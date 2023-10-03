@@ -15,10 +15,7 @@ node-setup:
 eslint:
   stage: lint
   script:
-    # Install eslint
-    - npm install eslint eslint-config-airbnb eslint-config-airbnb/hooks eslint-config-airbnb-typescript eslint-config-prettier
-    # Run eslint
-    - ./node_modules/.bin/eslint
+    - npm run lint
 
 prettier:
   stage: lint
