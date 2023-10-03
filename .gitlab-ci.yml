@@ -1,7 +1,16 @@
 image: node
 
 stages:
+  - setup
   - lint
+
+node-setup:
+  stage: setup
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules
 
 eslint:
   stage: lint
