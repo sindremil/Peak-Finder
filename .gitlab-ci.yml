@@ -14,7 +14,7 @@ eslint:
       eslint-config-airbnb-typescript \
       eslint-config-prettier \
     # Run eslint
-    - node_modules/eslint/bin/eslint.js .
+    - ./node_modules/.bin/eslint .
 
 prettier:
   stage: lint
