@@ -1,11 +1,11 @@
 import "./App.css";
-import { Chip, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   return (
     <>
-        <CssBaseline />
-        <h1>Hello World</h1>
+      <CssBaseline />
+      <h1>Hello World</h1>
     </>
   );
 }
