@@ -1,0 +1,24 @@
+image: node
+
+stages:
+  - lint
+
+eslint:
+  stage: lint
+  script:
+    # Install eslint
+    - |
+      npm install eslint \
+      eslint-config-airbnb \
+      eslint-config-airbnb/hooks \
+      eslint-config-airbnb-typescript \
+      eslint-config-prettier \
+    # Run eslint
+    - node_modules/eslint/bin/eslint.js .
+
+prettier:
+  stage: lint
+  script:
+    - |
+      npm install --global prettier
+    - prettier --check "**/*.{js,jsx,ts,tsx,json,md}"
