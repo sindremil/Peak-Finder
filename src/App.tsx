@@ -1,11 +1,11 @@
-import "./App.css";
 import { CssBaseline } from "@mui/material";
+import DestinationCard from "./components/DestinationCard";
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <h1>Hello World</h1>
+      <DestinationCard />
     </>
   );
 }
