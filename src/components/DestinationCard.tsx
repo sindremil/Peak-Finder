@@ -31,8 +31,7 @@ function DestinationImage(props: { src: string; alt: string }): JSX.Element {
   return <CardMedia sx={{ height: 240 }} image={src} title={alt} />;
 }
 
-// List items in the in the card
-function DestinationHeight(props: {
+function DestinationElevation(props: {
   lowestPoint: number;
   highestPoint: number;
 }): JSX.Element {
@@ -56,6 +55,12 @@ function DestinationPiste(props: {
   advanced: number;
 }): JSX.Element {
   const { beginner, intermediate, advanced } = props;
+
+  // Modifies the padding of all piste per difficulty total
+  const listItemPadding = {
+    padding: "0.5vw 2vw",
+  };
+
   return (
     <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
       <ListItemIcon>
@@ -64,15 +69,15 @@ function DestinationPiste(props: {
       <Box sx={{ display: "flex", color: "white" }}>
         <ListItemText
           primary={`${beginner} km`}
-          sx={{ background: "blue", padding: "0.5vw 0.25vw" }}
+          sx={{ ...listItemPadding, background: "blue" }}
         />
         <ListItemText
           primary={`${intermediate} km`}
-          sx={{ background: "red", padding: "0.5vw 0.25vw" }}
+          sx={{ ...listItemPadding, background: "red" }}
         />
         <ListItemText
           primary={`${advanced} km`}
-          sx={{ background: "black", padding: "0.5vw 0.25vw" }}
+          sx={{ ...listItemPadding, background: "black" }}
         />
       </Box>
     </ListItem>
@@ -91,7 +96,8 @@ function DestinationLifts(props: { lifts: number }): JSX.Element {
   );
 }
 
-// Contains all the info about the destinatio.
+// Combines the information about a destination's elevation, piste, and lifts
+// into a singe componenet which is used in the DestinationCard below
 function DestinationInfo({
   lowestPoint,
   highestPoint,
@@ -110,7 +116,7 @@ function DestinationInfo({
   return (
     <CardContent>
       <List>
-        <DestinationHeight
+        <DestinationElevation
           lowestPoint={lowestPoint}
           highestPoint={highestPoint}
         />
@@ -125,6 +131,8 @@ function DestinationInfo({
   );
 }
 
+// Combines the DestinationName, DestinationImage and DestinationInfo component
+// into a DestinationCard
 export default function DestinationCard({
   destinationCardProps,
 }: {
