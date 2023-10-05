@@ -1,7 +1,60 @@
-import { AppBar, Toolbar, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
 import { useEffect, useState } from "react";
+import { Search, PersonOutline } from "@mui/icons-material";
 import logo from "../assets/logos/logo-no-background.svg";
 import logocropped from "../assets/logos/logo-no-background-cropped.svg";
+
+// Custom theme to change the size of the icons
+const theme = createTheme({
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          fontSize: "2rem",
+        },
+      },
+    },
+  },
+});
+
+interface LogoProps {
+  logoPath: string;
+}
+
+function Logo({ logoPath }: LogoProps): JSX.Element {
+  return (
+    <Box
+      component="img"
+      sx={{
+        height: "2.5rem",
+      }}
+      alt="Peak Finder logo"
+      src={logoPath}
+      tabIndex={0}
+      role="button"
+    />
+  );
+}
+
+function Icons(): JSX.Element {
+  return (
+    <Box component="div" marginRight={1} marginLeft="auto">
+      <IconButton color="inherit">
+        <Search />
+      </IconButton>
+      <IconButton color="inherit">
+        <PersonOutline />
+      </IconButton>
+    </Box>
+  );
+}
 
 export default function Navbar() {
   // State variable for changing logo based on aspect ratio
@@ -11,9 +64,7 @@ export default function Navbar() {
   useEffect(() => {
     // Checks aspect ratio and changes state with respect to the threshold
     const handleResize = () => {
-      const aspectRatio = window.innerWidth / window.innerHeight;
-      const threshold = 1;
-      setIsLogoCropped(threshold > aspectRatio);
+      setIsLogoCropped(window.innerWidth < 600);
     };
 
     // handleResize function is each time window gets resized
@@ -29,17 +80,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Box
-          component="img"
-          sx={{
-            height: "2.5rem",
-          }}
-          alt="Peak Finder logo"
-          src={isLogoCropped ? logocropped : logo}
-        />
-      </Toolbar>
-    </AppBar>
+    <ThemeProvider theme={theme}>
+      <AppBar position="static">
+        <Toolbar>
+          <Logo logoPath={isLogoCropped ? logocropped : logo} />
+          <Icons />
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
   );
 }
