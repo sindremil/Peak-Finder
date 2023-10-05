@@ -3,6 +3,7 @@ import DestinationPage from "./pages/DestinationPage";
 import DestinationCard from "./components/DestinationCard";
 import DestinationCardProps from "./interfaces/DestinationCardProps";
 import hemsedalImage from "./assets/hemsedal.jpg";
+import Navbar from "./components/Navbar";
 
 // Mock values
 const mockDestinationCardProps: DestinationCardProps = {
@@ -25,6 +26,7 @@ function App() {
       <CssBaseline />
       <DestinationPage />
       <DestinationCard destinationCardProps={mockDestinationCardProps} />
+      <Navbar />
     </ThemeProvider>
   );
 }
