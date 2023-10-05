@@ -14,88 +14,150 @@ import {
 import HeightIcon from "@mui/icons-material/Height";
 import RouteIcon from "@mui/icons-material/Route";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
-import hemsedalImage from "../assets/hemsedal.jpg";
+import DestinationCardProps from "../interfaces/DestinationCardProps";
 
-export default function DestinationCard() {
+function DestinationName(props: { name: string }): JSX.Element {
+  const { name } = props;
   return (
-    <Container>
-      <Card raised>
-        <CardActionArea>
-          <DestinationName />
-          <DestinationImage />
-          <DestinationInfo />
-        </CardActionArea>
-      </Card>
-    </Container>
-  );
-}
-
-//Destination name, image and info
-function DestinationName(): JSX.Element {
-  return(
     <CardContent>
-      <Typography variant="h4">Hemsedal</Typography>
+      <Typography variant="h4">{name}</Typography>
     </CardContent>
   );
 }
 
-function DestinationImage(): JSX.Element {
-  return(
-    <CardMedia
-      sx={{ height: 240 }}
-      image={hemsedalImage}
-      title="Hemsedal's Roni chairlift"
-    />
-  );
+function DestinationImage(props: { src: string; alt: string }): JSX.Element {
+  const { src, alt } = props;
+
+  return <CardMedia sx={{ height: 240 }} image={src} title={alt} />;
 }
 
-function DestinationInfo(): JSX.Element {
-  return(
-    <CardContent>
-      <List>
-        <DestinationHeight />
-        <DestinationPiste />
-        <DestinationLifts />
-      </List>
-    </CardContent>
-  );
-}
-
-
-//List items in the in the card
-function DestinationHeight(): JSX.Element {
+// List items in the in the card
+function DestinationHeight(props: {
+  lowestPoint: number;
+  highestPoint: number;
+}): JSX.Element {
+  const { lowestPoint, highestPoint } = props;
+  const heightDelta: number = highestPoint - lowestPoint;
   return (
     <ListItem>
       <ListItemIcon>
         <HeightIcon />
       </ListItemIcon>
-      <ListItemText primary="1004m (2160m - 3164m)" />
+      <ListItemText
+        primary={`${lowestPoint} m - ${highestPoint} m (${heightDelta} m)`}
+      />
     </ListItem>
   );
 }
 
-function DestinationPiste(): JSX.Element {
+function DestinationPiste(props: {
+  beginner: number;
+  intermediate: number;
+  advanced: number;
+}): JSX.Element {
+  const { beginner, intermediate, advanced } = props;
   return (
-    <ListItem sx={{display: "flex", flexWrap: "wrap"}}>
+    <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
       <ListItemIcon>
         <RouteIcon />
       </ListItemIcon>
-      <Box sx={{display: "flex", color: "white"}}>
-        <ListItemText primary="35km" sx={{background: "blue", padding: "0.5vw 0.25vw"}}/>
-        <ListItemText primary="53km"  sx={{background: "red", padding: "0.5vw 0.25vw"}}/>
-        <ListItemText primary="22km"  sx={{background: "black", padding: "0.5vw 0.25vw"}}/>
+      <Box sx={{ display: "flex", color: "white" }}>
+        <ListItemText
+          primary={`${beginner} km`}
+          sx={{ background: "blue", padding: "0.5vw 0.25vw" }}
+        />
+        <ListItemText
+          primary={`${intermediate} km`}
+          sx={{ background: "red", padding: "0.5vw 0.25vw" }}
+        />
+        <ListItemText
+          primary={`${advanced} km`}
+          sx={{ background: "black", padding: "0.5vw 0.25vw" }}
+        />
       </Box>
     </ListItem>
   );
 }
 
-function DestinationLifts(): JSX.Element {
-  return(
+function DestinationLifts(props: { lifts: number }): JSX.Element {
+  const { lifts } = props;
+  return (
     <ListItem>
       <ListItemIcon>
         <ArrowOutwardIcon />
       </ListItemIcon>
-      <ListItemText primary="12 heiser" />
+      <ListItemText primary={`${lifts} heiser`} />
     </ListItem>
+  );
+}
+
+// Contains all the info about the destinatio.
+function DestinationInfo({
+  lowestPoint,
+  highestPoint,
+  beginner,
+  intermediate,
+  advanced,
+  lifts,
+}: {
+  lowestPoint: number;
+  highestPoint: number;
+  beginner: number;
+  intermediate: number;
+  advanced: number;
+  lifts: number;
+}): JSX.Element {
+  return (
+    <CardContent>
+      <List>
+        <DestinationHeight
+          lowestPoint={lowestPoint}
+          highestPoint={highestPoint}
+        />
+        <DestinationPiste
+          beginner={beginner}
+          intermediate={intermediate}
+          advanced={advanced}
+        />
+        <DestinationLifts lifts={lifts} />
+      </List>
+    </CardContent>
+  );
+}
+
+export default function DestinationCard({
+  destinationCardProps,
+}: {
+  destinationCardProps: DestinationCardProps;
+}): JSX.Element {
+  const {
+    name,
+    imageSrc,
+    imageAlt,
+    lowestPoint,
+    highestPoint,
+    beginner,
+    intermediate,
+    advanced,
+    lifts,
+  } = destinationCardProps;
+
+  return (
+    <Container>
+      <Card raised>
+        <CardActionArea>
+          <DestinationName name={name} />
+          <DestinationImage src={imageSrc} alt={imageAlt} />
+          <DestinationInfo
+            lowestPoint={lowestPoint}
+            highestPoint={highestPoint}
+            beginner={beginner}
+            intermediate={intermediate}
+            advanced={advanced}
+            lifts={lifts}
+          />
+        </CardActionArea>
+      </Card>
+    </Container>
   );
 }
