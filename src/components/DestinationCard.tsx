@@ -56,7 +56,7 @@ function DestinationPiste(props: {
   const { beginner, intermediate, advanced } = props;
 
   // Modifies the padding of all piste per difficulty total
-  const listItemPadding = {
+  const listItemPadding: { padding: string } = {
     padding: "0.5vw 2vw",
   };
 
