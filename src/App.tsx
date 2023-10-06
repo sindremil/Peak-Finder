@@ -1,4 +1,5 @@
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import DestinationPage from "./pages/DestinationPage";
 import DestinationCard from "./components/DestinationCard";
 import DestinationCardProps from "./interfaces/DestinationCardProps";
 import hemsedalImage from "./assets/hemsedal.jpg";
@@ -17,11 +18,14 @@ const mockDestinationCardProps: DestinationCardProps = {
 };
 
 function App() {
+  const theme = createTheme();
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
+      <DestinationPage />
       <DestinationCard destinationCardProps={mockDestinationCardProps} />
-    </>
+    </ThemeProvider>
   );
 }
 
