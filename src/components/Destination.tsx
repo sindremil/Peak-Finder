@@ -82,8 +82,8 @@ function DestinationInfo({
   );
 }
 
-// This component displays information about ski tracks.
-function DestinationTrack({
+// This component displays information about destination's piste.
+function DestinationPiste({
   trackType,
   trackDistance,
   TrackIcon,
@@ -106,17 +106,17 @@ function DestinationTrack({
   );
 }
 
-// This component displays a list of ski tracks
+// This component displays a list of pistes
 // of different difficulty levels (beginner, intermediate, difficult)
-// using the previously defined DestinationTrack function.
-function DestinationTracks({
-  blue,
-  red,
-  black,
+// using the previously defined DestinationPiste function.
+function DestinationPistes({
+  beginner,
+  intermediate,
+  advanced,
 }: {
-  blue: number;
-  red: number;
-  black: number;
+  beginner: number;
+  intermediate: number;
+  advanced: number;
 }): JSX.Element {
   return (
     <>
@@ -124,21 +124,21 @@ function DestinationTracks({
         Skibakker
       </Typography>
       <List>
-        <DestinationTrack
+        <DestinationPiste
           trackType="Nybegynner"
-          trackDistance={blue}
+          trackDistance={beginner}
           TrackIcon={CircleIcon}
           iconColor="Blue"
         />
-        <DestinationTrack
+        <DestinationPiste
           trackType="Middels"
-          trackDistance={red}
+          trackDistance={intermediate}
           TrackIcon={SquareIcon}
           iconColor="Red"
         />
-        <DestinationTrack
+        <DestinationPiste
           trackType="Vanskelig"
-          trackDistance={black}
+          trackDistance={advanced}
           TrackIcon={PentagonIcon}
           iconColor="Black"
         />
@@ -315,7 +315,7 @@ export default function Destination({
         <CardContent sx={{ paddingLeft: "20px" }}>
           <DestinationName name={destinationName} />
           <DestinationInfo country="Norge" minHeight={1000} maxHeight={3300} />
-          <DestinationTracks blue={8} red={7} black={6} />
+          <DestinationPistes beginner={8} intermediate={7} advanced={6} />
           <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
           <DestinationPrices adult={50} youth={30} />
         </CardContent>
