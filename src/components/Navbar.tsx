@@ -5,6 +5,8 @@ import {
   IconButton,
   createTheme,
   ThemeProvider,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Search, PersonOutline } from "@mui/icons-material";
@@ -28,6 +30,10 @@ interface LogoProps {
   logoPath: string;
 }
 
+interface SearchFieldProps {
+  isDesktop: boolean;
+}
+
 function Logo({ logoPath }: LogoProps): JSX.Element {
   return (
     <Box
@@ -43,28 +49,73 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
   );
 }
 
-function Icons(): JSX.Element {
+function UserIcon(): JSX.Element {
   return (
-    <Box component="div" marginRight={1} marginLeft="auto">
-      <IconButton color="inherit">
-        <Search />
-      </IconButton>
-      <IconButton color="inherit">
-        <PersonOutline />
-      </IconButton>
-    </Box>
+    <IconButton color="inherit">
+      <PersonOutline />
+    </IconButton>
+  );
+}
+
+function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
+  if (isDesktop) {
+    return (
+      <Box
+        component="div"
+        sx={{
+          height: "2.5rem",
+          borderRadius: "5px",
+          display: "flex",
+          alignItems: "center",
+          marginY: "auto",
+          width: "100%",
+        }}
+      >
+        <TextField
+          placeholder="Destinasjon, land..."
+          variant="standard"
+          size="small"
+          sx={{
+            marginTop: 0.7,
+            borderColor: "white",
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                sx={{
+                  color: "white",
+                }}
+              >
+                <Search />
+              </InputAdornment>
+            ),
+            style: { color: "white" },
+          }}
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <IconButton color="inherit">
+      <Search />
+    </IconButton>
   );
 }
 
 export default function Navbar() {
-  // State variable for changing logo based on aspect ratio
+  // State variable for changing logo based on width
   const [isLogoCropped, setIsLogoCropped] = useState(false);
+  // State variable for changing search field based on width
+  const [isSearchFieldVisible, setIsSearchFieldVisible] = useState(true);
 
-  // Effect for handling logo change
+  // Effect for handling logo and search field change
   useEffect(() => {
-    // Checks aspect ratio and changes state with respect to the threshold
+    // Checks width and sets state variables accordingly
     const handleResize = () => {
       setIsLogoCropped(window.innerWidth < 600);
+      setIsSearchFieldVisible(window.innerWidth >= 800);
     };
 
     // handleResize function is each time window gets resized
@@ -84,7 +135,19 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar>
           <Logo logoPath={isLogoCropped ? logocropped : logo} />
-          <Icons />
+          <Box
+            component="div"
+            marginRight={1}
+            marginLeft="auto"
+            sx={{
+              display: "flex",
+              justifyContent: "right",
+              alignItems: "center",
+            }}
+          >
+            <SearchField isDesktop={isSearchFieldVisible} />
+            <UserIcon />
+          </Box>
         </Toolbar>
       </AppBar>
     </ThemeProvider>
