@@ -3,111 +3,93 @@ import {
   Toolbar,
   Box,
   IconButton,
-  createTheme,
-  ThemeProvider,
   TextField,
   InputAdornment,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Search, PersonOutline } from "@mui/icons-material";
 import logo from "../assets/logos/logo-no-background.svg";
-import logocropped from "../assets/logos/logo-no-background-cropped.svg";
+import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
 
-// Custom theme to change the size of the icons
-const theme = createTheme({
-  components: {
-    MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          fontSize: "2rem",
-        },
-      },
-    },
-  },
-});
+// This const controls the size of all icons that belong to this component
+const iconSize: { fontSize: string } = {
+  fontSize: "2.5rem",
+};
 
 interface LogoProps {
   logoPath: string;
-}
-
-interface SearchFieldProps {
-  isDesktop: boolean;
 }
 
 function Logo({ logoPath }: LogoProps): JSX.Element {
   return (
     <Box
       component="img"
-      sx={{
-        height: "2.5rem",
-      }}
       alt="Peak Finder logo"
       src={logoPath}
       tabIndex={0}
       role="button"
+      sx={{
+        height: "2.5rem",
+      }}
     />
   );
 }
 
 function UserIcon(): JSX.Element {
   return (
-    <IconButton color="inherit">
-      <PersonOutline />
+    <IconButton
+      color="inherit"
+      sx={{
+        paddingRight: 0,
+      }}
+    >
+      <PersonOutline sx={{ ...iconSize }} />
     </IconButton>
   );
+}
+
+interface SearchFieldProps {
+  isDesktop: boolean;
 }
 
 function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
   if (isDesktop) {
     return (
-      <Box
-        component="div"
+      <TextField
+        placeholder="Destinasjon, land..."
+        variant="standard"
+        size="small"
         sx={{
-          height: "2.5rem",
-          borderRadius: "5px",
-          display: "flex",
-          alignItems: "center",
-          marginY: "auto",
-          width: "100%",
+          marginTop: 0.7,
         }}
-      >
-        <TextField
-          placeholder="Destinasjon, land..."
-          variant="standard"
-          size="small"
-          sx={{
-            marginTop: 0.7,
-            borderColor: "white",
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment
-                position="start"
-                sx={{
-                  color: "white",
-                }}
-              >
-                <Search />
-              </InputAdornment>
-            ),
-            style: { color: "white" },
-          }}
-        />
-      </Box>
+        InputProps={{
+          startAdornment: (
+            <InputAdornment
+              position="start"
+              sx={{
+                color: "white",
+              }}
+            >
+              <Search sx={{ ...iconSize }} />
+            </InputAdornment>
+          ),
+          style: { color: "white" },
+        }}
+      />
     );
   }
 
   return (
     <IconButton color="inherit">
-      <Search />
+      <Search sx={{ ...iconSize }} />
     </IconButton>
   );
 }
 
-export default function Navbar() {
-  // State variable for changing logo based on width
+export default function Navbar(): JSX.Element {
+  // State for changing logo based on width
   const [isLogoCropped, setIsLogoCropped] = useState(false);
-  // State variable for changing search field based on width
+  // State for changing search field based on width
   const [isSearchFieldVisible, setIsSearchFieldVisible] = useState(true);
 
   // Effect for handling logo and search field change
@@ -131,25 +113,24 @@ export default function Navbar() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        <Toolbar>
-          <Logo logoPath={isLogoCropped ? logocropped : logo} />
-          <Box
-            component="div"
-            marginRight={1}
-            marginLeft="auto"
-            sx={{
-              display: "flex",
-              justifyContent: "right",
-              alignItems: "center",
-            }}
-          >
-            <SearchField isDesktop={isSearchFieldVisible} />
-            <UserIcon />
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </ThemeProvider>
+    <AppBar>
+      <Toolbar>
+        <Logo logoPath={isLogoCropped ? logoCropped : logo} />
+        <Box
+          component="div"
+          marginRight={1}
+          marginLeft="auto"
+          sx={{
+            display: "flex",
+            justifyContent: "right",
+            alignItems: "center",
+            marginRight: 0,
+          }}
+        >
+          <SearchField isDesktop={isSearchFieldVisible} />
+          <UserIcon />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
