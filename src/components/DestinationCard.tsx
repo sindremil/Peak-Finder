@@ -13,6 +13,7 @@ import {
 import HeightIcon from "@mui/icons-material/Height";
 import RouteIcon from "@mui/icons-material/Route";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import { Link } from "react-router-dom";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
 
 function DestinationName(props: { name: string }): JSX.Element {
@@ -151,7 +152,7 @@ export default function DestinationCard({
 
   return (
     <Card raised>
-      <CardActionArea>
+      <CardActionArea component={Link} to="/destination">
         <DestinationName name={name} />
         <DestinationImage src={imageSrc} alt={imageAlt} />
         <DestinationInfo
