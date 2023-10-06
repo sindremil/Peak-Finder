@@ -26,7 +26,6 @@ function App() {
       <DestinationPage />
       <DestinationCard destinationCardProps={mockDestinationCardProps} />
     </ThemeProvider>
-    </>
   );
 }
 
