@@ -1,12 +1,14 @@
-import "./App.css";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import DestinationPage from "./pages/DestinationPage"
 
 function App() {
+  const theme = createTheme();
+  
   return (
-    <>
-      <CssBaseline />
-      <h1>Hello World</h1>
-    </>
+    <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <DestinationPage />
+      </ThemeProvider>
   );
 }
 
