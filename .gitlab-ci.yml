@@ -4,6 +4,9 @@ stages:
   - setup
   - lint
 
+variables:
+  CACHE_KEY: "node_modules-$CI_COMMIT_REF_SLUG"
+
 node-setup:
   stage: setup
   script:
@@ -11,15 +14,21 @@ node-setup:
   artifacts:
     paths:
       - node_modules
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - node_modules
 
 eslint:
   stage: lint
   script:
     - npm run lint
+  dependencies:
+    - node-setup
 
 prettier:
   stage: lint
   script:
-    - |
-      npm install --global prettier
     - prettier --check "**/*.{js,jsx,ts,tsx,json,md}"
+  dependencies:
+    - node-setup
