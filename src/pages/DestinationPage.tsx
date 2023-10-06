@@ -6,12 +6,19 @@ export default function DestinationPage() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return isSmallScreen ? (
-    <Box>
-      <Destination destinationName="Hemsedal" />
-    </Box>
+    <>
+      <Box>
+        <Destination destinationName="Hemsedal" />
+      </Box>
+      <br />
+    </>
   ) : (
-    <Container>
-      <Destination destinationName="Hemsedal" />
-    </Container>
+    <>
+      <br />
+      <Container>
+        <Destination destinationName="Hemsedal" />
+      </Container>
+      <br />
+    </>
   );
 }

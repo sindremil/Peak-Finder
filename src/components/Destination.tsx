@@ -1,42 +1,25 @@
 import {
   Typography,
-  Paper,
+  Card,
   List,
   ListItem,
   ListItemText,
   Box,
   ListItemIcon,
   SvgIconTypeMap,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import SquareIcon from "@mui/icons-material/Square";
-import StarIcon from "@mui/icons-material/Star";
+import PentagonIcon from "@mui/icons-material/Pentagon";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { ReactNode } from "react";
 import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
-import TbarLiftIcon from "../assets/TbarLiftIcon.svg";
+import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
+import fischbach from "../assets/Fischbach.jpg";
 
-// This is a temporary constant for the destination img
-// Will be changed later to be a prop and therefore dynamic
-const destinationImgSrc =
-  "https://vcdn.bergfex.at/images/resized/75/a6f8bc60ae1e5475_4c61ad8798145fc6@2x.jpg";
-
-// This function takes a single argument children (which is a ReactNode)
-// and returns a JSX element (React component) representing a <Box> with left padding.
-// It wraps the children with a box that has a left padding of 20 pixels.
-function BoxWithPaddingLeft({
-  children,
-}: {
-  children: ReactNode;
-}): JSX.Element {
-  return <Box sx={{ paddingLeft: "20px" }}>{children}</Box>;
-}
-
-// This function takes two arguments, name and img,
-// and returns a JSX element representing an <img> tag
-// with the specified src and alt attributes.
-// It's used to display an image associated with a destination.
+// This component displays an image associated with a destination.
 function DestinationImage({
   name,
   img,
@@ -44,34 +27,24 @@ function DestinationImage({
   name: string;
   img: string;
 }): JSX.Element {
-  return <Box component="img" src={img} alt={name} sx={{ maxWidth: "100%" }} />;
+  return <CardMedia image={img} title={name} sx={{ height: "400px" }} />;
 }
 
-// This function takes a single argument name
-// and returns a JSX element representing a <Typography> component
-// with the specified name as the content.
-// It's used to display the name of a destination.
+// This component displays the name of a destination.
 function DestinationName({ name }: { name: string }): JSX.Element {
   return <Typography variant="h2">{name}</Typography>;
 }
 
-// This function takes a single argument country
-// and returns a JSX element representing a <ListItem>
-// with the primary text "Country" and the country as secondary text.
-// It's used to display the country of a destination.
+// This component displays the country of a destination.
 function DestinationCountry({ country }: { country: string }): JSX.Element {
   return (
     <ListItem>
-      <ListItemText primary="Country" secondary={country} />
+      <ListItemText primary="Land" secondary={country} />
     </ListItem>
   );
 }
 
-// This function takes two arguments, minHeight and maxHeight,
-// and returns a JSX element representing a <ListItem>
-// with the primary text "Height" and a string showing the range of heights
-// (e.g., "1000 m - 3300 m (2300 m)") as secondary text.
-// It's used to display the height range of a destination.
+// This component displays the height range of a destination.
 function DestinationHeight({
   minHeight,
   maxHeight,
@@ -83,15 +56,14 @@ function DestinationHeight({
   return (
     <ListItem>
       <ListItemText
-        primary="Height"
+        primary="Meter over havet"
         secondary={`${minHeight} m - ${maxHeight} m (${heightDiff} m)`}
       />
     </ListItem>
   );
 }
 
-// This function takes three arguments, country, minHeight, and maxHeight,
-// and returns a JSX element that contains a list of destination information,
+// This component displays a list of destination information,
 // including country and height, using the previously defined functions.
 function DestinationInfo({
   country,
@@ -110,11 +82,7 @@ function DestinationInfo({
   );
 }
 
-// This function takes four arguments, trackType, trackDistance, TrackIcon, and iconColor,
-// and returns a JSX element representing a <ListItem>
-// with an icon (specified by TrackIcon),
-// the trackType as primary text, and the trackDistance as secondary text.
-// It's used to display information about ski tracks.
+// This component displays information about ski tracks.
 function DestinationTrack({
   trackType,
   trackDistance,
@@ -138,8 +106,7 @@ function DestinationTrack({
   );
 }
 
-// This function takes three arguments, blue, red, and black,
-// and returns a JSX element that displays a list of ski tracks
+// This component displays a list of ski tracks
 // of different difficulty levels (beginner, intermediate, difficult)
 // using the previously defined DestinationTrack function.
 function DestinationTracks({
@@ -154,25 +121,25 @@ function DestinationTracks({
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Ski slopes
+        Skibakker
       </Typography>
       <List>
         <DestinationTrack
-          trackType="Beginner"
+          trackType="Nybegynner"
           trackDistance={blue}
           TrackIcon={CircleIcon}
           iconColor="Blue"
         />
         <DestinationTrack
-          trackType="Intermediate"
+          trackType="Middels"
           trackDistance={red}
           TrackIcon={SquareIcon}
           iconColor="Red"
         />
         <DestinationTrack
-          trackType="Difficult"
+          trackType="Vanskelig"
           trackDistance={black}
-          TrackIcon={StarIcon}
+          TrackIcon={PentagonIcon}
           iconColor="Black"
         />
       </List>
@@ -180,11 +147,7 @@ function DestinationTracks({
   );
 }
 
-// This function takes three arguments, liftType, liftAmount, and liftIcon,
-// and returns a JSX element representing a <ListItem>
-// with an icon (specified by liftIcon),
-// the liftType as primary text, and the liftAmount as secondary text.
-// It's used to display information about ski lifts.
+// This component displays information about the ski lifts.
 function DestinationLift({
   liftType,
   liftAmount,
@@ -208,49 +171,45 @@ function DestinationLift({
   );
 }
 
-// This function takes three arguments, gondolas, chairlifts, and tbarLifts,
-// and returns a JSX element that displays a list of different types of ski lifts
-// (e.g., gondolas, chairlifts, T-bar lifts)
+// This component displays a list of different types of ski lifts
+// (e.g., gondolas, chairlifts and surfaces lifts)
 // using the previously defined DestinationLift function.
 function DestinationLifts({
   gondolas,
   chairlifts,
-  tbarLifts,
+  surfaceLifts,
 }: {
   gondolas: number;
   chairlifts: number;
-  tbarLifts: number;
+  surfaceLifts: number;
 }): JSX.Element {
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Ski lifts
+        Skiheiser
       </Typography>
       <List>
         <DestinationLift
-          liftType="Gondolas"
+          liftType="Gondoler"
           liftAmount={gondolas}
           liftIcon={GondolaIcon}
         />
         <DestinationLift
-          liftType="Chairlifts"
+          liftType="Stolheiser"
           liftAmount={chairlifts}
           liftIcon={SkiliftIcon}
         />
         <DestinationLift
-          liftType="T-bar lifts"
-          liftAmount={tbarLifts}
-          liftIcon={TbarLiftIcon}
+          liftType="Ankerheiser"
+          liftAmount={surfaceLifts}
+          liftIcon={surfaceLiftIcon}
         />
       </List>
     </>
   );
 }
 
-// This function takes two arguments, passType and passPrice,
-// and returns a JSX element representing a <ListItem>
-// with the passType as primary text and the passPrice as secondary text.
-// It's used to display information about ski pass prices.
+// This component displays information about ski pass prices.
 function DestinationPass({
   passType,
   passPrice,
@@ -265,8 +224,7 @@ function DestinationPass({
   );
 }
 
-// This function takes two arguments, adult and youth,
-// and returns a JSX element that displays a list of ski pass prices
+// This component displays a list of ski pass prices
 // for both adults and youth using the previously defined DestinationPass function.
 function DestinationPrices({
   adult,
@@ -278,20 +236,17 @@ function DestinationPrices({
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Ski pass prices
+        Skipass priser
       </Typography>
       <List>
-        <DestinationPass passType="Adult Day Pass" passPrice={adult} />
-        <DestinationPass passType="Youth Day Pass" passPrice={youth} />
+        <DestinationPass passType="Dagspass voksen" passPrice={adult} />
+        <DestinationPass passType="Dagspass ungdom" passPrice={youth} />
       </List>
     </>
   );
 }
 
-// This function takes two arguments, reviewer and comment,
-// and returns a JSX element representing a <ListItem>
-// with the reviewer as primary text and the comment as secondary text.
-// It's used to display user reviews for the destination.
+// This component displays user reviews for the destination.
 function DestinationReview({
   reviewer,
   comment,
@@ -310,8 +265,7 @@ type DestinationReviewsProps = {
   reviewList: { username: string; comment: string }[];
 };
 
-// This function takes an array of review objects as reviewList
-// and returns a JSX element that displays a list of user reviews
+// This component displays a list of user reviews
 // using the previously defined DestinationReview function.
 function DestinationReviews({
   reviewList,
@@ -319,11 +273,12 @@ function DestinationReviews({
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Reviews
+        Anmeldelser
       </Typography>
       <List>
         {reviewList.map((review) => (
           <DestinationReview
+            key={review.username}
             reviewer={review.username}
             comment={review.comment}
           />
@@ -334,10 +289,8 @@ function DestinationReviews({
 }
 
 // This is the main component exported from the module.
-// It takes a single argument destinationName
-// and returns a JSX element representing a complete view of destination information.
-// It uses the previously defined functions to display information
-// about the destination, including
+// It uses the previously defined functions to display
+// information about the destination, including
 // images, name, country, height, ski tracks, ski lifts, ski pass prices, and user reviews.
 export default function Destination({
   destinationName,
@@ -347,36 +300,29 @@ export default function Destination({
   const reviews = [
     {
       username: "John Smith",
-      comment: "Great place, would love to return here some day.",
+      comment: "Great place, would love to return here some day!",
     },
     {
       username: "Ola Nordmann",
-      comment: "We had a great time in Hemsedal! Loved the beginner tracks.",
+      comment:
+        "Vi hadde det veldig gøy i Hemsdal. Skibakkene for nybegynnere var toppers!",
     },
   ];
   return (
-    <Box>
-      <Paper elevation={3} sx={{ marginBottom: "20px" }}>
-        <DestinationImage name={destinationName} img={destinationImgSrc} />
-        <BoxWithPaddingLeft>
+    <>
+      <Card sx={{ marginBottom: "20px" }} raised>
+        <DestinationImage name={destinationName} img={fischbach} />
+        <CardContent sx={{ paddingLeft: "20px" }}>
           <DestinationName name={destinationName} />
-        </BoxWithPaddingLeft>
-        <BoxWithPaddingLeft>
-          <DestinationInfo country="Norway" minHeight={1000} maxHeight={3300} />
-        </BoxWithPaddingLeft>
-        <BoxWithPaddingLeft>
+          <DestinationInfo country="Norge" minHeight={1000} maxHeight={3300} />
           <DestinationTracks blue={8} red={7} black={6} />
-        </BoxWithPaddingLeft>
-        <BoxWithPaddingLeft>
-          <DestinationLifts gondolas={2} chairlifts={6} tbarLifts={10} />
-        </BoxWithPaddingLeft>
-        <BoxWithPaddingLeft>
+          <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
           <DestinationPrices adult={50} youth={30} />
-        </BoxWithPaddingLeft>
-      </Paper>
-      <Paper elevation={3} sx={{ padding: "20px" }}>
+        </CardContent>
+      </Card>
+      <Card sx={{ padding: "20px" }} raised>
         <DestinationReviews reviewList={reviews} />
-      </Paper>
-    </Box>
+      </Card>
+    </>
   );
 }
