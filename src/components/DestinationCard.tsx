@@ -4,7 +4,6 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Container,
   List,
   ListItem,
   ListItemIcon,
@@ -97,7 +96,7 @@ function DestinationLifts(props: { lifts: number }): JSX.Element {
 }
 
 // Combines the information about a destination's elevation, piste, and lifts
-// into a singe componenet which is used in the DestinationCard below
+// into a singel component which is used in the DestinationCard below
 function DestinationInfo({
   lowestPoint,
   highestPoint,
@@ -151,21 +150,19 @@ export default function DestinationCard({
   } = destinationCardProps;
 
   return (
-    <Container>
-      <Card raised>
-        <CardActionArea>
-          <DestinationName name={name} />
-          <DestinationImage src={imageSrc} alt={imageAlt} />
-          <DestinationInfo
-            lowestPoint={lowestPoint}
-            highestPoint={highestPoint}
-            beginner={beginner}
-            intermediate={intermediate}
-            advanced={advanced}
-            lifts={lifts}
-          />
-        </CardActionArea>
-      </Card>
-    </Container>
+    <Card raised>
+      <CardActionArea>
+        <DestinationName name={name} />
+        <DestinationImage src={imageSrc} alt={imageAlt} />
+        <DestinationInfo
+          lowestPoint={lowestPoint}
+          highestPoint={highestPoint}
+          beginner={beginner}
+          intermediate={intermediate}
+          advanced={advanced}
+          lifts={lifts}
+        />
+      </CardActionArea>
+    </Card>
   );
 }
