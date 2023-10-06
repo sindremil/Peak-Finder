@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Search, PersonOutline } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import logo from "../assets/logos/logo-no-background.svg";
 import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
 
@@ -22,22 +23,25 @@ interface LogoProps {
 
 function Logo({ logoPath }: LogoProps): JSX.Element {
   return (
-    <Box
-      component="img"
-      alt="Peak Finder logo"
-      src={logoPath}
-      tabIndex={0}
-      role="button"
-      sx={{
-        height: "2.5rem",
-      }}
-    />
+    <Box component={Link} to="/">
+      <Box
+        component="img"
+        alt="Peak Finder logo"
+        src={logoPath}
+        tabIndex={0}
+        role="button"
+        sx={{
+          height: "2.5rem",
+        }}
+      />
+    </Box>
   );
 }
 
 function UserIcon(): JSX.Element {
   return (
     <IconButton
+      href="/project2/login"
       color="inherit"
       sx={{
         paddingRight: 0,
@@ -113,7 +117,7 @@ export default function Navbar(): JSX.Element {
   }, []);
 
   return (
-    <AppBar>
+    <AppBar position="static">
       <Toolbar>
         <Logo logoPath={isLogoCropped ? logoCropped : logo} />
         <Box

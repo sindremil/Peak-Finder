@@ -1,33 +1,54 @@
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DestinationPage from "./pages/DestinationPage";
-import DestinationCard from "./components/DestinationCard";
-import DestinationCardProps from "./interfaces/DestinationCardProps";
-import hemsedalImage from "./assets/hemsedal.jpg";
 import Navbar from "./components/Navbar";
-
-// Mock values
-const mockDestinationCardProps: DestinationCardProps = {
-  name: "Hemsedal",
-  imageSrc: hemsedalImage,
-  imageAlt: "Mock Image Alt",
-  lowestPoint: 1030,
-  highestPoint: 2479,
-  beginner: 30,
-  intermediate: 60,
-  advanced: 10,
-  lifts: 15,
-};
+import SetPageTitle from "./utils/SetPageTitle";
+import Result from "./pages/Result";
+import LoginPage from "./pages/LoginPage";
+import CreateUserPage from "./pages/CreateUserPage";
 
 function App() {
-  const theme = createTheme();
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <DestinationPage />
-      <DestinationCard destinationCardProps={mockDestinationCardProps} />
+    <Router basename="/project2">
       <Navbar />
-    </ThemeProvider>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <SetPageTitle title="Results" />
+              <Result />
+            </>
+          }
+        />
+        <Route
+          path="/destination"
+          element={
+            <>
+              <SetPageTitle title="Destination" />
+              <DestinationPage />
+            </>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <>
+              <SetPageTitle title="Login" />
+              <LoginPage />
+            </>
+          }
+        />
+        <Route
+          path="/create-user"
+          element={
+            <>
+              <SetPageTitle title="Create User" />
+              <CreateUserPage />
+            </>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
