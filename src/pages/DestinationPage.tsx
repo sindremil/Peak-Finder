@@ -6,6 +6,7 @@ export default function DestinationPage() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return isSmallScreen ? (
+    // Temporary DRY violation whilst developing
     <>
       <Box>
         <Destination destinationName="Hemsedal" />
@@ -15,8 +16,8 @@ export default function DestinationPage() {
   ) : (
     <>
       <br />
-      <Container>
-        <Destination destinationName="Hemsedal" />
+      <Container maxWidth="md">
+        <Destination destinationName="Saalbach-Hinterglem-Leogang-Fieberrunn (Skicircus)" />
       </Container>
       <br />
     </>

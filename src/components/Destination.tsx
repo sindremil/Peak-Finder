@@ -9,6 +9,12 @@ import {
   SvgIconTypeMap,
   CardMedia,
   CardContent,
+  Rating,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import SquareIcon from "@mui/icons-material/Square";
@@ -18,6 +24,7 @@ import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import fischbach from "../assets/Fischbach.jpg";
+import { useEffect, useState } from "react";
 
 // This component displays an image associated with a destination.
 function DestinationImage({
@@ -63,19 +70,93 @@ function DestinationHeight({
   );
 }
 
+// This component displays the rating of a destination
+function DestinationRating({
+  rating,
+  ratings,
+  handleRatingDialogOpen,
+}: {
+  rating: number;
+  ratings: number;
+  handleRatingDialogOpen: any;
+}): JSX.Element {
+  return (
+    <>
+      <ListItem>
+        <Typography>
+          {rating}
+          <Rating name="read-only" value={rating} />(
+          {ratings})
+        </Typography>
+      </ListItem>
+      <ListItem>
+        <Button onClick={handleRatingDialogOpen}>Gi vurdering</Button>
+      </ListItem>
+    </>
+  );
+}
+
+function DestinationGiveReview({
+  isOpen,
+  handleClose,
+  handleGiveRating,
+}: {
+  isOpen: boolean;
+  handleClose: () => void;
+  handleGiveRating: (rating: number) => void;
+}): JSX.Element {
+  const [newRating, setNewRating] = useState(0);
+  return (
+    <Dialog open={isOpen} onClose={handleClose}>
+      <DialogTitle>Gi en vurdering</DialogTitle>
+      <DialogContent>
+        <Rating
+          value={newRating}
+          onChange={(_event, value: number | null) => {
+            if (value != null) {
+              setNewRating(value);
+            }
+          }}
+        ></Rating>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Avbryt</Button>
+        <Button
+          onClick={() => {
+            handleGiveRating(newRating);
+          }}
+        >
+          Send inn
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 // This component displays a list of destination information,
 // including country and height, using the previously defined functions.
 function DestinationInfo({
   country,
+  rating,
+  ratings,
   minHeight,
   maxHeight,
+  handleRatingDialogOpen,
 }: {
   country: string;
+  rating: number;
+  ratings: number;
   minHeight: number;
   maxHeight: number;
+  handleRatingDialogOpen: () => void;
 }): JSX.Element {
   return (
     <List>
+      <DestinationRating
+        rating={rating}
+        ratings={ratings}
+        handleRatingDialogOpen={handleRatingDialogOpen}
+      />
       <DestinationCountry country={country} />
       <DestinationHeight minHeight={minHeight} maxHeight={maxHeight} />
     </List>
@@ -246,48 +327,6 @@ function DestinationPrices({
   );
 }
 
-// This component displays user reviews for the destination.
-function DestinationReview({
-  reviewer,
-  comment,
-}: {
-  reviewer: string;
-  comment: string;
-}): JSX.Element {
-  return (
-    <ListItem>
-      <ListItemText primary={reviewer} secondary={comment} />
-    </ListItem>
-  );
-}
-
-type DestinationReviewsProps = {
-  reviewList: { username: string; comment: string }[];
-};
-
-// This component displays a list of user reviews
-// using the previously defined DestinationReview function.
-function DestinationReviews({
-  reviewList,
-}: DestinationReviewsProps): JSX.Element {
-  return (
-    <>
-      <Typography variant="h4" gutterBottom>
-        Anmeldelser
-      </Typography>
-      <List>
-        {reviewList.map((review) => (
-          <DestinationReview
-            key={review.username}
-            reviewer={review.username}
-            comment={review.comment}
-          />
-        ))}
-      </List>
-    </>
-  );
-}
-
 // This is the main component exported from the module.
 // It uses the previously defined functions to display
 // information about the destination, including
@@ -297,32 +336,51 @@ export default function Destination({
 }: {
   destinationName: string;
 }) {
-  const reviews = [
-    {
-      username: "John Smith",
-      comment: "Great place, would love to return here some day!",
-    },
-    {
-      username: "Ola Nordmann",
-      comment:
-        "Vi hadde det veldig gøy i Hemsdal. Skibakkene for nybegynnere var toppers!",
-    },
-  ];
+  const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
+  const [newRating, setNewRating] = useState(0);
+
+  const handleRatingDialogOpen = () => {
+    setIsRatingDialogOpen(true);
+  };
+
+  const handleRatingDialogClose = () => {
+    setIsRatingDialogOpen(false);
+  };
+
+  const handleGiveRating = (newValue: number) => {
+    setNewRating(newValue)
+    handleRatingDialogClose();
+  };
+
+   // Use useEffect to log the updated value
+   useEffect(() => {
+    console.log(newRating);
+  }, [newRating]);
+  
   return (
     <>
       <Card sx={{ marginBottom: "20px" }} raised>
         <DestinationImage name={destinationName} img={fischbach} />
         <CardContent sx={{ paddingLeft: "20px" }}>
           <DestinationName name={destinationName} />
-          <DestinationInfo country="Norge" minHeight={1000} maxHeight={3300} />
+          <DestinationInfo
+            country="Norge"
+            rating={3.4}
+            ratings={53}
+            minHeight={1000}
+            maxHeight={3300}
+            handleRatingDialogOpen={handleRatingDialogOpen}
+          />
           <DestinationPistes beginner={8} intermediate={7} advanced={6} />
           <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
           <DestinationPrices adult={50} youth={30} />
         </CardContent>
       </Card>
-      <Card sx={{ padding: "20px" }} raised>
-        <DestinationReviews reviewList={reviews} />
-      </Card>
+      <DestinationGiveReview
+        isOpen={isRatingDialogOpen}
+        handleClose={handleRatingDialogClose}
+        handleGiveRating={handleGiveRating}
+      />
     </>
   );
 }
