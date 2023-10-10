@@ -15,16 +15,28 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Grid,
+  styled,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import SquareIcon from "@mui/icons-material/Square";
 import PentagonIcon from "@mui/icons-material/Pentagon";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
 import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
+import LogoIcon from "../assets/logos/logo-black-cropped.svg";
 import fischbach from "../assets/Fischbach.jpg";
+
+const ListItemIconCentered = styled(ListItemIcon)({
+  justifyContent: "center",
+});
 
 // This component displays an image associated with a destination.
 function DestinationImage({
@@ -70,30 +82,85 @@ function DestinationHeight({
   );
 }
 
+// This component displays information about ski pass prices.
+function DestinationPass({ passPrice }: { passPrice: number }): JSX.Element {
+  return (
+    <ListItem>
+      <ListItemText primary="Dagspass voksen" secondary={`${passPrice} kr`} />
+    </ListItem>
+  );
+}
+
+// This component displays a list of destination information,
+// including country and height, using the previously defined functions.
+function DestinationInfo({
+  country,
+  minHeight,
+  maxHeight,
+  passPrice,
+}: {
+  country: string;
+  minHeight: number;
+  maxHeight: number;
+  passPrice: number;
+}): JSX.Element {
+  return (
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={4}>
+        <DestinationCountry country={country} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <DestinationHeight minHeight={minHeight} maxHeight={maxHeight} />
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <DestinationPass passPrice={passPrice} />
+      </Grid>
+    </Grid>
+  );
+}
+
 // This component displays the rating of a destination
 function DestinationRating({
   rating,
   ratings,
-  handleRatingDialogOpen,
 }: {
   rating: number;
   ratings: number;
-  handleRatingDialogOpen: any;
 }): JSX.Element {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <>
-      <ListItem>
-        <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
-        <Rating name="showRating" value={rating} readOnly />
-        <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
-      </ListItem>
-      <ListItem>
-        <Button onClick={handleRatingDialogOpen}>Gi vurdering</Button>
-      </ListItem>
-    </>
+    <Grid
+      container
+      spacing={1}
+      sx={{
+        margin: 0,
+        paddingLeft: "5px",
+        justifyContent: isSmallScreen ? "left" : "right",
+      }}
+    >
+      <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
+      <Rating name="showRating" value={rating} precision={0.5} readOnly />
+      <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
+    </Grid>
   );
 }
 
+function DestinationReviewButton({
+  handleRatingDialogOpen,
+}: {
+  handleRatingDialogOpen: () => void;
+}) {
+  return (
+    <Button onClick={handleRatingDialogOpen} variant="outlined">
+      Vurder destinasjon
+    </Button>
+  );
+}
+
+// This component displays a Dialog to add a review
+// It sends the value to the Destination funciton
 function DestinationGiveReview({
   isOpen,
   handleClose,
@@ -107,7 +174,7 @@ function DestinationGiveReview({
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>Gi en vurdering</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ paddingBottom: 0 }}>
         <Rating
           name="newRating"
           value={newRating}
@@ -132,56 +199,49 @@ function DestinationGiveReview({
   );
 }
 
-// This component displays a list of destination information,
-// including country and height, using the previously defined functions.
-function DestinationInfo({
-  country,
-  rating,
-  ratings,
-  minHeight,
-  maxHeight,
-  handleRatingDialogOpen,
+// This component displays a total of the pistes/lifts availible
+function DestinationTotal({
+  totalType,
+  totalNumber,
 }: {
-  country: string;
-  rating: number;
-  ratings: number;
-  minHeight: number;
-  maxHeight: number;
-  handleRatingDialogOpen: () => void;
+  totalType: string;
+  totalNumber: number;
 }): JSX.Element {
   return (
-    <List>
-      <DestinationRating
-        rating={rating}
-        ratings={ratings}
-        handleRatingDialogOpen={handleRatingDialogOpen}
+    <ListItem>
+      <ListItemIconCentered>
+        <DragHandleIcon sx={{ color: "Black" }} />
+      </ListItemIconCentered>
+      <ListItemText
+        primary="Totalt"
+        secondary={`${totalNumber} ${
+          totalType.toLowerCase() === "piste" ? "km" : ""
+        }`}
       />
-      <DestinationCountry country={country} />
-      <DestinationHeight minHeight={minHeight} maxHeight={maxHeight} />
-    </List>
+    </ListItem>
   );
 }
 
 // This component displays information about destination's piste.
 function DestinationPiste({
-  trackType,
-  trackDistance,
-  TrackIcon,
+  pisteType,
+  pisteDistance,
+  PisteIcon,
   iconColor,
 }: {
-  trackType: string;
-  trackDistance: number;
-  TrackIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+  pisteType: string;
+  pisteDistance: number;
+  PisteIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
   iconColor: string;
 }): JSX.Element {
   return (
     <ListItem>
-      <ListItemIcon>
-        <TrackIcon sx={{ color: iconColor }} />
-      </ListItemIcon>
-      <ListItemText primary={trackType} secondary={`${trackDistance} km`} />
+      <ListItemIconCentered>
+        <PisteIcon sx={{ color: iconColor }} />
+      </ListItemIconCentered>
+      <ListItemText primary={pisteType} secondary={`${pisteDistance} km`} />
     </ListItem>
   );
 }
@@ -205,22 +265,26 @@ function DestinationPistes({
       </Typography>
       <List>
         <DestinationPiste
-          trackType="Nybegynner"
-          trackDistance={beginner}
-          TrackIcon={CircleIcon}
+          pisteType="Nybegynner"
+          pisteDistance={beginner}
+          PisteIcon={CircleIcon}
           iconColor="Blue"
         />
         <DestinationPiste
-          trackType="Middels"
-          trackDistance={intermediate}
-          TrackIcon={SquareIcon}
+          pisteType="Middels"
+          pisteDistance={intermediate}
+          PisteIcon={SquareIcon}
           iconColor="Red"
         />
         <DestinationPiste
-          trackType="Vanskelig"
-          trackDistance={advanced}
-          TrackIcon={PentagonIcon}
+          pisteType="Vanskelig"
+          pisteDistance={advanced}
+          PisteIcon={PentagonIcon}
           iconColor="Black"
+        />
+        <DestinationTotal
+          totalType="Piste"
+          totalNumber={beginner + intermediate + advanced}
         />
       </List>
     </>
@@ -239,9 +303,9 @@ function DestinationLift({
 }): JSX.Element {
   return (
     <ListItem>
-      <ListItemIcon>
+      <ListItemIconCentered>
         <Box component="img" src={liftIcon} sx={{ maxWidth: "50px" }} />
-      </ListItemIcon>
+      </ListItemIconCentered>
       <ListItemText
         primary={liftType}
         secondary={liftAmount}
@@ -284,44 +348,84 @@ function DestinationLifts({
           liftAmount={surfaceLifts}
           liftIcon={surfaceLiftIcon}
         />
+        <DestinationTotal
+          totalType="Lifts"
+          totalNumber={gondolas + chairlifts + surfaceLifts}
+        />
       </List>
     </>
   );
 }
 
-// This component displays information about ski pass prices.
-function DestinationPass({
-  passType,
-  passPrice,
+// This component displays information about a specific extra for the destination
+function DestinationExtra({
+  text,
+  boolean,
+  Icon,
 }: {
-  passType: string;
-  passPrice: number;
+  text: string;
+  boolean: boolean;
+  Icon:
+    | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+        muiName: string;
+      })
+    | string;
 }): JSX.Element {
+  const tekst = boolean ? "Ja" : "Nei";
+  let icon;
+  if (typeof Icon === "string") {
+    icon = <Box component="img" src={LogoIcon} sx={{ maxWidth: "40px" }} />;
+  } else {
+    icon = <Icon sx={{ minWidth: "40px" }} />;
+  }
   return (
     <ListItem>
-      <ListItemText primary={passType} secondary={`${passPrice} €`} />
+      {icon}
+      <ListItemText
+        primary={text}
+        secondary={tekst}
+        sx={{ paddingLeft: "5px" }}
+      />
     </ListItem>
   );
 }
 
-// This component displays a list of ski pass prices
-// for both adults and youth using the previously defined DestinationPass function.
-function DestinationPrices({
-  adult,
-  youth,
+// This component displays if the destination has a snow park, night ski or is certified
+function DestinationExtras({
+  snowPark,
+  nightSki,
+  certified,
 }: {
-  adult: number;
-  youth: number;
+  snowPark: boolean;
+  nightSki: boolean;
+  certified: boolean;
 }): JSX.Element {
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Skipass priser
-      </Typography>
-      <List>
-        <DestinationPass passType="Dagspass voksen" passPrice={adult} />
-        <DestinationPass passType="Dagspass ungdom" passPrice={youth} />
-      </List>
+      <Typography variant="h4">Ekstra</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={3}>
+          <DestinationExtra
+            text="Har park"
+            boolean={snowPark}
+            Icon={SnowboardingIcon}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <DestinationExtra
+            text="Har kveldskjøring"
+            boolean={nightSki}
+            Icon={NightlightIcon}
+          />
+        </Grid>
+        <Grid item xs={12} sm={5}>
+          <DestinationExtra
+            text="Peak Finder sertifisert"
+            boolean={certified}
+            Icon={LogoIcon}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }
@@ -351,26 +455,49 @@ export default function Destination({
     handleRatingDialogClose();
   };
 
-  // Use useEffect to log the updated value
+  // Is going to be used to send the newRating to the backend
+  // when a user submits a review
   useEffect(() => {}, [newRating]);
 
   return (
     <>
       <Card raised>
         <DestinationImage name={destinationName} img={fischbach} />
-        <CardContent sx={{ paddingLeft: "20px" }}>
-          <DestinationName name={destinationName} />
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <DestinationName name={destinationName} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <DestinationRating rating={3.4} ratings={53} />
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
           <DestinationInfo
             country="Norge"
-            rating={3.4}
-            ratings={53}
             minHeight={1000}
             maxHeight={3300}
-            handleRatingDialogOpen={handleRatingDialogOpen}
+            passPrice={50}
           />
-          <DestinationPistes beginner={8} intermediate={7} advanced={6} />
-          <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
-          <DestinationPrices adult={50} youth={30} />
+          <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
+            <Grid item xs={12} sm={6}>
+              <DestinationPistes beginner={8} intermediate={7} advanced={6} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
+            </Grid>
+          </Grid>
+          <DestinationExtras snowPark nightSki={false} certified />
+          <Grid
+            container
+            spacing={1}
+            sx={{ justifyContent: "center", paddingTop: "20px" }}
+          >
+            <DestinationReviewButton
+              handleRatingDialogOpen={handleRatingDialogOpen}
+            />
+          </Grid>
         </CardContent>
       </Card>
       <DestinationGiveReview

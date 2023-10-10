@@ -14,7 +14,7 @@ export default function DestinationPage() {
     <>
       <br />
       <Container maxWidth="md">
-        <Destination destinationName="Saalbach-Hinterglem-Leogang-Fieberrunn (Skicircus)" />
+        <Destination destinationName="Hemsedal" />
       </Container>
       <br />
     </>
