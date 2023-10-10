@@ -7,7 +7,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Search, PersonOutline } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import logo from "../assets/logos/logo-no-background.svg";
 import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
@@ -37,21 +37,6 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
     </Box>
   );
 }
-
-function UserIcon(): JSX.Element {
-  return (
-    <IconButton
-      href="/project2/login"
-      color="inherit"
-      sx={{
-        paddingRight: 0,
-      }}
-    >
-      <PersonOutline sx={{ ...iconSize }} />
-    </IconButton>
-  );
-}
-
 interface SearchFieldProps {
   isDesktop: boolean;
 }
@@ -132,7 +117,6 @@ export default function Navbar(): JSX.Element {
           }}
         >
           <SearchField isDesktop={isSearchFieldVisible} />
-          <UserIcon />
         </Box>
       </Toolbar>
     </AppBar>
