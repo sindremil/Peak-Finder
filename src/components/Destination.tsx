@@ -20,11 +20,11 @@ import CircleIcon from "@mui/icons-material/Circle";
 import SquareIcon from "@mui/icons-material/Square";
 import PentagonIcon from "@mui/icons-material/Pentagon";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { useEffect, useState } from "react";
 import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import fischbach from "../assets/Fischbach.jpg";
-import { useEffect, useState } from "react";
 
 // This component displays an image associated with a destination.
 function DestinationImage({
@@ -83,11 +83,9 @@ function DestinationRating({
   return (
     <>
       <ListItem>
-        <Typography>
-          {rating}
-          <Rating name="read-only" value={rating} />(
-          {ratings})
-        </Typography>
+        <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
+        <Rating name="showRating" value={rating} readOnly />
+        <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
       </ListItem>
       <ListItem>
         <Button onClick={handleRatingDialogOpen}>Gi vurdering</Button>
@@ -111,13 +109,14 @@ function DestinationGiveReview({
       <DialogTitle>Gi en vurdering</DialogTitle>
       <DialogContent>
         <Rating
+          name="newRating"
           value={newRating}
           onChange={(_event, value: number | null) => {
             if (value != null) {
               setNewRating(value);
             }
           }}
-        ></Rating>
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Avbryt</Button>
@@ -348,18 +347,16 @@ export default function Destination({
   };
 
   const handleGiveRating = (newValue: number) => {
-    setNewRating(newValue)
+    setNewRating(newValue);
     handleRatingDialogClose();
   };
 
-   // Use useEffect to log the updated value
-   useEffect(() => {
-    console.log(newRating);
-  }, [newRating]);
-  
+  // Use useEffect to log the updated value
+  useEffect(() => {}, [newRating]);
+
   return (
     <>
-      <Card sx={{ marginBottom: "20px" }} raised>
+      <Card raised>
         <DestinationImage name={destinationName} img={fischbach} />
         <CardContent sx={{ paddingLeft: "20px" }}>
           <DestinationName name={destinationName} />

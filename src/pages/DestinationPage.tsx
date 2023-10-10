@@ -5,14 +5,11 @@ export default function DestinationPage() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // Temporary DRY violation whilst developing
   return isSmallScreen ? (
-    // Temporary DRY violation whilst developing
-    <>
-      <Box>
-        <Destination destinationName="Hemsedal" />
-      </Box>
-      <br />
-    </>
+    <Box>
+      <Destination destinationName="Hemsedal" />
+    </Box>
   ) : (
     <>
       <br />
