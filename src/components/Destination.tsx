@@ -175,7 +175,7 @@ function DestinationReviewButton({
   handleRatingDialogOpen,
 }: {
   handleRatingDialogOpen: () => void;
-}) {
+}): JSX.Element {
   return (
     <Grid
       container
@@ -500,7 +500,7 @@ export default function Destination({
   destinationProps,
 }: {
   destinationProps: DestinationProps;
-}) {
+}): JSX.Element {
   const {
     destinationName,
     country,
