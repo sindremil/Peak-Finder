@@ -5,17 +5,27 @@ import SetPageTitle from "./utils/SetPageTitle";
 import Result from "./pages/Result";
 import LoginPage from "./pages/LoginPage";
 import CreateUserPage from "./pages/CreateUserPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <Router basename="/project2">
-      <Navbar />
       <Routes>
         <Route
           path="/"
           element={
             <>
+              <SetPageTitle title="Home" />
+              <HomePage />
+            </>
+          }
+        />
+        <Route
+          path="/results"
+          element={
+            <>
               <SetPageTitle title="Results" />
+              <Navbar />
               <Result />
             </>
           }
@@ -25,6 +35,7 @@ function App() {
           element={
             <>
               <SetPageTitle title="Destination" />
+              <Navbar />
               <DestinationPage />
             </>
           }
@@ -34,6 +45,7 @@ function App() {
           element={
             <>
               <SetPageTitle title="Login" />
+              <Navbar />
               <LoginPage />
             </>
           }
@@ -43,6 +55,7 @@ function App() {
           element={
             <>
               <SetPageTitle title="Create User" />
+              <Navbar />
               <CreateUserPage />
             </>
           }
