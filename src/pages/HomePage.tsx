@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import logo from "../assets/logos/logo-black.svg";
+import logo from "../assets/logos/logo-color.svg";
 import Searchbar from "../components/Searchbar";
 
 function Logo(): JSX.Element {

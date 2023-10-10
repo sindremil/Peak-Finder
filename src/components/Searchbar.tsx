@@ -1,26 +1,26 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { Box, TextField, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
 export default function Searchbar() {
   return (
-    <TextField
-      placeholder="Destinasjon, land..."
+    <Box
       sx={{
+        display: "flex",
+        justifyContent: "center",
         marginTop: "2rem",
         width: "100%",
       }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment
-            position="start"
-            sx={{
-              color: "black",
-            }}
-          >
-            <Search />
-          </InputAdornment>
-        ),
-      }}
-    />
+    >
+      <TextField
+        placeholder="Destinasjon, land..."
+        sx={{
+          flex: 1,
+          borderColor: "#2074d4",
+        }}
+      />
+      <Button variant="contained">
+        <Search />
+      </Button>
+    </Box>
   );
 }
