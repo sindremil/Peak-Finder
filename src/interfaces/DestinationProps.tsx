@@ -1,5 +1,6 @@
 export default interface DestinationProps {
   destinationName: string;
+  destinationImage: string;
   country: string;
   minHeight: number;
   maxHeight: number;

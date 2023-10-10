@@ -1,6 +1,7 @@
 import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import Destination from "../components/Destination";
 import DestinationProps from "../interfaces/DestinationProps";
+import fischbach from "../assets/Fischbach.jpg";
 
 export default function DestinationPage() {
   const theme = useTheme();
@@ -8,6 +9,7 @@ export default function DestinationPage() {
 
   const destinationPageProps: DestinationProps = {
     destinationName: "Hemsedal",
+    destinationImage: fischbach,
     country: "Norge",
     minHeight: 1000,
     maxHeight: 3300,

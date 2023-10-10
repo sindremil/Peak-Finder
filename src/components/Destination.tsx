@@ -33,7 +33,6 @@ import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import LogoIcon from "../assets/logos/logo-black-cropped.svg";
-import fischbach from "../assets/Fischbach.jpg";
 import DestinationProps from "../interfaces/DestinationProps";
 
 const ListItemIconCentered = styled(ListItemIcon)({
@@ -503,6 +502,7 @@ export default function Destination({
 }): JSX.Element {
   const {
     destinationName,
+    destinationImage,
     country,
     minHeight,
     maxHeight,
@@ -543,7 +543,7 @@ export default function Destination({
     <>
       <Button onClick={() => navigate("../results")}>Tilbake</Button>
       <Card raised>
-        <DestinationImage name={destinationName} img={fischbach} />
+        <DestinationImage name={destinationName} img={destinationImage} />
         <DestinationHeader destinationName={destinationName} />
         <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
           <DestinationInfo
