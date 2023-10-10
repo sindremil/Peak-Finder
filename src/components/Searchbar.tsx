@@ -2,7 +2,7 @@ import { Box, TextField, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-export default function Searchbar() {
+export default function Searchbar(): JSX.Element {
   // Hook used for search bar navigation
   // State for query will be added when functionality is implemented in future deliverables
   const navigate = useNavigate();

@@ -17,7 +17,7 @@ function Logo(): JSX.Element {
   );
 }
 
-export default function HomePage() {
+export default function HomePage(): JSX.Element {
   return (
     <Container
       sx={{
