@@ -1,20 +1,37 @@
 import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import Destination from "../components/Destination";
+import DestinationProps from "../interfaces/DestinationProps";
 
 export default function DestinationPage() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Temporary DRY violation whilst developing
+  const destinationPageProps: DestinationProps = {
+    destinationName: "Hemsedal",
+    country: "Norge",
+    minHeight: 1000,
+    maxHeight: 3300,
+    passPrice: 500,
+    beginner: 8,
+    intermediate: 7,
+    advanced: 6,
+    gondolas: 2,
+    chairlifts: 3,
+    surfaceLifts: 4,
+    snowPark: true,
+    nightSki: false,
+    certifed: true,
+  };
+
   return isSmallScreen ? (
     <Box>
-      <Destination destinationName="Hemsedal" />
+      <Destination destinationProps={destinationPageProps} />
     </Box>
   ) : (
     <>
       <br />
       <Container maxWidth="md">
-        <Destination destinationName="Hemsedal" />
+        <Destination destinationProps={destinationPageProps} />
       </Container>
       <br />
     </>

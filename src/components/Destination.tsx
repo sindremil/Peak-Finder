@@ -33,6 +33,7 @@ import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import LogoIcon from "../assets/logos/logo-black-cropped.svg";
 import fischbach from "../assets/Fischbach.jpg";
+import DestinationProps from "../interfaces/DestinationProps";
 
 const ListItemIconCentered = styled(ListItemIcon)({
   justifyContent: "center",
@@ -51,7 +52,11 @@ function DestinationImage({
 
 // This component displays the name of a destination.
 function DestinationName({ name }: { name: string }): JSX.Element {
-  return <Typography variant="h2">{name}</Typography>;
+  return (
+    <Grid item xs={12} sm={6}>
+      <Typography variant="h2">{name}</Typography>
+    </Grid>
+  );
 }
 
 // This component displays the country of a destination.
@@ -131,19 +136,37 @@ function DestinationRating({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Grid
-      container
-      spacing={1}
-      sx={{
-        margin: 0,
-        paddingLeft: "5px",
-        justifyContent: isSmallScreen ? "left" : "right",
-      }}
-    >
-      <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
-      <Rating name="showRating" value={rating} precision={0.5} readOnly />
-      <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
+    <Grid item xs={12} sm={6}>
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          margin: 0,
+          paddingLeft: "5px",
+          justifyContent: isSmallScreen ? "left" : "right",
+        }}
+      >
+        <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
+        <Rating name="showRating" value={rating} precision={0.5} readOnly />
+        <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
+      </Grid>
     </Grid>
+  );
+}
+
+// This function displays what is meant to be in the header
+function DestinationHeader({
+  destinationName,
+}: {
+  destinationName: string;
+}): JSX.Element {
+  return (
+    <CardContent>
+      <Grid container spacing={2}>
+        <DestinationName name={destinationName} />
+        <DestinationRating rating={3.4} ratings={53} />
+      </Grid>
+    </CardContent>
   );
 }
 
@@ -153,9 +176,15 @@ function DestinationReviewButton({
   handleRatingDialogOpen: () => void;
 }) {
   return (
-    <Button onClick={handleRatingDialogOpen} variant="outlined">
-      Vurder destinasjon
-    </Button>
+    <Grid
+      container
+      spacing={1}
+      sx={{ justifyContent: "center", paddingTop: "20px" }}
+    >
+      <Button onClick={handleRatingDialogOpen} variant="outlined">
+        Vurder destinasjon
+      </Button>
+    </Grid>
   );
 }
 
@@ -259,7 +288,7 @@ function DestinationPistes({
   advanced: number;
 }): JSX.Element {
   return (
-    <>
+    <Grid item xs={12} sm={6}>
       <Typography variant="h4" gutterBottom>
         Skibakker
       </Typography>
@@ -287,7 +316,7 @@ function DestinationPistes({
           totalNumber={beginner + intermediate + advanced}
         />
       </List>
-    </>
+    </Grid>
   );
 }
 
@@ -328,7 +357,7 @@ function DestinationLifts({
   surfaceLifts: number;
 }): JSX.Element {
   return (
-    <>
+    <Grid item xs={12} sm={6}>
       <Typography variant="h4" gutterBottom>
         Skiheiser
       </Typography>
@@ -353,7 +382,39 @@ function DestinationLifts({
           totalNumber={gondolas + chairlifts + surfaceLifts}
         />
       </List>
-    </>
+    </Grid>
+  );
+}
+
+// This component displays Pists and Lifts
+function DestinationSkiInformation({
+  beginner,
+  intermediate,
+  advanced,
+  gondolas,
+  chairlifts,
+  surfaceLifts,
+}: {
+  beginner: number;
+  intermediate: number;
+  advanced: number;
+  gondolas: number;
+  chairlifts: number;
+  surfaceLifts: number;
+}): JSX.Element {
+  return (
+    <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
+      <DestinationPistes
+        beginner={beginner}
+        intermediate={intermediate}
+        advanced={advanced}
+      />
+      <DestinationLifts
+        gondolas={gondolas}
+        chairlifts={chairlifts}
+        surfaceLifts={surfaceLifts}
+      />
+    </Grid>
   );
 }
 
@@ -435,10 +496,26 @@ function DestinationExtras({
 // information about the destination, including
 // images, name, country, height, ski tracks, ski lifts, ski pass prices, and user reviews.
 export default function Destination({
-  destinationName,
+  destinationProps,
 }: {
-  destinationName: string;
+  destinationProps: DestinationProps;
 }) {
+  const {
+    destinationName,
+    country,
+    minHeight,
+    maxHeight,
+    passPrice,
+    beginner,
+    intermediate,
+    advanced,
+    gondolas,
+    chairlifts,
+    surfaceLifts,
+    snowPark,
+    nightSki,
+    certifed,
+  } = destinationProps;
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
   const [newRating, setNewRating] = useState(0);
 
@@ -463,41 +540,30 @@ export default function Destination({
     <>
       <Card raised>
         <DestinationImage name={destinationName} img={fischbach} />
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <DestinationName name={destinationName} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <DestinationRating rating={3.4} ratings={53} />
-            </Grid>
-          </Grid>
-        </CardContent>
+        <DestinationHeader destinationName={destinationName} />
         <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
           <DestinationInfo
-            country="Norge"
-            minHeight={1000}
-            maxHeight={3300}
-            passPrice={50}
+            country={country}
+            minHeight={minHeight}
+            maxHeight={maxHeight}
+            passPrice={passPrice}
           />
-          <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
-            <Grid item xs={12} sm={6}>
-              <DestinationPistes beginner={8} intermediate={7} advanced={6} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <DestinationLifts gondolas={2} chairlifts={6} surfaceLifts={10} />
-            </Grid>
-          </Grid>
-          <DestinationExtras snowPark nightSki={false} certified />
-          <Grid
-            container
-            spacing={1}
-            sx={{ justifyContent: "center", paddingTop: "20px" }}
-          >
-            <DestinationReviewButton
-              handleRatingDialogOpen={handleRatingDialogOpen}
-            />
-          </Grid>
+          <DestinationSkiInformation
+            beginner={beginner}
+            intermediate={intermediate}
+            advanced={advanced}
+            gondolas={gondolas}
+            chairlifts={chairlifts}
+            surfaceLifts={surfaceLifts}
+          />
+          <DestinationExtras
+            snowPark={snowPark}
+            nightSki={nightSki}
+            certified={certifed}
+          />
+          <DestinationReviewButton
+            handleRatingDialogOpen={handleRatingDialogOpen}
+          />
         </CardContent>
       </Card>
       <DestinationGiveReview
