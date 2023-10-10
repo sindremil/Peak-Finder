@@ -69,7 +69,7 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
   }
 
   return (
-    <IconButton color="inherit">
+    <IconButton color="inherit" sx={{ paddingRight: "0" }}>
       <Search sx={{ ...iconSize }} />
     </IconButton>
   );
