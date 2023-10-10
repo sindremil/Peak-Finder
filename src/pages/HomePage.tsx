@@ -1,8 +1,11 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, useMediaQuery } from "@mui/material";
 import logo from "../assets/logos/logo-color.svg";
 import Searchbar from "../components/Searchbar";
 
 function Logo(): JSX.Element {
+  // Media query for mobile that increases size of logo
+  const isMobile = useMediaQuery("(max-aspect-ratio: 3/4)");
+
   return (
     <Box
       component="img"
@@ -11,7 +14,7 @@ function Logo(): JSX.Element {
       tabIndex={0}
       role="button"
       sx={{
-        width: "80%",
+        width: isMobile ? "80%" : "50%",
       }}
     />
   );
@@ -24,7 +27,7 @@ export default function HomePage(): JSX.Element {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "9rem",
+        marginTop: "15rem",
       }}
     >
       <Logo />
