@@ -28,6 +28,7 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
@@ -516,6 +517,8 @@ export default function Destination({
     nightSki,
     certifed,
   } = destinationProps;
+
+  const navigate = useNavigate();
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
   const [newRating, setNewRating] = useState(0);
 
@@ -538,6 +541,7 @@ export default function Destination({
 
   return (
     <>
+      <Button onClick={() => navigate("../results")}>Tilbake</Button>
       <Card raised>
         <DestinationImage name={destinationName} img={fischbach} />
         <DestinationHeader destinationName={destinationName} />
