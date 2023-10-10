@@ -28,7 +28,7 @@ function DestinationName(props: { name: string }): JSX.Element {
 function DestinationImage(props: { src: string; alt: string }): JSX.Element {
   const { src, alt } = props;
 
-  return <CardMedia sx={{ height: 240 }} image={src} title={alt} />;
+  return <CardMedia sx={{ height: 150 }} image={src} title={alt} />;
 }
 
 function DestinationElevation(props: {
@@ -58,7 +58,7 @@ function DestinationPiste(props: {
 
   // Modifies the padding of all piste per difficulty total
   const listItemPadding: { padding: string } = {
-    padding: "0.5vw 2vw",
+    padding: "0.5vw 1vw",
   };
 
   return (
