@@ -387,7 +387,7 @@ function DestinationLifts({
 }
 
 // This component displays Pists and Lifts
-function DestinationSkiInformation({
+function DestinationPistesAndLifts({
   beginner,
   intermediate,
   advanced,
@@ -548,7 +548,7 @@ export default function Destination({
             maxHeight={maxHeight}
             passPrice={passPrice}
           />
-          <DestinationSkiInformation
+          <DestinationPistesAndLifts
             beginner={beginner}
             intermediate={intermediate}
             advanced={advanced}
