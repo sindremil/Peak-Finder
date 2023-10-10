@@ -5,7 +5,7 @@ const themeConfig = {
       sm: 720,
       md: 960,
       lg: 1280,
-      xl: 1920
+      xl: 1920,
     },
   },
 };

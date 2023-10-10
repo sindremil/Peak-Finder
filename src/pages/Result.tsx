@@ -1,7 +1,15 @@
+import { Container, Grid } from "@mui/material";
 import DestinationCard from "../components/DestinationCard";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
 import hemsedalImage from "../assets/hemsedal.jpg";
-import { Container, Grid } from "@mui/material";
+
+function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
+  return (
+    <Grid item xs={12} sm={6} lg={4}>
+      <DestinationCard destinationCardProps={destinationCardProps} />
+    </Grid>
+  );
+}
 
 export default function Result(): JSX.Element {
   // Mock values
@@ -17,41 +25,18 @@ export default function Result(): JSX.Element {
     lifts: 15,
   };
   return (
-    <Container sx={{marginTop: "2rem"}}>
+    <Container sx={{ marginTop: "2rem" }}>
       <Grid container spacing={4}>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
-          <DestinationCard destinationCardProps={mockDestinationCardProps} />
-        </Grid>
+        {/* Temporary since we cannot implement this without backend */}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
+        {addResult(mockDestinationCardProps)}
       </Grid>
     </Container>
   );
