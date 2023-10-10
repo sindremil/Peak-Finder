@@ -8,11 +8,11 @@ function Logo(): JSX.Element {
 
   return (
     <Box
+      role="img"
       component="img"
       alt="Peak Finder logo"
       src={logo}
       tabIndex={0}
-      role="button"
       sx={{
         width: isMobile ? "80%" : "50%",
       }}
