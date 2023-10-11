@@ -113,8 +113,19 @@ function DestinationInfo({
   advanced: number;
   lifts: number;
 }): JSX.Element {
+  // Text read by screen readers when the card is focused
+  const ariaLabel = `
+  Laveste punkt ${lowestPoint} meter.
+  Høyeste punkt ${highestPoint} meter.
+  Høydeforskjell ${highestPoint - lowestPoint} meter.
+  Det er ${beginner} kilometer med nybegynner løyper,
+  ${intermediate} kilometer med middels løyper, og
+  ${advanced} kilometer med vanskelige løyper.
+  Det er ${lifts} heiser.
+  `;
+
   return (
-    <CardContent>
+    <CardContent aria-label={ariaLabel}>
       <List>
         <DestinationElevation
           lowestPoint={lowestPoint}

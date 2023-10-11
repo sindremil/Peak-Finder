@@ -16,7 +16,7 @@ export default function Result(): JSX.Element {
   const mockDestinationCardProps: DestinationCardProps = {
     name: "Saalbach-Hinterglem-Leogang-Fieberbrunn",
     imageSrc: hemsedalImage,
-    imageAlt: "Mock Image Alt",
+    imageAlt: "Bilde av Saalbach-Hinterglem-Leogang-Fieberbrunn",
     lowestPoint: 1030,
     highestPoint: 2479,
     beginner: 130,
