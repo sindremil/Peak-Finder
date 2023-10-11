@@ -13,7 +13,7 @@ function App() {
           path="/"
           element={
             <>
-              <SetPageTitle title="Home" />
+              <SetPageTitle title="Hjem " />
               <HomePage />
             </>
           }
@@ -23,7 +23,7 @@ function App() {
           element={
             <>
               <Navbar />
-              <SetPageTitle title="Results" />
+              <SetPageTitle title="Resultater " />
               <Result />
             </>
           }
@@ -32,7 +32,7 @@ function App() {
           path="/destination"
           element={
             <>
-              <SetPageTitle title="Destination" />
+              <SetPageTitle title="Destinasjon " />
               <Navbar />
               <DestinationPage />
             </>

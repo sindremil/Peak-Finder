@@ -1,4 +1,12 @@
-import { Container, Drawer, Fab, Grid } from "@mui/material";
+import {
+  Breadcrumbs,
+  Container,
+  Drawer,
+  Fab,
+  Grid,
+  Link,
+  Typography,
+} from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
 import DestinationCard from "../components/DestinationCard";
@@ -14,6 +22,20 @@ function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
   );
 }
 
+// This funciton creates bread crumbs used for navigation between pages
+function ResultsBreadCrumbs(): JSX.Element {
+  return (
+    <Grid item xs={12}>
+      <Breadcrumbs aria-label="Navigasjon">
+        <Link underline="hover" color="inherit" href="/">
+          Hjem
+        </Link>
+        <Typography color="text.primary">Resultater</Typography>
+      </Breadcrumbs>
+    </Grid>
+  );
+}
+
 export default function Result(): JSX.Element {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -21,7 +43,7 @@ export default function Result(): JSX.Element {
   const mockDestinationCardProps: DestinationCardProps = {
     name: "Saalbach-Hinterglem-Leogang-Fieberbrunn",
     imageSrc: hemsedalImage,
-    imageAlt: "Mock Image Alt",
+    imageAlt: "Bilde av Saalbach-Hinterglem-Leogang-Fieberbrunn",
     lowestPoint: 1030,
     highestPoint: 2479,
     beginner: 130,
@@ -43,9 +65,10 @@ export default function Result(): JSX.Element {
         onClick={handleDrawer}
       >
         <FilterListIcon />
-        Filter
+        Filtrer
       </Fab>
       <Grid container spacing={4} sx={{ marginTop: "0.2vw" }}>
+        <ResultsBreadCrumbs />
         {/* Temporary since we cannot implement this without backend */}
         {addResult(mockDestinationCardProps)}
         {addResult(mockDestinationCardProps)}
