@@ -7,19 +7,35 @@ import EuroIcon from "@mui/icons-material/Euro";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import CustomSlider from "./CustomSlider";
 
+// Reusable Chip component
+function ChipOption({
+  label,
+  selected,
+  onClick,
+}: {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}): JSX.Element {
+  return (
+    <Chip
+      label={label}
+      onClick={onClick}
+      color={selected ? "primary" : "default"}
+    />
+  );
+}
+
 // Component for grouping all the chips
 function Chips(): JSX.Element {
   const [nightSkiing, setNightSkiing] = useState(false);
   const [park, setPark] = useState(false);
   const [certified, setCertified] = useState(false);
-  const handleClickNightSking = () => {
-    setNightSkiing(!nightSkiing);
-  };
-  const handleClickPark = () => {
-    setPark(!park);
-  };
-  const handleClickCertified = () => {
-    setCertified(!certified);
+  const [chairLift, setChairLift] = useState(false);
+  const [gondolas, setGondolas] = useState(false);
+
+  const toggleOption = (setter: Function) => () => {
+    setter((prev: boolean) => !prev);
   };
 
   return (
@@ -31,30 +47,30 @@ function Chips(): JSX.Element {
         gap: 1,
       }}
     >
-      <Chip
+      <ChipOption
         label="Kveldskjøring"
-        onClick={handleClickNightSking}
-        color={nightSkiing ? "primary" : "default"}
+        selected={nightSkiing}
+        onClick={toggleOption(setNightSkiing)}
       />
-      <Chip
+      <ChipOption
         label="Park"
-        onClick={handleClickPark}
-        color={park ? "primary" : "default"}
+        selected={park}
+        onClick={toggleOption(setPark)}
       />
-      <Chip
+      <ChipOption
         label="Peak Finder sertifisert"
-        onClick={handleClickCertified}
-        color={certified ? "primary" : "default"}
+        selected={certified}
+        onClick={toggleOption(setCertified)}
       />
-      <Chip
+      <ChipOption
         label="Stolheis"
-        onClick={handleClickCertified}
-        color={certified ? "primary" : "default"}
+        selected={chairLift}
+        onClick={toggleOption(setChairLift)}
       />
-      <Chip
+      <ChipOption
         label="Gondol"
-        onClick={handleClickCertified}
-        color={certified ? "primary" : "default"}
+        selected={gondolas}
+        onClick={toggleOption(setGondolas)}
       />
     </Box>
   );
