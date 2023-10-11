@@ -588,7 +588,7 @@ export default function Destination({
 
   // Scroll back to top
   window.scrollTo(0, 0);
-  
+
   return (
     <>
       <Button onClick={() => navigate("../results")}>Tilbake</Button>
