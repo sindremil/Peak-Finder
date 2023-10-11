@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DestinationPage from "./pages/DestinationPage";
 import Navbar from "./components/Navbar";
 import SetPageTitle from "./utils/SetPageTitle";
-import Result from "./pages/Result";
+import Result from "./pages/ResultPage";
 import HomePage from "./pages/HomePage";
 
 function App() {
@@ -22,8 +22,8 @@ function App() {
           path="/results"
           element={
             <>
-              <SetPageTitle title="Resultater " />
               <Navbar />
+              <SetPageTitle title="Resultater " />
               <Result />
             </>
           }
