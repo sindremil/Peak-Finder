@@ -1,6 +1,7 @@
 # Peak Finder
 
 Peak Finder will allow users to find different ski resorts across Europe.
+
 ## Running the app
 
 The app can be run by using the following commands from the project's root folder:
@@ -30,7 +31,7 @@ We have assumed a grid of results is sufficient for the list requirement since a
 - The app is fully accessible. All elements can be tabbed to, and all relevant information is read aloud to the user.
 - The data this app uses is from: https://www.kaggle.com/datasets/thomasnibb/european-ski-resorts
 
-## Accessibility 
+## Accessibility
 
 Peak Finder has been developed with accessibility in mind. All pages have support for screen readers and allow the use of the tab key to navigate between elements.
 
