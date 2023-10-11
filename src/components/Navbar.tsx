@@ -29,8 +29,6 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
         component="img"
         alt="Peak Finder logo"
         src={logoPath}
-        tabIndex={0}
-        role="button"
         sx={{
           height: "2.5rem",
         }}

@@ -24,6 +24,9 @@ export default function Searchbar(): JSX.Element {
 
   return (
     <Box
+      role="search"
+      aria-label="Søkefelt"
+      component="div"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -39,7 +42,7 @@ export default function Searchbar(): JSX.Element {
           borderColor: "#2074d4",
         }}
       />
-      <Button variant="contained" onClick={handleSearch}>
+      <Button variant="contained" onClick={handleSearch} aria-label="Søk">
         <Search />
       </Button>
     </Box>
