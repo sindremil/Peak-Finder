@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Search } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logos/logo-no-background.svg";
 import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
 
@@ -48,6 +48,29 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
   // State is set to false when user clicks outside the drawer or the escape key
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
+  // Query state is currently only used to empty the search field
+  // Will be used more in future deliverables when search functionality is implemented
+  const [query, setQuery] = useState("");
+
+  // Function for handling query change
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  // Hook used for search bar navigation
+  const navigate = useNavigate();
+
+  // Navigate to results page when user presses 'enter' in search field
+  // The search drawer on mobile is closed
+  // The search field for desktop is emptied
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      setIsDrawerOpen(false);
+      setQuery("");
+      navigate("/results");
+    }
+  };
 
   // JSX returned when on desktop
   if (isDesktop) {
@@ -55,6 +78,9 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
       <TextField
         placeholder="Destinasjon, land..."
         variant="standard"
+        onKeyDown={handleSearch}
+        onChange={handleQueryChange}
+        value={query}
         size="small"
         sx={{
           marginTop: 0.7,
@@ -64,13 +90,13 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
             <InputAdornment
               position="start"
               sx={{
-                color: 'white',
+                color: "white",
               }}
             >
               <Search />
             </InputAdornment>
           ),
-          style: { color: 'white' },
+          style: { color: "white" },
         }}
       />
     );
@@ -79,21 +105,35 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
   // JSX returned when on mobile
   return (
     <>
-      <IconButton color="inherit" sx={{ paddingRight: 0 }} onClick={() => setIsDrawerOpen(true)}>
-        <Search sx={{...iconSize}} />
+      <IconButton
+        color="inherit"
+        sx={{ paddingRight: 0 }}
+        onClick={() => setIsDrawerOpen(true)}
+      >
+        <Search sx={{ ...iconSize }} />
       </IconButton>
-      <Drawer anchor="top" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+      <Drawer
+        anchor="top"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      >
         <TextField
           placeholder="Destinasjon, land..."
           variant="outlined"
+          onKeyDown={handleSearch}
+          onChange={handleQueryChange}
+          value={query}
           size="small"
           sx={{ padding: 2 }}
           InputProps={{
+            inputProps: {
+              "aria-label": "Søkefelt",
+            },
             startAdornment: (
               <InputAdornment
                 position="start"
                 sx={{
-                  color: 'black',
+                  color: "black",
                 }}
               >
                 <Search />
