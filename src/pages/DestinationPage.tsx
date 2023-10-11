@@ -8,7 +8,7 @@ export default function DestinationPage() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const destinationPageProps: DestinationProps = {
-    destinationName: "Hemsedal",
+    destinationName: "Saalbach hinterglemm leogang fieberbrunn (skicircus) ",
     destinationImage: fischbach,
     country: "Norge",
     minHeight: 1000,

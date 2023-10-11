@@ -53,7 +53,7 @@ function DestinationImage({
 // This component displays the name of a destination.
 function DestinationName({ name }: { name: string }): JSX.Element {
   return (
-    <Grid item xs={12} sm={6}>
+    <Grid item xs={12} sm={9}>
       <Typography variant="h2">{name}</Typography>
     </Grid>
   );
@@ -136,7 +136,7 @@ function DestinationRating({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Grid item xs={12} sm={6}>
+    <Grid item xs={12} sm={3}>
       <Grid
         container
         spacing={1}
@@ -320,6 +320,17 @@ function DestinationPistes({
   );
 }
 
+// This function converts a svg path to just the file name
+function extractFileName(path: string): string {
+  const parts = path.split("/");
+  let fileName = parts[parts.length - 1].replace(".svg", "");
+
+  // Remove "icon" if it's part of the filename
+  fileName = fileName.replace(/icon/gi, "");
+
+  return fileName;
+}
+
 // This component displays information about the ski lifts.
 function DestinationLift({
   liftType,
@@ -333,7 +344,12 @@ function DestinationLift({
   return (
     <ListItem>
       <ListItemIconCentered>
-        <Box component="img" src={liftIcon} sx={{ maxWidth: "50px" }} />
+        <Box
+          component="img"
+          src={liftIcon}
+          alt={extractFileName(liftIcon)}
+          sx={{ maxWidth: "50px" }}
+        />
       </ListItemIconCentered>
       <ListItemText
         primary={liftType}
@@ -435,7 +451,14 @@ function DestinationExtra({
   const tekst = boolean ? "Ja" : "Nei";
   let icon;
   if (typeof Icon === "string") {
-    icon = <Box component="img" src={LogoIcon} sx={{ maxWidth: "40px" }} />;
+    icon = (
+      <Box
+        component="img"
+        src={LogoIcon}
+        alt="Logo"
+        sx={{ maxWidth: "40px" }}
+      />
+    );
   } else {
     icon = <Icon sx={{ minWidth: "40px" }} />;
   }
