@@ -35,6 +35,9 @@ import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import LogoIcon from "../assets/logos/logo-black-cropped.svg";
 import DestinationProps from "../interfaces/DestinationProps";
 
+// ListItemIconCentered is a new MUI class which copies ListItemIcon
+// The difference is that it also has 'justifyContent: "center"'
+// This is used instead of having a similar sx tag in all the ListItemIcons
 const ListItemIconCentered = styled(ListItemIcon)({
   justifyContent: "center",
 });
@@ -271,6 +274,7 @@ function DestinationPiste({
 }: {
   pisteType: string;
   pisteDistance: number;
+  // OverridableComponent... is the type of MUI Icons
   PisteIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
@@ -454,6 +458,9 @@ function DestinationExtra({
 }: {
   text: string;
   boolean: boolean;
+  // OverridableComponent... is the type of MUI Icons
+  // Imgs/Svgs in this porject are imported as string paths
+  // Therefore "Icon" is either a OverridableComponent or a string
   Icon:
     | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
         muiName: string;
@@ -462,6 +469,7 @@ function DestinationExtra({
 }): JSX.Element {
   const tekst = boolean ? "Ja" : "Nei";
   let icon;
+  // Handles if the "Icon" is a MUI Icon or a path string
   if (typeof Icon === "string") {
     icon = (
       <Box
