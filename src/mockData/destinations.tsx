@@ -120,6 +120,3 @@ export const innsbruck: DestinationCardProps = {
   advanced: 20,
   lifts: 35,
 };
-
-
-

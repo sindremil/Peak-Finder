@@ -11,7 +11,17 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
 import DestinationCard from "../components/DestinationCard";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
-import { hemsedal, saalbach, zermatt, chamonix, verbier, davos, courchevel, innsbruck, stMoritz } from "../mockData/destinations";
+import {
+  hemsedal,
+  saalbach,
+  zermatt,
+  chamonix,
+  verbier,
+  davos,
+  courchevel,
+  innsbruck,
+  stMoritz,
+} from "../mockData/destinations";
 import Filter from "../components/Filter";
 
 function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
