@@ -32,7 +32,7 @@ function App() {
           path="/destination"
           element={
             <>
-              <SetPageTitle title="Destination" />
+              <SetPageTitle title="Destinasjon " />
               <Navbar />
               <DestinationPage />
             </>
