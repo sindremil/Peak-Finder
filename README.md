@@ -2,14 +2,13 @@
 
 ## Kjøring av appen
 
-Først sjekk at en befinner seg i /prosjekt2.
-For å kjøre appen så må en skrive
+For å kjøre appen bør en først sjekke at en befinner seg i /prosjekt2, for deretter å skrive:
 
 ```
 npm install
 ```
 
-For deretter å kjøre
+Heretter kjør
 
 ```
 npm run dev
@@ -33,7 +32,7 @@ Peak Finder er optimalisert for tilgjengelighet. Alle sidene har skjermleserstø
 
 ## Kjøring av linter
 
-For å sjekke etter linting error i prosjektet så kjør kommandoen under. Pass på at en befinner seg i /prosjekt2.
+For å sjekke om det finnes linting error i prosjektet, så kjør kommandoen under. Pass på at en befinner seg i /prosjekt2.
 
 ```
 npx eslint . --ext .js,.jsx,.ts,.tsx
@@ -53,7 +52,7 @@ For å se formatterings feil i prosjektet, kjør den følgende kommandoen:
 npx prettier . --check
 ```
 
-For å fikse dem kjør:
+For å fikse dem, kjør:
 
 ```
 npx prettier . --write
