@@ -459,7 +459,7 @@ function DestinationExtra({
   text: string;
   boolean: boolean;
   // OverridableComponent... is the type of MUI Icons
-  // Imgs/Svgs in this porject are imported as string paths
+  // Imgs/Svgs in this project are imported as string paths
   // Therefore "Icon" is either a OverridableComponent or a string
   Icon:
     | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
