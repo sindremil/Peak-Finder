@@ -60,7 +60,7 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
   // Hook used for search bar navigation
   const navigate = useNavigate();
 
-  // Navigate to results page when user presses 'enter' in search field
+  // Navigate to results page when user presses 'Enter' in search field
   // The search drawer on mobile is closed
   // The search field for desktop is emptied
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
