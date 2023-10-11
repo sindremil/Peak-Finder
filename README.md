@@ -5,13 +5,13 @@
 To view linting erros across the entire project run the following command from the project's root folder:
 
 ```
-npx eslint . --ext .js,.jsx,.ts,.tsx
+npm run lint
 ```
 
 To fix them run:
 
 ```
-npx eslint . --ext .js,.jsx,.ts,.tsx --fix
+npm run lint-fix
 ```
 
 ## Running prettier
@@ -19,11 +19,11 @@ npx eslint . --ext .js,.jsx,.ts,.tsx --fix
 To view formatting errors run the following from the project's root folder:
 
 ```
-npx prettier . --check
+npm run prettier
 ```
 
 To fix them run:
 
 ```
-npx prettier . --write
+npm run prettier-fix
 ```
