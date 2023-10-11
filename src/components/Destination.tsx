@@ -542,7 +542,7 @@ function DestinationExtras({
 // This funciton creates bread crumbs used for navigation between pages
 function DestinationBreadCrumbs(): JSX.Element {
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs aria-label="Navigasjon">
       <Link underline="hover" color="inherit" href="/">
         Hjem
       </Link>
