@@ -478,8 +478,8 @@ function DestinationExtra({
     <ListItem
       aria-label={
         boolean
-          ? "Har" + ` ${text.toLowerCase()}`
-          : "Mangler" + ` ${text.toLowerCase()}`
+          ? `Har ${text.toLowerCase()}`
+          : `Mangler ${text.toLowerCase()}`
       }
     >
       {icon}
