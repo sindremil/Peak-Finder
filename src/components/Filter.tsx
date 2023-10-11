@@ -44,7 +44,7 @@ function SliderWithInput({
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === "" ? NaN : Number(event.target.value));
+    setValue(event.target.value === "" ? 0 : Number(event.target.value));
   };
 
   const handleBlur = () => {
@@ -61,10 +61,10 @@ function SliderWithInput({
         {label}
       </Typography>
       <Grid container spacing={2} alignItems="center">
-        <Grid item>
+        <Grid item xs={2}>
           <Icon />
         </Grid>
-        <Grid item xs>
+        <Grid item xs={6}>
           <Slider
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
@@ -74,18 +74,22 @@ function SliderWithInput({
             step={step}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <Input
-            value={value}
+            value={value === 0 ? "" : value}
             size="small"
             onChange={handleInputChange}
             onBlur={handleBlur}
+            placeholder={String(defaultValue)}
             inputProps={{
               step,
               min: minValue,
               max: maxValue,
               type: "number",
               "aria-labelledby": "input-slider",
+            }}
+            sx={{
+              width: "65px"
             }}
           />
         </Grid>
@@ -113,7 +117,8 @@ function Chips(): JSX.Element {
       sx={{
         display: "flex",
         flexDirection: "row",
-        flexFlow: "wrap",
+        flexFlow: "wrap", 
+        gap: 1       
       }}
     >
       <Chip

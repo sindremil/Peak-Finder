@@ -35,7 +35,7 @@ export default function Result(): JSX.Element {
   };
 
   return (
-    <Container sx={{ marginTop: "2rem" }}>
+    <Container sx={{ marginBottom: "2rem" }}>
       <Fab
         aria-label="filter"
         variant="extended"
