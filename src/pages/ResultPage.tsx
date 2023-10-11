@@ -11,7 +11,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
 import DestinationCard from "../components/DestinationCard";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
-import hemsedalImage from "../assets/hemsedal.jpg";
+import { hemsedal, saalbach, zermatt, chamonix, verbier, davos, courchevel, innsbruck, stMoritz } from "../mockData/destinations";
 import Filter from "../components/Filter";
 
 function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
@@ -39,19 +39,6 @@ function ResultsBreadCrumbs(): JSX.Element {
 export default function Result(): JSX.Element {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Mock values
-  const mockDestinationCardProps: DestinationCardProps = {
-    name: "Saalbach-Hinterglem-Leogang-Fieberbrunn",
-    imageSrc: hemsedalImage,
-    imageAlt: "Bilde av Saalbach-Hinterglem-Leogang-Fieberbrunn",
-    lowestPoint: 1030,
-    highestPoint: 2479,
-    beginner: 130,
-    intermediate: 220,
-    advanced: 80,
-    lifts: 15,
-  };
-
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -70,15 +57,15 @@ export default function Result(): JSX.Element {
       <Grid container spacing={4} sx={{ marginTop: "0.2vw" }}>
         <ResultsBreadCrumbs />
         {/* Temporary since we cannot implement this without backend */}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
-        {addResult(mockDestinationCardProps)}
+        {addResult(hemsedal)}
+        {addResult(saalbach)}
+        {addResult(chamonix)}
+        {addResult(stMoritz)}
+        {addResult(zermatt)}
+        {addResult(verbier)}
+        {addResult(davos)}
+        {addResult(courchevel)}
+        {addResult(innsbruck)}
       </Grid>
       <Drawer
         anchor="left"
