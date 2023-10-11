@@ -1,103 +1,13 @@
-import {
-  Box,
-  Chip,
-  Container,
-  Grid,
-  Input,
-  Slider,
-  Stack,
-  SvgIconTypeMap,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Box, Chip, Container, Stack } from "@mui/material";
+import { useState } from "react";
 import HeightIcon from "@mui/icons-material/Height";
 import RouteIcon from "@mui/icons-material/Route";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import EuroIcon from "@mui/icons-material/Euro";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import CustomSlider from "./CustomSlider";
 
-// This component
-function SliderWithInput({
-  label,
-  Icon,
-  defaultValue,
-  minValue,
-  maxValue,
-  step,
-}: {
-  label: string;
-  // This is the type of a MUI icon
-  Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-    muiName: string;
-  };
-  defaultValue: number;
-  minValue: number;
-  maxValue: number;
-  step: number;
-}): JSX.Element {
-  // Sets the current value of the SliderWithInput component.
-  const [value, setValue] = React.useState(defaultValue);
-
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === "" ? 0 : Number(event.target.value));
-  };
-
-  const handleBlur = () => {
-    if (value < minValue) {
-      setValue(minValue);
-    } else if (value > maxValue) {
-      setValue(maxValue);
-    }
-  };
-
-  return (
-    <Box sx={{ width: 250 }}>
-      <Typography id="input-slider" gutterBottom>
-        {label}
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={2}>
-          <Icon />
-        </Grid>
-        <Grid item xs={6}>
-          <Slider
-            value={typeof value === "number" ? value : 0}
-            onChange={handleSliderChange}
-            aria-labelledby="input-slider"
-            min={minValue}
-            max={maxValue}
-            step={step}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Input
-            value={value === 0 ? "" : value}
-            size="small"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder={String(defaultValue)}
-            inputProps={{
-              step,
-              min: minValue,
-              max: maxValue,
-              type: "number",
-              "aria-labelledby": "input-slider",
-            }}
-            sx={{
-              width: "65px"
-            }}
-          />
-        </Grid>
-      </Grid>
-    </Box>
-  );
-}
-
+// Component for grouping all the chips
 function Chips(): JSX.Element {
   const [nightSkiing, setNightSkiing] = useState(false);
   const [park, setPark] = useState(false);
@@ -117,8 +27,8 @@ function Chips(): JSX.Element {
       sx={{
         display: "flex",
         flexDirection: "row",
-        flexFlow: "wrap", 
-        gap: 1       
+        flexFlow: "wrap",
+        gap: 1,
       }}
     >
       <Chip
@@ -159,7 +69,7 @@ export default function Filter(): JSX.Element {
         alignItems="flex-start"
         spacing={2}
       >
-        <SliderWithInput
+        <CustomSlider
           label="Minimum fallhøyde"
           Icon={HeightIcon}
           defaultValue={0}
@@ -167,7 +77,7 @@ export default function Filter(): JSX.Element {
           maxValue={3000}
           step={10}
         />
-        <SliderWithInput
+        <CustomSlider
           label="Minimum basehøyde"
           Icon={LocationCityIcon}
           defaultValue={0}
@@ -175,7 +85,7 @@ export default function Filter(): JSX.Element {
           maxValue={3000}
           step={10}
         />
-        <SliderWithInput
+        <CustomSlider
           label="Minimum total løypelegende"
           Icon={RouteIcon}
           defaultValue={0}
@@ -183,7 +93,7 @@ export default function Filter(): JSX.Element {
           maxValue={600}
           step={10}
         />
-        <SliderWithInput
+        <CustomSlider
           label="Minimum total heiser"
           Icon={ArrowOutwardIcon}
           defaultValue={0}
@@ -191,7 +101,7 @@ export default function Filter(): JSX.Element {
           maxValue={200}
           step={1}
         />
-        <SliderWithInput
+        <CustomSlider
           label="Makspris dagspass"
           Icon={EuroIcon}
           defaultValue={200}
