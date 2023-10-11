@@ -586,6 +586,9 @@ export default function Destination({
   // when a user submits a review
   useEffect(() => {}, [newRating]);
 
+  // Scroll back to top
+  window.scrollTo(0, 0);
+  
   return (
     <>
       <Button onClick={() => navigate("../results")}>Tilbake</Button>
