@@ -13,7 +13,7 @@ function App() {
           path="/"
           element={
             <>
-              <SetPageTitle title="Home" />
+              <SetPageTitle title="Hjem " />
               <HomePage />
             </>
           }
@@ -22,7 +22,7 @@ function App() {
           path="/results"
           element={
             <>
-              <SetPageTitle title="Results" />
+              <SetPageTitle title="Resultater " />
               <Navbar />
               <Result />
             </>
