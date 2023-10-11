@@ -22,7 +22,7 @@ function App() {
           path="/results"
           element={
             <>
-              <SetPageTitle title="Results" />
+              <SetPageTitle title="Resultater " />
               <Navbar />
               <Result />
             </>
