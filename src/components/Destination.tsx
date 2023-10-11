@@ -19,6 +19,8 @@ import {
   styled,
   useMediaQuery,
   useTheme,
+  Breadcrumbs,
+  Link,
 } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import SquareIcon from "@mui/icons-material/Square";
@@ -28,7 +30,6 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/ChairLiftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
@@ -538,6 +539,21 @@ function DestinationExtras({
   );
 }
 
+// This funciton creates bread crumbs used for navigation between pages
+function DestinationBreadCrumbs(): JSX.Element {
+  return (
+    <Breadcrumbs aria-label="Navigasjon">
+      <Link underline="hover" color="inherit" href="/">
+        Hjem
+      </Link>
+      <Link underline="hover" color="inherit" href="/project2/results">
+        Resultater
+      </Link>
+      <Typography color="text.primary">Destinasjon</Typography>
+    </Breadcrumbs>
+  );
+}
+
 // This is the main component exported from the module.
 // It uses the previously defined functions to display
 // information about the destination, including
@@ -565,7 +581,6 @@ export default function Destination({
     certifed,
   } = destinationProps;
 
-  const navigate = useNavigate();
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
   const [newRating, setNewRating] = useState(0);
 
@@ -591,7 +606,7 @@ export default function Destination({
 
   return (
     <>
-      <Button onClick={() => navigate("../results")}>Tilbake</Button>
+      <DestinationBreadCrumbs />
       <Card raised>
         <DestinationImage name={destinationName} img={destinationImage} />
         <DestinationHeader destinationName={destinationName} />
