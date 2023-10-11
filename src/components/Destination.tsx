@@ -30,7 +30,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GondolaIcon from "../assets/GondolaIcon.svg";
-import SkiliftIcon from "../assets/ChairLiftIcon.svg";
+import SkiliftIcon from "../assets/SkiliftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import LogoIcon from "../assets/logos/logo-black-cropped.svg";
 import DestinationProps from "../interfaces/DestinationProps";
@@ -47,14 +47,7 @@ function DestinationImage({
   name: string;
   img: string;
 }): JSX.Element {
-  return (
-    <CardMedia
-      image={img}
-      title={name}
-      sx={{ height: "400px" }}
-      aria-label={`Bilde av ${name}`}
-    />
-  );
+  return <CardMedia image={img} title={name} sx={{ height: "400px" }} />;
 }
 
 // This component displays the name of a destination.
@@ -117,7 +110,7 @@ function DestinationInfo({
   passPrice: number;
 }): JSX.Element {
   return (
-    <Grid container spacing={1} tabIndex={0}>
+    <Grid container spacing={1}>
       <Grid item xs={12} sm={4}>
         <DestinationCountry country={country} />
       </Grid>
@@ -153,13 +146,9 @@ function DestinationRating({
           justifyContent: isSmallScreen ? "left" : "right",
         }}
       >
-        <Typography sx={{ paddingRight: "5px" }} aria-hidden="true">
-          {rating}
-        </Typography>
+        <Typography sx={{ paddingRight: "5px" }}>{rating}</Typography>
         <Rating name="showRating" value={rating} precision={0.5} readOnly />
-        <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
-          ({ratings})
-        </Typography>
+        <Typography sx={{ paddingLeft: "5px" }}>({ratings})</Typography>
       </Grid>
     </Grid>
   );
@@ -173,7 +162,7 @@ function DestinationHeader({
 }): JSX.Element {
   return (
     <CardContent>
-      <Grid container spacing={2} tabIndex={0}>
+      <Grid container spacing={2}>
         <DestinationName name={destinationName} />
         <DestinationRating rating={3.4} ratings={53} />
       </Grid>
@@ -299,7 +288,7 @@ function DestinationPistes({
   advanced: number;
 }): JSX.Element {
   return (
-    <Grid item xs={12} sm={6} tabIndex={0}>
+    <Grid item xs={12} sm={6}>
       <Typography variant="h4" gutterBottom>
         Skibakker
       </Typography>
@@ -360,7 +349,6 @@ function DestinationLift({
           src={liftIcon}
           alt={extractFileName(liftIcon)}
           sx={{ maxWidth: "50px" }}
-          aria-hidden="true"
         />
       </ListItemIconCentered>
       <ListItemText
@@ -385,7 +373,7 @@ function DestinationLifts({
   surfaceLifts: number;
 }): JSX.Element {
   return (
-    <Grid item xs={12} sm={6} tabIndex={0}>
+    <Grid item xs={12} sm={6}>
       <Typography variant="h4" gutterBottom>
         Skiheiser
       </Typography>
@@ -475,13 +463,7 @@ function DestinationExtra({
     icon = <Icon sx={{ minWidth: "40px" }} />;
   }
   return (
-    <ListItem
-      aria-label={
-        boolean
-          ? "Har" + ` ${text.toLowerCase()}`
-          : "Mangler" + ` ${text.toLowerCase()}`
-      }
-    >
+    <ListItem>
       {icon}
       <ListItemText
         primary={text}
@@ -505,24 +487,24 @@ function DestinationExtras({
   return (
     <>
       <Typography variant="h4">Ekstra</Typography>
-      <Grid container spacing={2} tabIndex={0}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={3}>
           <DestinationExtra
-            text="Park"
+            text="Har park"
             boolean={snowPark}
             Icon={SnowboardingIcon}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <DestinationExtra
-            text="Kveldskjøring"
+            text="Har kveldskjøring"
             boolean={nightSki}
             Icon={NightlightIcon}
           />
         </Grid>
         <Grid item xs={12} sm={5}>
           <DestinationExtra
-            text="Peak Finder sertifisering"
+            text="Peak Finder sertifisert"
             boolean={certified}
             Icon={LogoIcon}
           />
