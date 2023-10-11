@@ -1,58 +1,62 @@
 # Peak Finder
 
-## Kjøring av appen
+Peak Finder will allow users to find different ski resorts across Europe.
+## Running the app
 
-For å kjøre appen bør en først sjekke at en befinner seg i /prosjekt2, for deretter å skrive:
+The app can be run by using the following commands from the project's root folder:
 
 ```
 npm install
 ```
 
-Heretter kjør
-
 ```
 npm run dev
 ```
 
-## Beskrivelse av appen
+## Current limitations
 
-Peak Finder skal gi brukere en bedre måte sjekke ut ulike skidestinasjoner på. Når en først går inn på siden så ser en Peak Finder logoen samt et søkefelt. For nå kan en skrive inn hva som helst før en blir sendt til en statisk resultatside. På denne siden kan en velge mellom ulike destinasjoner og filtrere mellom dem. Når en klikker på et av resultatene blir en sendt til en ny side om den spesifikke destinasjonen. Her vises mer informasjon om stedet. Det er også her en kan legge igjen en anmeldelse. Anmeldelsen er på mellom 1 og 5 stjerner.
+Since the goal for this deadline was to show the app's interface, its features, and its data we have imposed some temporary limitations which will obviously be addressed before the next deadline. The search feature currently sends the user to a static results page with placeholder results. The user can open a drawer with filtering options from this page but none of these do anything as of now. The results can be clicked but they all redirect to the same page with static data. It is possible to give a star rating to the destination, but the rating does nothing.
 
-## Valg vi har tatt
+## Assumptioms
 
-Vi har antatt at en kan presentere ett og ett kort i en grid (en form for liste) der scrolling er muligheten til å bla seg frem eller tilbake. En kan hoppe til en spesifikk ressurs ved å trykke på kortet en ønsker.
-Vi har et filter der en kan sortere skisteder etter blant annet høyde, høydeforskjell og om det har kveldskjøring.
-Siden er responsiv som gjør at appen kan brukes på store skjermer og mindre smarttelefoner.
-Et godt eksempel av ryddig utforming er den utdypete informasjonen på en spesifikk destinasjonside. Hvis en er på mobil så endres presentasjonen av tabellen drastisk for å bevare den ryddig utformingen.
-Dataen som vises på de ulike sidene kommer til å hentes fra datasettet «European Ski Resorts» fra nettstedet Kaggle. Lenken til datasettet ser slik ut: https://www.kaggle.com/datasets/thomasnibb/european-ski-resorts
+We have assumed a grid of results is sufficient for the list requirement since a grid is virtually a list spread across multiple rows.
 
-## Tilgjengelighet
+## Functionality
 
-Peak Finder er optimalisert for tilgjengelighet. Alle sidene har skjermleserstøtte og kan derfor brukes av mennesker med synstap.
+- Detailed information about a destination can be viewed by clicking on a card.
+- The site has a filter which can be applied to search results.
+- The app is responsive which allows it to be used on devices with different screen sizes.
+- The user can give a destination a rating which will be persistent on the database
+- The app is fully accessible. All elements can be tabbed to, and all relevant information is read aloud to the user.
+- The data this app uses is from: https://www.kaggle.com/datasets/thomasnibb/european-ski-resorts
 
-## Kjøring av linter
+## Accessibility 
 
-For å sjekke om det finnes linting error i prosjektet, så kjør kommandoen under. Pass på at en befinner seg i /prosjekt2.
+Peak Finder has been developed with accessibility in mind. All pages have support for screen readers and allow the use of the tab key to navigate between elements.
+
+## Running ESLint
+
+To check the project for ESLint errors the following command can be run from the project's root folder:
 
 ```
 npx eslint . --ext .js,.jsx,.ts,.tsx
 ```
 
-For å fikse problemene kjør:
+To fix ESLint issues run:
 
 ```
 npx eslint . --ext .js,.jsx,.ts,.tsx --fix
 ```
 
-## Kjøring av prettier
+## Running prettier
 
-For å se formatterings feil i prosjektet, kjør den følgende kommandoen:
+To check the project for formatting issues the following command can be run from the project's root folder:
 
 ```
 npx prettier . --check
 ```
 
-For å fikse dem, kjør:
+To fix the issues run this:
 
 ```
 npx prettier . --write
