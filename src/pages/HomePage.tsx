@@ -12,7 +12,6 @@ function Logo(): JSX.Element {
       component="img"
       alt="Peak Finder logo"
       src={logo}
-      tabIndex={0}
       sx={{
         width: isMobile ? "80%" : "50%",
       }}

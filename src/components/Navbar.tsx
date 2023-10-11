@@ -28,8 +28,6 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
         component="img"
         alt="Peak Finder logo"
         src={logoPath}
-        tabIndex={0}
-        role="button"
         sx={{
           height: "2.5rem",
         }}
@@ -52,6 +50,9 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
           marginTop: 0.7,
         }}
         InputProps={{
+          inputProps: {
+            "aria-label": "Søkefelt",
+          },
           startAdornment: (
             <InputAdornment
               position="start"
