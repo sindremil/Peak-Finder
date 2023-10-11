@@ -5,6 +5,7 @@ import {
   IconButton,
   TextField,
   InputAdornment,
+  Drawer,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Search } from "@mui/icons-material";
@@ -37,11 +38,18 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
     </Box>
   );
 }
+
 interface SearchFieldProps {
   isDesktop: boolean;
 }
 
 function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
+  // State is set to true when user presses the search icon on the mobile version
+  // State is set to false when user clicks outside the drawer or the escape key
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+
+  // JSX returned when on desktop
   if (isDesktop) {
     return (
       <TextField
@@ -56,22 +64,45 @@ function SearchField({ isDesktop }: SearchFieldProps): JSX.Element {
             <InputAdornment
               position="start"
               sx={{
-                color: "white",
+                color: 'white',
               }}
             >
-              <Search sx={{ ...iconSize }} />
+              <Search />
             </InputAdornment>
           ),
-          style: { color: "white" },
+          style: { color: 'white' },
         }}
       />
     );
   }
 
+  // JSX returned when on mobile
   return (
-    <IconButton color="inherit" sx={{ paddingRight: "0" }}>
-      <Search sx={{ ...iconSize }} />
-    </IconButton>
+    <>
+      <IconButton color="inherit" sx={{ paddingRight: 0 }} onClick={() => setIsDrawerOpen(true)}>
+        <Search sx={{...iconSize}} />
+      </IconButton>
+      <Drawer anchor="top" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+        <TextField
+          placeholder="Destinasjon, land..."
+          variant="outlined"
+          size="small"
+          sx={{ padding: 2 }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                sx={{
+                  color: 'black',
+                }}
+              >
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Drawer>
+    </>
   );
 }
 
