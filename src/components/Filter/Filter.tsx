@@ -5,7 +5,6 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import EuroIcon from "@mui/icons-material/Euro";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import CustomSlider from "./CustomSlider";
-import { useAppSelector } from "../../hooks";
 import CustomChip from "./CustomChip";
 import {
   setMaxDayPassPrice,
@@ -21,55 +20,50 @@ import {
 } from "./filterSlice";
 
 function ParkChip(): JSX.Element {
-  const hasPark = useAppSelector((state) => state.filter.hasPark);
-
-  return <CustomChip label="Park" selected={hasPark} action={toggleHasPark} />;
+  return (
+    <CustomChip
+      label="Park"
+      selector={(state) => state.filter.hasPark}
+      action={toggleHasPark}
+    />
+  );
 }
 
 function NightSkiingChip(): JSX.Element {
-  const hasNightSkiing = useAppSelector((state) => state.filter.hasNightSkiing);
-
   return (
     <CustomChip
       label="Kveldskjøring"
-      selected={hasNightSkiing}
+      selector={(state) => state.filter.hasNightSkiing}
       action={toggleHasNightSkiing}
     />
   );
 }
 
-// For ChairliftChip
 function ChairliftChip(): JSX.Element {
-  const hasChairlift = useAppSelector((state) => state.filter.hasChairlift);
-
   return (
     <CustomChip
       label="Stolheis"
-      selected={hasChairlift}
+      selector={(state) => state.filter.hasChairlift}
       action={toggleHasChairlift}
     />
   );
 }
 
 function GondolaChip(): JSX.Element {
-  const hasGondola = useAppSelector((state) => state.filter.hasGondola);
-
   return (
     <CustomChip
       label="Gondol"
-      selected={hasGondola}
+      selector={(state) => state.filter.hasGondola}
       action={toggleHasGondola}
     />
   );
 }
 
 function CertifiedChip(): JSX.Element {
-  const isCertified = useAppSelector((state) => state.filter.isCertified);
-
   return (
     <CustomChip
       label="Peak Finder Sertifisert"
-      selected={isCertified}
+      selector={(state) => state.filter.isCertified}
       action={toggleIsCertified}
     />
   );

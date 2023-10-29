@@ -175,6 +175,7 @@ function IconSliderInput({
 }
 
 // This component is a better alternative to the regular MUI slider
+// CustomSlider takes in an action to update the state
 export default function CustomSlider({
   label,
   Icon,
