@@ -118,25 +118,28 @@ function IconSliderInput({
   maxValue,
   step,
   Icon,
+  onChange,
 }: {
   defaultValue: number;
   minValue: number;
   maxValue: number;
   step: number;
-  // This is the type of a MUI icon
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
+  onChange: (value: number) => void;
 }) {
   // Sets the current value of the CustomSlider component.
   const [value, setValue] = useState(defaultValue);
 
   const handleSliderChange = (newValue: number) => {
     setValue(newValue);
+    onChange(newValue);
   };
 
   const handleInputChange = (newValue: number) => {
     setValue(newValue);
+    onChange(newValue);
   };
 
   const handleBlur = () => {
@@ -178,9 +181,9 @@ export default function CustomSlider({
   minValue,
   maxValue,
   step,
+  onChange, // New prop
 }: {
   label: string;
-  // This is the type of a MUI icon
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
@@ -188,6 +191,7 @@ export default function CustomSlider({
   minValue: number;
   maxValue: number;
   step: number;
+  onChange: (value: number) => void; // New prop
 }): JSX.Element {
   return (
     <Box sx={{ width: 250 }}>
@@ -198,6 +202,7 @@ export default function CustomSlider({
         minValue={minValue}
         maxValue={maxValue}
         step={step}
+        onChange={onChange}
       />
     </Box>
   );

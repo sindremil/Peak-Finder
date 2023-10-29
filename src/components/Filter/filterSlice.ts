@@ -6,6 +6,12 @@ interface FilterState {
   hasChairlift: boolean;
   hasGondola: boolean;
   isCertified: boolean;
+
+  minElevationDifference: number;
+  minBaseElevation: number;
+  minTotalPiste: number;
+  minTotalLifts: number;
+  maxDayPassPrice: number;
 }
 
 const initialState: FilterState = {
@@ -14,6 +20,12 @@ const initialState: FilterState = {
   hasChairlift: false,
   hasGondola: false,
   isCertified: false,
+
+  minElevationDifference: 0,
+  minBaseElevation: 0,
+  minTotalPiste: 0,
+  minTotalLifts: 0,
+  maxDayPassPrice: 200,
 };
 
 export const filterSlice = createSlice({
@@ -36,6 +48,21 @@ export const filterSlice = createSlice({
     toggleIsCertified: (state) => {
       state.isCertified = !state.isCertified;
     },
+    setMinElevationDifference: (state, action) => {
+      state.minElevationDifference = action.payload;
+    },
+    setMinBaseElevation: (state, action) => {
+      state.minBaseElevation = action.payload;
+    },
+    setMinTotalPiste: (state, action) => {
+      state.minTotalPiste = action.payload;
+    },
+    setMinTotalLifts: (state, action) => {
+      state.minTotalLifts = action.payload;
+    },
+    setMaxDayPassPrice: (state, action) => {
+      state.maxDayPassPrice = action.payload;
+    }
   },
 });
 
@@ -45,6 +72,12 @@ export const {
   toggleHasChairlift,
   toggleHasGondola,
   toggleIsCertified,
+
+  setMinElevationDifference,
+  setMinBaseElevation,
+  setMinTotalPiste,
+  setMinTotalLifts,
+  setMaxDayPassPrice,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
