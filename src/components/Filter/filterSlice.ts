@@ -62,7 +62,7 @@ export const filterSlice = createSlice({
     },
     setMaxDayPassPrice: (state, action) => {
       state.maxDayPassPrice = action.payload;
-    }
+    },
   },
 });
 

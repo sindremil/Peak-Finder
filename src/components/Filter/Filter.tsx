@@ -21,86 +21,60 @@ import {
 } from "./filterSlice";
 
 function ParkChip(): JSX.Element {
-  const dispatch = useAppDispatch();
   const hasPark = useAppSelector((state) => state.filter.hasPark);
 
-  return (
-    <CustomChip
-      label="Park"
-      selected={hasPark}
-      onClick={() => {
-        hasPark;
-        dispatch(toggleHasPark());
-      }}
-    />
-  );
+  return <CustomChip label="Park" selected={hasPark} action={toggleHasPark} />;
 }
 
 function NightSkiingChip(): JSX.Element {
-  const dispatch = useAppDispatch();
   const hasNightSkiing = useAppSelector((state) => state.filter.hasNightSkiing);
 
   return (
     <CustomChip
       label="Kveldskjøring"
       selected={hasNightSkiing}
-      onClick={() => {
-        hasNightSkiing;
-        dispatch(toggleHasNightSkiing());
-      }}
+      action={toggleHasNightSkiing}
     />
   );
 }
 
+// For ChairliftChip
 function ChairliftChip(): JSX.Element {
-  const dispatch = useAppDispatch();
   const hasChairlift = useAppSelector((state) => state.filter.hasChairlift);
 
   return (
     <CustomChip
       label="Stolheis"
       selected={hasChairlift}
-      onClick={() => {
-        hasChairlift;
-        dispatch(toggleHasChairlift());
-      }}
+      action={toggleHasChairlift}
     />
   );
 }
 
 function GondolaChip(): JSX.Element {
-  const dispatch = useAppDispatch();
   const hasGondola = useAppSelector((state) => state.filter.hasGondola);
 
   return (
     <CustomChip
       label="Gondol"
       selected={hasGondola}
-      onClick={() => {
-        hasGondola;
-        dispatch(toggleHasGondola());
-      }}
+      action={toggleHasGondola}
     />
   );
 }
 
 function CertifiedChip(): JSX.Element {
-  const dispatch = useAppDispatch();
   const isCertified = useAppSelector((state) => state.filter.isCertified);
 
   return (
     <CustomChip
       label="Peak Finder Sertifisert"
       selected={isCertified}
-      onClick={() => {
-        isCertified;
-        dispatch(toggleIsCertified());
-      }}
+      action={toggleIsCertified}
     />
   );
 }
 
-// Component for grouping all the chips
 function Chips(): JSX.Element {
   return (
     <Box
@@ -132,16 +106,14 @@ function MinimumElevationDifferenceSlider(): JSX.Element {
       step={10}
       onChange={(value) => dispatch(setMinElevationDifference(value))}
     />
-  )
+  );
 }
 
 // Component for grouping all the sliders
 function Sliders(): JSX.Element {
   const dispatch = useAppDispatch();
   return (
-    <Stack
-      spacing={2}
-    >
+    <Stack spacing={2}>
       <MinimumElevationDifferenceSlider />
       <CustomSlider
         label="Minimum basehøyde"
@@ -160,7 +132,6 @@ function Sliders(): JSX.Element {
         maxValue={600}
         step={10}
         onChange={(value) => dispatch(setMinTotalPiste(value))}
-
       />
       <CustomSlider
         label="Minimum total heiser"
@@ -170,7 +141,6 @@ function Sliders(): JSX.Element {
         maxValue={200}
         step={1}
         onChange={(value) => dispatch(setMinTotalLifts(value))}
-
       />
       <CustomSlider
         label="Makspris dagspass"
@@ -180,10 +150,9 @@ function Sliders(): JSX.Element {
         maxValue={200}
         step={5}
         onChange={(value) => dispatch(setMaxDayPassPrice(value))}
-
       />
     </Stack>
-  )
+  );
 }
 
 export default function Filter(): JSX.Element {

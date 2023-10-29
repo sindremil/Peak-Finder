@@ -1,19 +1,21 @@
 import Chip from "@mui/material/Chip";
+import { useAppDispatch } from "../../hooks";
 
-// Reusable Chip component
-export default function ChipOption({
+export default function CustomChip({
   label,
   selected,
-  onClick,
+  action,
 }: {
   label: string;
   selected: boolean;
-  onClick: () => void;
+  action: () => { type: string };
 }): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <Chip
       label={label}
-      onClick={onClick}
+      onClick={() => dispatch(action())}
       color={selected ? "primary" : "default"}
     />
   );
