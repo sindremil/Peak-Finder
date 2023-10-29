@@ -2,6 +2,7 @@ import { Box, Grid, Input, Slider, SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { useAppDispatch } from "../../hooks"; // Import the hook
 
 // The onBlur event occurs when an input field loses focus
 
@@ -181,7 +182,7 @@ export default function CustomSlider({
   minValue,
   maxValue,
   step,
-  onChange, // New prop
+  action,
 }: {
   label: string;
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
@@ -191,8 +192,10 @@ export default function CustomSlider({
   minValue: number;
   maxValue: number;
   step: number;
-  onChange: (value: number) => void; // New prop
+  action: (value: number) => { type: string };
 }): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <Box sx={{ width: 250 }}>
       <Label label={label} />
@@ -202,7 +205,7 @@ export default function CustomSlider({
         minValue={minValue}
         maxValue={maxValue}
         step={step}
-        onChange={onChange}
+        onChange={(value) => dispatch(action(value))}
       />
     </Box>
   );

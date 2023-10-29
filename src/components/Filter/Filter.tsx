@@ -5,7 +5,7 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import EuroIcon from "@mui/icons-material/Euro";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import CustomSlider from "./CustomSlider";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../hooks";
 import CustomChip from "./CustomChip";
 import {
   setMaxDayPassPrice,
@@ -95,7 +95,6 @@ function Chips(): JSX.Element {
 }
 
 function MinimumElevationDifferenceSlider(): JSX.Element {
-  const dispatch = useAppDispatch();
   return (
     <CustomSlider
       label="Minimum fallhøyde"
@@ -104,53 +103,76 @@ function MinimumElevationDifferenceSlider(): JSX.Element {
       minValue={0}
       maxValue={3000}
       step={10}
-      onChange={(value) => dispatch(setMinElevationDifference(value))}
+      action={setMinElevationDifference}
+    />
+  );
+}
+
+function MinimumBaseElevationSlider(): JSX.Element {
+  return (
+    <CustomSlider
+      label="Minimum basehøyde"
+      Icon={LocationCityIcon}
+      defaultValue={0}
+      minValue={0}
+      maxValue={3000}
+      step={10}
+      action={setMinBaseElevation}
+    />
+  );
+}
+
+function MinimumTotalPisteSlider(): JSX.Element {
+  return (
+    <CustomSlider
+      label="Minimum total løypelegende"
+      Icon={RouteIcon}
+      defaultValue={0}
+      minValue={0}
+      maxValue={600}
+      step={10}
+      action={setMinTotalPiste}
+    />
+  );
+}
+
+function MinimumTotalLiftsSlider(): JSX.Element {
+  return (
+    <CustomSlider
+      label="Minimum total heiser"
+      Icon={ArrowOutwardIcon}
+      defaultValue={0}
+      minValue={0}
+      maxValue={200}
+      step={1}
+      action={setMinTotalLifts}
+    />
+  );
+}
+
+function MaximumDayPassPriceSlider(): JSX.Element {
+  return (
+    <CustomSlider
+      label="Makspris dagspass"
+      Icon={EuroIcon}
+      defaultValue={200}
+      minValue={0}
+      maxValue={200}
+      step={5}
+      action={setMaxDayPassPrice}
     />
   );
 }
 
 // Component for grouping all the sliders
 function Sliders(): JSX.Element {
-  const dispatch = useAppDispatch();
   return (
     <Stack spacing={2}>
       <MinimumElevationDifferenceSlider />
-      <CustomSlider
-        label="Minimum basehøyde"
-        Icon={LocationCityIcon}
-        defaultValue={0}
-        minValue={0}
-        maxValue={3000}
-        step={10}
-        onChange={(value) => dispatch(setMinBaseElevation(value))}
-      />
-      <CustomSlider
-        label="Minimum total løypelegende"
-        Icon={RouteIcon}
-        defaultValue={0}
-        minValue={0}
-        maxValue={600}
-        step={10}
-        onChange={(value) => dispatch(setMinTotalPiste(value))}
-      />
-      <CustomSlider
-        label="Minimum total heiser"
-        Icon={ArrowOutwardIcon}
-        defaultValue={0}
-        minValue={0}
-        maxValue={200}
-        step={1}
-        onChange={(value) => dispatch(setMinTotalLifts(value))}
-      />
-      <CustomSlider
-        label="Makspris dagspass"
-        Icon={EuroIcon}
-        defaultValue={200}
-        minValue={0}
-        maxValue={200}
-        step={5}
-        onChange={(value) => dispatch(setMaxDayPassPrice(value))}
-      />
+      <MinimumBaseElevationSlider />
+      <MinimumTotalPisteSlider />
+      <MinimumTotalLiftsSlider />
+      <MaximumDayPassPriceSlider />
     </Stack>
   );
 }
