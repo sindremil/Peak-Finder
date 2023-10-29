@@ -28,6 +28,8 @@ const initialState: FilterState = {
   maxDayPassPrice: 200,
 };
 
+/* eslint-disable no-param-reassign */
+// no-param-reassign is disabled in this method since it uses immer
 export const filterSlice = createSlice({
   name: "filter",
   // createSlice will infer the state type from the `initialState` argument
@@ -65,6 +67,7 @@ export const filterSlice = createSlice({
     },
   },
 });
+/* eslint-enable no-param-reassign */
 
 export const {
   toggleHasPark,
