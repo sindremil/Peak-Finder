@@ -22,7 +22,7 @@ import {
   innsbruck,
   stMoritz,
 } from "../mockData/destinations";
-import Filter from "../components/Filter";
+import Filter from "../components/Filter/Filter";
 
 function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
   return (

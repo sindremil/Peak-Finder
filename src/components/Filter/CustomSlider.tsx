@@ -2,6 +2,7 @@ import { Box, Grid, Input, Slider, SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { useAppDispatch } from "../../hooks"; // Import the hook
 
 // The onBlur event occurs when an input field loses focus
 
@@ -118,25 +119,28 @@ function IconSliderInput({
   maxValue,
   step,
   Icon,
+  onChange,
 }: {
   defaultValue: number;
   minValue: number;
   maxValue: number;
   step: number;
-  // This is the type of a MUI icon
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
+  onChange: (value: number) => void;
 }) {
   // Sets the current value of the CustomSlider component.
   const [value, setValue] = useState(defaultValue);
 
   const handleSliderChange = (newValue: number) => {
     setValue(newValue);
+    onChange(newValue);
   };
 
   const handleInputChange = (newValue: number) => {
     setValue(newValue);
+    onChange(newValue);
   };
 
   const handleBlur = () => {
@@ -171,6 +175,7 @@ function IconSliderInput({
 }
 
 // This component is a better alternative to the regular MUI slider
+// CustomSlider takes in an action to update the state
 export default function CustomSlider({
   label,
   Icon,
@@ -178,9 +183,9 @@ export default function CustomSlider({
   minValue,
   maxValue,
   step,
+  action,
 }: {
   label: string;
-  // This is the type of a MUI icon
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
     muiName: string;
   };
@@ -188,7 +193,10 @@ export default function CustomSlider({
   minValue: number;
   maxValue: number;
   step: number;
+  action: (value: number) => { type: string };
 }): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <Box sx={{ width: 250 }}>
       <Label label={label} />
@@ -198,6 +206,7 @@ export default function CustomSlider({
         minValue={minValue}
         maxValue={maxValue}
         step={step}
+        onChange={(value) => dispatch(action(value))}
       />
     </Box>
   );
