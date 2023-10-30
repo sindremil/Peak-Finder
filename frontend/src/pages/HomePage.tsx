@@ -26,7 +26,7 @@ export default function HomePage(): JSX.Element {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "15rem",
+        marginTop: "10rem",
       }}
     >
       <Logo />
