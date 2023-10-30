@@ -10,6 +10,9 @@ variables:
 node-setup:
   stage: setup
   script:
+    - cd .\backend\
+    - npm install
+    - cd ..\frontend\
     - npm install
   artifacts:
     paths:
@@ -23,6 +26,9 @@ node-setup:
 eslint:
   stage: lint
   script:
+    - cd .\backend\
+    - npm run lint
+    - cd ..\frontend\
     - npm run lint
   dependencies:
     - node-setup
@@ -30,6 +36,9 @@ eslint:
 prettier:
   stage: lint
   script:
+    - cd .\backend\
+    - npx prettier --check "**/*.{js,jsx,ts,tsx,json,md}"
+    - cd ..\frontend\
     - npx prettier --check "**/*.{js,jsx,ts,tsx,json,md}"
   dependencies:
     - node-setup
