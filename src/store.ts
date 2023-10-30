@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "./components/Filter/filterSlice";
-
+import searchReducer from "./components/Searchbar/searchSlice"
 const store = configureStore({
   reducer: {
     filter: filterReducer,
+    search: searchReducer,
   },
 });
 
