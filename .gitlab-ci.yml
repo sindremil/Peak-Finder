@@ -27,9 +27,9 @@ eslint:
   stage: lint
   script:
     - cd backend/
-    - npm run lint
+    - npx eslint . --ext .js,.jsx,.ts,.tsx
     - cd ../frontend/
-    - npm run lint
+    - npm eslint . --ext .js,.jsx,.ts,.tsx
   dependencies:
     - node-setup
 
