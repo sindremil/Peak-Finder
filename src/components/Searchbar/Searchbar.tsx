@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { Box, TextField, Button, useMediaQuery } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { setSearchValue } from "./searchSlice";
 import { useAppDispatch } from "../../hooks";
-import { useState } from "react";
 
 export default function Searchbar(): JSX.Element {
   const dispatch = useAppDispatch();
