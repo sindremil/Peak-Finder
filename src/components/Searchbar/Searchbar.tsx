@@ -1,67 +1,8 @@
 import React, { useState } from "react";
-import { Box, TextField, useMediaQuery, List, Paper, ListItemButton, Skeleton } from "@mui/material";
+import { Box, TextField, useMediaQuery } from "@mui/material";
 import { setSearchValue } from "./searchSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useQuery } from "@tanstack/react-query";
-import fetchSearchResults from "./fetchSearchResults";
-
-function SearchResults(): JSX.Element | null {
-  const searchValue = useAppSelector(state => state.search.searchValue);
-
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["searchValue", searchValue],
-    queryFn: () => fetchSearchResults(searchValue),
-    enabled: !!searchValue,
-    staleTime: Infinity,
-  });
-
-  if (!searchValue) {
-    return null;
-  }
-  if (isPending) {
-    return (
-      <Paper elevation={3} sx={{ maxHeight: "50vh", overflow: 'auto' }}>
-        <List>
-          <ListItemButton>
-            <Skeleton variant="text" width={250} />
-          </ListItemButton>
-          <ListItemButton>
-            <Skeleton variant="text" width={250} />
-          </ListItemButton>
-          <ListItemButton>
-            <Skeleton variant="text" width={250} />
-          </ListItemButton>
-          <ListItemButton>
-            <Skeleton variant="text" width={250} />
-          </ListItemButton>
-          <ListItemButton>
-            <Skeleton variant="text" width={250} />
-          </ListItemButton>
-        </List>
-      </Paper>
-    )
-  }
-  if (isError) {
-    return <span>Error: {error.message}</span>
-  }
-  return (
-    <Paper 
-      elevation={3} 
-      sx={{ 
-        maxHeight: "50vh",
-        display: data.data.resorts.length === 0 ? "none" : "block" 
-      }}
-    >
-    <List>
-      {data.data.resorts.map((resort, index) => (
-        <ListItemButton key={index}>
-          {resort.name}
-        </ListItemButton>
-      ))}
-    </List>
-  </Paper>
-  )
-}
+import { useAppDispatch } from "../../hooks";
+import SearchResultList from "./SearchResultList";
 
 export default function Searchbar(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -98,7 +39,7 @@ export default function Searchbar(): JSX.Element {
           borderColor: "#2074d4",
         }}
       />
-      <SearchResults />
+      <SearchResultList />
     </Box>
   );
 }
