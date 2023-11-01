@@ -16,10 +16,8 @@ const destinationSchema = new Schema({
   ChairLifts: Number,
   GondolaLifts: Number,
   TotalLifts: Number,
-  LiftCapacity: Number,
-  Snowcanons: Number,
-  AverageRating: Number,
-  TotalRatings: Number,
+  TotalRating: Number,
+  AmountOfRatings: Number,
   Certified: Boolean,
 });
 

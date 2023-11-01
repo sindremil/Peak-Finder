@@ -21,10 +21,8 @@ const typeDefs = `#graphql
     ChairLifts: Int
     GondolaLifts: Int
     TotalLifts: Int
-    LiftCapacity: Int
-    Snowcanons: Int
-    AverageRating: Float
-    TotalRatings: Int
+    TotalRating: Int
+    AmountOfRatings: Int
     Certified: Boolean
   }
 
@@ -33,7 +31,12 @@ const typeDefs = `#graphql
   # case, the "destination" query returns an array of zero or more Destinations (defined above).
   type Query {
     getDestination(Resort: String!): Destination
-    getDestinations(limit: Int!): [Destination]
+    getDestinations(searchTerm: String!, maxResults: Int!): [Destination]
+    getDestinationsByCountry(Country: String!, maxResults: Int!): [Destination]
+  }
+
+  type Mutation {
+    giveRating(Resort: String!, Rating: Int!): Destination
   }
 `;
 
