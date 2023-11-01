@@ -5,12 +5,16 @@ import { useAppSelector } from "../../hooks";
 import fetchSearchResult from "./fetchSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
+import {
+  maxSearchQueryResults,
+  searchQueryDebounceDelayMs,
+} from "../../config";
 
 function LoadingSearchResultListItems(): JSX.Element {
   // TODO make length dynamic from last search result
   return (
     <List>
-      {Array.from({ length: 5 }).map((_, number) => (
+      {Array.from({ length: maxSearchQueryResults }).map((_, number) => (
         <ListItemButton key={number.toString()}>
           <Skeleton variant="text" width={250} />
         </ListItemButton>
@@ -42,14 +46,18 @@ function SearchResultListItems(props: {
 export default function SearchResultList(): JSX.Element | null {
   // The current search term
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
+
   // A deboucned search term which only updates after half a second on no
   // changes to the search term. Avoids unncessary API calls.
-  const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
-  const MAX_RESULTS: number = 5;
+  const debouncedSearchTerm = useDebounce<string>(
+    searchTerm,
+    searchQueryDebounceDelayMs,
+  );
 
   const { isPending, isError, data, error } = useQuery<SearchResult>({
-    queryKey: ["searchTerm", debouncedSearchTerm, MAX_RESULTS],
-    queryFn: () => fetchSearchResult(debouncedSearchTerm, MAX_RESULTS),
+    queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
+    queryFn: () =>
+      fetchSearchResult(debouncedSearchTerm, maxSearchQueryResults),
     enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
