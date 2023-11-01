@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface SearchState {
-  searchValue: string;
+  searchTerm: string;
 }
 
 const initialState: SearchState = {
-  searchValue: "",
+  searchTerm: "",
 };
 
 /* eslint-disable no-param-reassign */
@@ -14,13 +14,13 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearchValue: (state, action) => {
-      state.searchValue = action.payload;
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
     },
   },
 });
 /* eslint-enable no-param-reassign */
 
-export const { setSearchValue } = searchSlice.actions;
+export const { setSearchTerm } = searchSlice.actions;
 
 export default searchSlice.reducer;
