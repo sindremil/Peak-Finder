@@ -75,7 +75,7 @@ export default function SearchResultList(): JSX.Element | null {
         position: "absolute",
         top: "100%",
         left: 0,
-        width: "100%"
+        width: "100%",
       }}
     >
       {content()}

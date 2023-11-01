@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
-import DestinationCard from "../components/DestinationCard";
-import DestinationCardProps from "../interfaces/DestinationCardProps";
 import {
   hemsedal,
   saalbach,
@@ -23,16 +21,9 @@ import {
   stMoritz,
 } from "../mockData/destinations";
 import Filter from "../components/Filter/Filter";
+import addResult from "../utils/addResult";
 
-function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
-  return (
-    <Grid item xs={12} sm={6} lg={4}>
-      <DestinationCard destinationCardProps={destinationCardProps} />
-    </Grid>
-  );
-}
-
-// This funciton creates bread crumbs used for navigation between pages
+// This function creates bread crumbs used for navigation between pages
 function ResultsBreadCrumbs(): JSX.Element {
   return (
     <Grid item xs={12}>

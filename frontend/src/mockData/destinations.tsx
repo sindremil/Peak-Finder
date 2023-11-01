@@ -11,6 +11,7 @@ import stMoritzImage from "./mockImages/stmoritz.jpg";
 
 export const hemsedal: DestinationCardProps = {
   name: "Hemsedal",
+  country: "Norway",
   imageSrc: hemsedalImage,
   imageAlt: "Bilde av Hemsedal",
   lowestPoint: 1030,
@@ -23,6 +24,7 @@ export const hemsedal: DestinationCardProps = {
 
 export const saalbach: DestinationCardProps = {
   name: "Saalbach-Hinterglem",
+  country: "Austria",
   imageSrc: saalbachImage,
   imageAlt: "Bilde av Saalbach-Hinterglem",
   lowestPoint: 1030,
@@ -35,6 +37,7 @@ export const saalbach: DestinationCardProps = {
 
 export const zermatt: DestinationCardProps = {
   name: "Zermatt",
+  country: "Switzerland",
   imageSrc: zermattImage,
   imageAlt: "Bilde av Zermatt",
   lowestPoint: 1620,
@@ -47,6 +50,7 @@ export const zermatt: DestinationCardProps = {
 
 export const chamonix: DestinationCardProps = {
   name: "Chamonix",
+  country: "France",
   imageSrc: chamonixImage,
   imageAlt: "Bilde av Chamonix",
   lowestPoint: 1035,
@@ -60,6 +64,7 @@ export const chamonix: DestinationCardProps = {
 // Verbier, Switzerland
 export const verbier: DestinationCardProps = {
   name: "Verbier",
+  country: "Switzerland",
   imageSrc: verbierImage,
   imageAlt: "Bilde av Verbier",
   lowestPoint: 821,
@@ -73,6 +78,7 @@ export const verbier: DestinationCardProps = {
 // Courchevel, France
 export const courchevel: DestinationCardProps = {
   name: "Courchevel",
+  country: "France",
   imageSrc: couchervelImage,
   imageAlt: "Bilde av Courchevel",
   lowestPoint: 1300,
@@ -85,6 +91,7 @@ export const courchevel: DestinationCardProps = {
 
 export const davos: DestinationCardProps = {
   name: "Davos",
+  country: "Switzerland",
   imageSrc: davoslImage,
   imageAlt: "Bilde av Davos",
   lowestPoint: 810,
@@ -98,6 +105,7 @@ export const davos: DestinationCardProps = {
 // St. Moritz, Switzerland
 export const stMoritz: DestinationCardProps = {
   name: "St. Moritz",
+  country: "Switzerland",
   imageSrc: stMoritzImage,
   imageAlt: "Bilde av St. Moritz",
   lowestPoint: 1775,
@@ -111,6 +119,7 @@ export const stMoritz: DestinationCardProps = {
 // Innsbruck, Austria
 export const innsbruck: DestinationCardProps = {
   name: "Innsbruck",
+  country: "Austria",
   imageSrc: innsbruckImage,
   imageAlt: "Bilde av Innsbruck",
   lowestPoint: 574,
