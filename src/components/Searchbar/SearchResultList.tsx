@@ -1,5 +1,6 @@
 import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { ResortName } from "./searchbarTypes";
 import { useAppSelector } from "../../hooks";
 import fetchSearchResults from "./fetchSearchResults";
@@ -22,7 +23,12 @@ function SearchResultListItems(props: { result: ResortName[] }): JSX.Element {
   return (
     <List>
       {result.map((resorts) => (
-        <ListItemButton>{resorts.name}</ListItemButton>
+        <ListItemButton
+          component={Link}
+          to={`/destination/${encodeURIComponent(resorts.name)}`}
+        >
+          {resorts.name}
+        </ListItemButton>
       ))}
     </List>
   );
@@ -56,7 +62,7 @@ export default function SearchResultList(): JSX.Element | null {
     return <SearchResultListItems result={result} />;
   }
 
-  if (!searchValue || content === null) {
+  if (!searchValue || content() === null) {
     return null;
   }
 
