@@ -2,7 +2,7 @@ import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
-import fetchSearchResult from "./fetchSearchResult";
+import getSearchResult from "./getSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
 import {
@@ -57,7 +57,7 @@ export default function SearchResultList(): JSX.Element | null {
   const { isPending, isError, data, error } = useQuery<SearchResult>({
     queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
     queryFn: () =>
-      fetchSearchResult(debouncedSearchTerm, maxSearchQueryResults),
+      getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
     enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
