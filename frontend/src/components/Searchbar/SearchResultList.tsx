@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import fetchSearchResult from "./fetchSearchResult";
 import { SearchResult } from "./searchbarTypes";
+import { useDebounce } from "../../hooks/useDebounce";
 
 function LoadingSearchResultListItems(): JSX.Element {
   // TODO make length dynamic from last search result
@@ -39,13 +40,17 @@ function SearchResultListItems(props: {
 }
 
 export default function SearchResultList(): JSX.Element | null {
+  // The current search term
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
+  // A deboucned search term which only updates after half a second on no
+  // changes to the search term. Avoids unncessary API calls.
+  const debouncedSearchTerm = useDebounce<string>(searchTerm, 500);
   const MAX_RESULTS: number = 5;
 
   const { isPending, isError, data, error } = useQuery<SearchResult>({
-    queryKey: ["searchTerm", searchTerm, MAX_RESULTS],
-    queryFn: () => fetchSearchResult(searchTerm, MAX_RESULTS),
-    enabled: !!searchTerm,
+    queryKey: ["searchTerm", debouncedSearchTerm, MAX_RESULTS],
+    queryFn: () => fetchSearchResult(debouncedSearchTerm, MAX_RESULTS),
+    enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
 

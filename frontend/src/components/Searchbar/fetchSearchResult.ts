@@ -16,7 +16,7 @@ export default async function fetchSearchResult(
   }
   `;
 
-  const variables = {
+  const variables: { searchTerm: string; maxResults: number } = {
     searchTerm,
     maxResults,
   };
