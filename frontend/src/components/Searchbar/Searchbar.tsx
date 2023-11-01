@@ -23,6 +23,7 @@ export default function Searchbar(): JSX.Element {
       aria-label="Søkefelt"
       component="div"
       sx={{
+        position: "relative",
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
@@ -31,7 +32,7 @@ export default function Searchbar(): JSX.Element {
       }}
     >
       <TextField
-        placeholder="Destinasjon"
+        placeholder="Søk etter destinasjon"
         value={localSearchValue}
         onChange={handleInputChange}
         sx={{

@@ -71,6 +71,11 @@ export default function SearchResultList(): JSX.Element | null {
       elevation={3}
       sx={{
         maxHeight: "50vh",
+        zIndex: 1,
+        position: "absolute",
+        top: "100%",
+        left: 0,
+        width: "100%"
       }}
     >
       {content()}

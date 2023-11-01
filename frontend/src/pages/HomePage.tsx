@@ -1,6 +1,7 @@
 import { Box, Container, useMediaQuery } from "@mui/material";
 import logo from "../assets/logos/logo-color.svg";
 import Searchbar from "../components/Searchbar/Searchbar";
+import Browse from "../components/Browse";
 
 function Logo(): JSX.Element {
   // Media query for mobile that increases size of logo
@@ -31,6 +32,7 @@ export default function HomePage(): JSX.Element {
     >
       <Logo />
       <Searchbar />
+      <Browse />
     </Container>
   );
 }
