@@ -1,8 +1,8 @@
-import { Box, TextField, Button, useMediaQuery } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import React, { useState } from "react";
+import { Box, TextField, useMediaQuery } from "@mui/material";
 import { setSearchValue } from "./searchSlice";
 import { useAppDispatch } from "../../hooks";
-import { useState } from "react";
+import SearchResultList from "./SearchResultList";
 
 export default function Searchbar(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,6 +25,7 @@ export default function Searchbar(): JSX.Element {
       sx={{
         display: "flex",
         justifyContent: "center",
+        flexDirection: "column",
         marginTop: "2.5rem",
         width: isMobile ? "80%" : "65%",
       }}
@@ -38,9 +39,7 @@ export default function Searchbar(): JSX.Element {
           borderColor: "#2074d4",
         }}
       />
-      <Button variant="contained" aria-label="Søk">
-        <Search />
-      </Button>
+      <SearchResultList />
     </Box>
   );
 }
