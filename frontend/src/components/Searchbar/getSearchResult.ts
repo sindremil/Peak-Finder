@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 import { SearchResult } from "./searchbarTypes";
-import { useGqlClient } from "../../hooks/useGqlClient";
+import { gqlClient } from "../../main";
 
-const client = useGqlClient();
+const client = gqlClient;
 
 export default async function getSearchResult(
   searchTerm: string,
