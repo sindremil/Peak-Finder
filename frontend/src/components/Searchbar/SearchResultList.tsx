@@ -1,7 +1,7 @@
 import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import getSearchResult from "./getSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
@@ -9,6 +9,7 @@ import {
   maxSearchQueryResults,
   searchQueryDebounceDelayMs,
 } from "../../config";
+import { setSearchTerm } from "./searchSlice";
 
 // A placeholder component which is displayed when data being fetched
 function LoadingSearchResultListItems(): JSX.Element {
@@ -29,6 +30,12 @@ function SearchResultListItems(props: {
 }): JSX.Element {
   const { resorts } = props;
 
+  function handleClick() {
+    // Clears the redux search term
+    const dispatch = useAppDispatch();
+    dispatch(setSearchTerm(""))
+  }
+
   return (
     <List>
       {resorts.map(({ Resort }) => (
@@ -36,6 +43,7 @@ function SearchResultListItems(props: {
           key={encodeURI(Resort)}
           component={Link}
           to={`/${encodeURI(Resort)}`}
+          onClick={handleClick}
         >
           {Resort}
         </ListItemButton>
