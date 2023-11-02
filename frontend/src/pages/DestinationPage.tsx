@@ -1,4 +1,4 @@
-import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import Destination from "../components/Destination";
@@ -14,7 +14,7 @@ export default function DestinationPage() {
   const { name } = useParams();
   const decodedName = decodeURI(name || "");
 
-  const { isPending, isError, data } = useQuery<DestinationResponse>({
+  const { isPending, isError, data, error } = useQuery<DestinationResponse>({
     queryKey: ["Resort", decodedName],
     queryFn: () => getDestinationPageProps(decodedName),
     staleTime: Infinity,
@@ -26,11 +26,11 @@ export default function DestinationPage() {
 
   function getDestinationContent(): JSX.Element | null {
     if (isPending) {
-      return null;
+      return <p>Loading...</p>;
     }
 
     if (isError) {
-      return null;
+      return <Alert severity="error">{error.message}</Alert>;
     }
 
     const destination: DestinationInterface = data.getDestination;
