@@ -597,7 +597,7 @@ export default function Destination({
     TotalLifts: totalLifts,
     TotalRating: totalRating,
     AmountOfRatings: amountOfRatings,
-    Certifed: certifed,
+    Certified: certified,
   } = destination;
 
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
@@ -649,7 +649,7 @@ export default function Destination({
           <DestinationExtras
             snowPark={snowPark}
             nightSki={nightSki}
-            certified={certifed}
+            certified={certified}
           />
           <DestinationReviewButton
             handleRatingDialogOpen={handleRatingDialogOpen}

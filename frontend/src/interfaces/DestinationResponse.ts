@@ -17,6 +17,6 @@ export default interface DestinationResponse  {
     TotalLifts: number;
     TotalRating: number;
     AmountOfRatings: number;
-    Certifed: boolean;
+    Certified: boolean;
   };
 }
