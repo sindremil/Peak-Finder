@@ -1,15 +1,21 @@
 import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { ResortName } from "./searchbarTypes";
 import { useAppSelector } from "../../hooks";
-import fetchSearchResults from "./fetchSearchResults";
+import getSearchResult from "./getSearchResult";
+import { SearchResult } from "./searchbarTypes";
+import useDebounce from "../../hooks/useDebounce";
+import {
+  maxSearchQueryResults,
+  searchQueryDebounceDelayMs,
+} from "../../config";
 
 function LoadingSearchResultListItems(): JSX.Element {
+  // TODO make length dynamic from last search result
   return (
     <List>
-      {Array.from({ length: 5 }).map(() => (
-        <ListItemButton>
+      {Array.from({ length: maxSearchQueryResults }).map((_, number) => (
+        <ListItemButton key={number.toString()}>
           <Skeleton variant="text" width={250} />
         </ListItemButton>
       ))}
@@ -17,17 +23,20 @@ function LoadingSearchResultListItems(): JSX.Element {
   );
 }
 
-function SearchResultListItems(props: { result: ResortName[] }): JSX.Element {
-  const { result } = props;
+function SearchResultListItems(props: {
+  resorts: { Resort: string }[];
+}): JSX.Element {
+  const { resorts } = props;
 
   return (
     <List>
-      {result.map((resorts) => (
+      {resorts.map(({ Resort }) => (
         <ListItemButton
+          key={encodeURI(Resort)}
           component={Link}
-          to={`/destination/${encodeURIComponent(resorts.name)}`}
+          to={`/${encodeURI(Resort)}`}
         >
-          {resorts.name}
+          {Resort}
         </ListItemButton>
       ))}
     </List>
@@ -35,12 +44,21 @@ function SearchResultListItems(props: { result: ResortName[] }): JSX.Element {
 }
 
 export default function SearchResultList(): JSX.Element | null {
-  const searchValue = useAppSelector((state) => state.search.searchValue);
+  // The current search term
+  const searchTerm = useAppSelector((state) => state.search.searchTerm);
 
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["searchValue", searchValue],
-    queryFn: () => fetchSearchResults(searchValue),
-    enabled: !!searchValue,
+  // A deboucned search term which only updates after half a second on no
+  // changes to the search term. Avoids unncessary API calls.
+  const debouncedSearchTerm = useDebounce<string>(
+    searchTerm,
+    searchQueryDebounceDelayMs,
+  );
+
+  const { isPending, isError, data, error } = useQuery<SearchResult>({
+    queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
+    queryFn: () =>
+      getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
+    enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
 
@@ -53,16 +71,16 @@ export default function SearchResultList(): JSX.Element | null {
       return <Alert severity="error">{error.message}</Alert>;
     }
 
-    const result: ResortName[] = data.data.resorts;
+    const resorts: SearchResult["getDestinations"] = data.getDestinations;
 
-    if (result.length === 0) {
+    if (resorts.length === 0) {
       return null;
     }
 
-    return <SearchResultListItems result={result} />;
+    return <SearchResultListItems resorts={resorts} />;
   }
 
-  if (!searchValue || content() === null) {
+  if (!searchTerm || content() === null) {
     return null;
   }
 
