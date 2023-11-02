@@ -1,8 +1,8 @@
-import { gql } from "graphql-request";
+import { GraphQLClient, gql } from "graphql-request";
 import { SearchResult } from "./searchbarTypes";
-import { gqlClient } from "../../main";
+import { backendEndpoint } from "../../config";
 
-const client = gqlClient;
+const client: GraphQLClient = new GraphQLClient(backendEndpoint);
 
 export default async function getSearchResult(
   searchTerm: string,
