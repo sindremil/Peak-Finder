@@ -10,8 +10,8 @@ import {
   searchQueryDebounceDelayMs,
 } from "../../config";
 
+// A placeholder component which is displayed when data being fetched
 function LoadingSearchResultListItems(): JSX.Element {
-  // TODO make length dynamic from last search result
   return (
     <List>
       {Array.from({ length: maxSearchQueryResults }).map((_, number) => (
@@ -23,6 +23,7 @@ function LoadingSearchResultListItems(): JSX.Element {
   );
 }
 
+// The actual results of the search after the data was fetched successfully
 function SearchResultListItems(props: {
   resorts: { Resort: string }[];
 }): JSX.Element {
@@ -43,6 +44,7 @@ function SearchResultListItems(props: {
   );
 }
 
+// The container for the SearchResultListItems
 export default function SearchResultList(): JSX.Element | null {
   // The current search term
   const searchTerm = useAppSelector((state) => state.search.searchTerm);
@@ -80,7 +82,7 @@ export default function SearchResultList(): JSX.Element | null {
     return <SearchResultListItems resorts={resorts} />;
   }
 
-  if (!searchTerm || content() === null) {
+  if (!searchTerm) {
     return null;
   }
 
