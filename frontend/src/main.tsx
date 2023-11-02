@@ -1,23 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { Provider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import App from "./App";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import themeConfig from "./utils/themeConfig";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
 import store from "./store";
+import themeConfig from "./utils/themeConfig";
 
 const theme = createTheme(themeConfig);
-const queryClient = new QueryClient();
+const tanstackClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={tanstackClient}>
       <Provider store={store}>
         <CssBaseline />
         <ThemeProvider theme={theme}>
@@ -26,5 +26,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       </Provider>
       <ReactQueryDevtools />
     </QueryClientProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

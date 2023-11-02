@@ -34,7 +34,8 @@ import GondolaIcon from "../assets/GondolaIcon.svg";
 import SkiliftIcon from "../assets/ChairLiftIcon.svg";
 import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
 import LogoIcon from "../assets/logos/logo-black-cropped.svg";
-import DestinationProps from "../interfaces/DestinationProps";
+import Destination from "../interfaces/Destination";
+import tempImage from "../assets/Fischbach.jpg"
 
 // ListItemIconCentered is a new MUI class which copies ListItemIcon
 // The difference is that it also has 'justifyContent: "center"'
@@ -102,7 +103,7 @@ function DestinationHeight({
 function DestinationPass({ passPrice }: { passPrice: number }): JSX.Element {
   return (
     <ListItem>
-      <ListItemText primary="Dagspass voksen" secondary={`${passPrice} kr`} />
+      <ListItemText primary="Dagspass voksen" secondary={`${passPrice} €`} />
     </ListItem>
   );
 }
@@ -145,7 +146,7 @@ function DestinationRating({
 }): JSX.Element {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const ratingString = rating.toFixed(1);
   return (
     <Grid item xs={12} sm={3}>
       <Grid
@@ -158,7 +159,7 @@ function DestinationRating({
         }}
       >
         <Typography sx={{ paddingRight: "5px" }} aria-hidden="true">
-          {rating}
+          {ratingString}
         </Typography>
         <Rating name="showRating" value={rating} precision={0.5} readOnly />
         <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
@@ -172,14 +173,19 @@ function DestinationRating({
 // This function displays what is meant to be in the header
 function DestinationHeader({
   destinationName,
+  totalRating,
+  amountOfRatings,
 }: {
   destinationName: string;
+  totalRating: number;
+  amountOfRatings: number;
 }): JSX.Element {
+  const averageRating = totalRating / amountOfRatings;
   return (
     <CardContent>
       <Grid container spacing={2} tabIndex={0}>
         <DestinationName name={destinationName} />
-        <DestinationRating rating={3.4} ratings={53} />
+        <DestinationRating rating={averageRating} ratings={amountOfRatings} />
       </Grid>
     </CardContent>
   );
@@ -298,10 +304,12 @@ function DestinationPistes({
   beginner,
   intermediate,
   advanced,
+  totalSlope,
 }: {
   beginner: number;
   intermediate: number;
   advanced: number;
+  totalSlope: number;
 }): JSX.Element {
   return (
     <Grid item xs={12} sm={6} tabIndex={0}>
@@ -329,7 +337,7 @@ function DestinationPistes({
         />
         <DestinationTotal
           totalType="Piste"
-          totalNumber={beginner + intermediate + advanced}
+          totalNumber={totalSlope}
         />
       </List>
     </Grid>
@@ -384,10 +392,12 @@ function DestinationLifts({
   gondolas,
   chairlifts,
   surfaceLifts,
+  totalLifts,
 }: {
   gondolas: number;
   chairlifts: number;
   surfaceLifts: number;
+  totalLifts: number;
 }): JSX.Element {
   return (
     <Grid item xs={12} sm={6} tabIndex={0}>
@@ -412,7 +422,7 @@ function DestinationLifts({
         />
         <DestinationTotal
           totalType="Lifts"
-          totalNumber={gondolas + chairlifts + surfaceLifts}
+          totalNumber={totalLifts}
         />
       </List>
     </Grid>
@@ -424,16 +434,20 @@ function DestinationPistesAndLifts({
   beginner,
   intermediate,
   advanced,
+  totalSlope,
   gondolas,
   chairlifts,
   surfaceLifts,
+  totalLifts,
 }: {
   beginner: number;
   intermediate: number;
   advanced: number;
+  totalSlope: number;
   gondolas: number;
   chairlifts: number;
   surfaceLifts: number;
+  totalLifts: number;
 }): JSX.Element {
   return (
     <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
@@ -441,11 +455,13 @@ function DestinationPistesAndLifts({
         beginner={beginner}
         intermediate={intermediate}
         advanced={advanced}
+        totalSlope={totalSlope}
       />
       <DestinationLifts
         gondolas={gondolas}
         chairlifts={chairlifts}
         surfaceLifts={surfaceLifts}
+        totalLifts={totalLifts}
       />
     </Grid>
   );
@@ -559,27 +575,30 @@ function DestinationBreadCrumbs(): JSX.Element {
 // information about the destination, including
 // images, name, country, height, ski tracks, ski lifts, ski pass prices, and user reviews.
 export default function Destination({
-  destinationProps,
+  destination,
 }: {
-  destinationProps: DestinationProps;
+  destination: Destination;
 }): JSX.Element {
   const {
-    destinationName,
-    destinationImage,
-    country,
-    minHeight,
-    maxHeight,
-    passPrice,
-    beginner,
-    intermediate,
-    advanced,
-    gondolas,
-    chairlifts,
-    surfaceLifts,
-    snowPark,
-    nightSki,
-    certifed,
-  } = destinationProps;
+    Resort: name,
+    Country: country,
+    HighestPoint: maxHeight,
+    LowestPoint: minHeight,
+    DayPassPriceAdult: passPrice,
+    BeginnerSlope: beginner,
+    IntermediateSlope: intermediate,
+    DifficultSlope : advanced,
+    TotalSlope: totalSlope,
+    Snowparks: snowPark,
+    NightSki: nightSki,
+    GondolaLifts: gondolas,
+    ChairLifts: chairlifts,
+    SurfaceLifts: surfaceLifts,
+    TotalLifts: totalLifts,
+    TotalRating: totalRating,
+    AmountOfRatings: amountOfRatings,
+    Certifed: certifed,
+  } = destination;
 
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
   const [newRating, setNewRating] = useState(0);
@@ -603,13 +622,13 @@ export default function Destination({
 
   // Scroll back to top
   window.scrollTo(0, 0);
-
+  console.log(destination)
   return (
     <>
       <DestinationBreadCrumbs />
       <Card raised>
-        <DestinationImage name={destinationName} img={destinationImage} />
-        <DestinationHeader destinationName={destinationName} />
+        <DestinationImage name={name} img={tempImage} />
+        <DestinationHeader destinationName={name} totalRating={totalRating} amountOfRatings={amountOfRatings} />
         <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
           <DestinationInfo
             country={country}
@@ -621,9 +640,11 @@ export default function Destination({
             beginner={beginner}
             intermediate={intermediate}
             advanced={advanced}
+            totalSlope={totalSlope}
             gondolas={gondolas}
             chairlifts={chairlifts}
             surfaceLifts={surfaceLifts}
+            totalLifts={totalLifts}
           />
           <DestinationExtras
             snowPark={snowPark}

@@ -5,7 +5,7 @@ const destinationSchema = new Schema({
   Country: String,
   HighestPoint: Number,
   LowestPoint: Number,
-  DayPricePassAdult: Number,
+  DayPassPriceAdult: Number,
   BeginnerSlope: Number,
   IntermediateSlope: Number,
   DifficultSlope: Number,

@@ -28,16 +28,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/destination"
-          element={
-            <>
-              <SetPageTitle title="Destinasjon " />
-              <Navbar />
-              <DestinationPage />
-            </>
-          }
-        />
+        <Route path={`/:name`} element={<DestinationPage />} />
       </Routes>
     </Router>
   );

@@ -10,7 +10,7 @@ const typeDefs = `#graphql
     Country: String
     HighestPoint: Int
     LowestPoint: Int
-    DayPricePassAdult: Int
+    DayPassPriceAdult: Int
     BeginnerSlope: Int
     IntermediateSlope: Int
     DifficultSlope: Int

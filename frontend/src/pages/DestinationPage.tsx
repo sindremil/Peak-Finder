@@ -1,41 +1,61 @@
 import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 import Destination from "../components/Destination";
-import DestinationProps from "../interfaces/DestinationProps";
-import fischbach from "../assets/Fischbach.jpg";
+import getDestinationPageProps from "../components/Destination/getDestinationPageProps";
+import Navbar from "../components/Navbar";
+import DestinationInterface from "../interfaces/Destination";
+import DestinationResponse from "../interfaces/DestinationResponse";
+import SetPageTitle from "../utils/SetPageTitle";
 
 export default function DestinationPage() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { name } = useParams();
+  const decodedName = decodeURI(name || "");
 
-  const destinationPageProps: DestinationProps = {
-    destinationName: "Saalbach hinterglemm leogang fieberbrunn (skicircus) ",
-    destinationImage: fischbach,
-    country: "Norge",
-    minHeight: 1000,
-    maxHeight: 3300,
-    passPrice: 500,
-    beginner: 8,
-    intermediate: 7,
-    advanced: 6,
-    gondolas: 2,
-    chairlifts: 3,
-    surfaceLifts: 4,
-    snowPark: true,
-    nightSki: false,
-    certifed: true,
-  };
+  const { isPending, isError, data } = useQuery<DestinationResponse>({
+    queryKey: ["Resort", decodedName],
+    queryFn: () => getDestinationPageProps(decodedName),
+    staleTime: Infinity,
+  });
 
-  return isSmallScreen ? (
-    <Box>
-      <Destination destinationProps={destinationPageProps} />
-    </Box>
-  ) : (
-    <>
-      <br />
-      <Container maxWidth="md">
-        <Destination destinationProps={destinationPageProps} />
-      </Container>
-      <br />
-    </>
-  );
+  function setTitle(name: string): JSX.Element {
+    return <SetPageTitle title={name || "Destination"} />;
+  }
+
+  function getDestinationContent(): JSX.Element | null {
+    if (isPending) {
+      return null;
+    }
+
+    if (isError) {
+      return null;
+    }
+
+    const destination: DestinationInterface = data.getDestination;
+
+    if (!destination) {
+      return null;
+    }
+
+    return isSmallScreen ? (
+      <>
+        {setTitle(destination.Resort)}
+        <Navbar />
+        <Box>{<Destination destination={destination} />}</Box>
+      </>
+    ) : (
+      <>
+        {setTitle(destination.Resort)}
+        <Navbar />
+        <br />
+        <Container maxWidth="md">
+          {<Destination destination={destination} />}
+        </Container>
+        <br />
+      </>
+    );
+  }
+  return getDestinationContent();
 }
