@@ -6,7 +6,7 @@ const client = new GraphQLClient(backendEndpoint);
 
 export default async function getSearchResult(
   searchTerm: string,
-  maxResults: number
+  maxResults: number,
 ): Promise<SearchResult> {
   const query: string = gql`
     query SearchQuery($searchTerm: String!, $maxResults: Int!) {
