@@ -1,50 +1,90 @@
-import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
+import { useCallback, useMemo } from "react";
+import {
+  Alert,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  Skeleton,
+} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { ResortName } from "./searchbarTypes";
-import { useAppSelector } from "../../hooks";
-import fetchSearchResults from "./fetchSearchResults";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import getSearchResult from "./getSearchResult";
+import { SearchResult } from "./searchbarTypes";
+import useDebounce from "../../hooks/useDebounce";
+import {
+  maxSearchQueryResults,
+  searchQueryDebounceDelayMs,
+} from "../../config";
+import { setSearchTerm } from "./searchSlice";
 
+// A placeholder component which is displayed when data being fetched
 function LoadingSearchResultListItems(): JSX.Element {
   return (
     <List>
-      {Array.from({ length: 5 }).map(() => (
-        <ListItemButton>
-          <Skeleton variant="text" width={250} />
-        </ListItemButton>
+      {Array.from({ length: maxSearchQueryResults }).map((_, number) => (
+        <ListItem key={number.toString()} disableGutters disablePadding>
+          <ListItemButton>
+            <Skeleton variant="text" width={250} />
+          </ListItemButton>
+        </ListItem>
       ))}
     </List>
   );
 }
 
-function SearchResultListItems(props: { result: ResortName[] }): JSX.Element {
-  const { result } = props;
+// The actual results of the search after the data was fetched successfully
+function SearchResultListItems(props: {
+  resorts: { Resort: string }[];
+}): JSX.Element {
+  const { resorts } = props;
+  const dispatch = useAppDispatch();
+
+  // Clears the redux search term
+  const handleClick = useCallback(() => {
+    dispatch(setSearchTerm(""));
+  }, [dispatch]);
 
   return (
     <List>
-      {result.map((resorts) => (
-        <ListItemButton
-          component={Link}
-          to={`/destination/${encodeURIComponent(resorts.name)}`}
+      {resorts.map(({ Resort }) => (
+        <ListItem
+          onClick={() => handleClick}
+          disableGutters
+          key={encodeURI(Resort)}
+          disablePadding
         >
-          {resorts.name}
-        </ListItemButton>
+          <ListItemButton component={Link} to={`/${encodeURI(Resort)}`}>
+            <ListItemText>{Resort}</ListItemText>
+          </ListItemButton>
+        </ListItem>
       ))}
     </List>
   );
 }
 
+// The container for the SearchResultListItems
 export default function SearchResultList(): JSX.Element | null {
-  const searchValue = useAppSelector((state) => state.search.searchValue);
+  // The current search term
+  const searchTerm = useAppSelector((state) => state.search.searchTerm);
 
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["searchValue", searchValue],
-    queryFn: () => fetchSearchResults(searchValue),
-    enabled: !!searchValue,
+  // A deboucned search term which only updates after half a second on no
+  // changes to the search term. Avoids unncessary API calls.
+  const debouncedSearchTerm = useDebounce<string>(
+    searchTerm,
+    searchQueryDebounceDelayMs,
+  );
+
+  const { isPending, isError, data, error } = useQuery<SearchResult>({
+    queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
+    queryFn: () => getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
+    enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
 
-  function content(): JSX.Element | null {
+  const content = useMemo(() => {
     if (isPending) {
       return <LoadingSearchResultListItems />;
     }
@@ -53,27 +93,16 @@ export default function SearchResultList(): JSX.Element | null {
       return <Alert severity="error">{error.message}</Alert>;
     }
 
-    const result: ResortName[] = data.data.resorts;
-
-    if (result.length === 0) {
+    if (data.getDestinations.length === 0) {
       return null;
     }
 
-    return <SearchResultListItems result={result} />;
-  }
+    return <SearchResultListItems resorts={data.getDestinations} />;
+  }, [isPending, isError, data, error]);
 
-  if (!searchValue || content() === null) {
+  if (!searchTerm) {
     return null;
   }
 
-  return (
-    <Paper
-      elevation={3}
-      sx={{
-        maxHeight: "50vh",
-      }}
-    >
-      {content()}
-    </Paper>
-  );
+  return <Paper elevation={3}>{content}</Paper>;
 }

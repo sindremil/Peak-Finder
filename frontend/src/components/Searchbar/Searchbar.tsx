@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, TextField, useMediaQuery } from "@mui/material";
-import { setSearchValue } from "./searchSlice";
+import { setSearchTerm } from "./searchSlice";
 import { useAppDispatch } from "../../hooks";
 import SearchResultList from "./SearchResultList";
 
@@ -11,7 +11,7 @@ export default function Searchbar(): JSX.Element {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setLocalSearchValue(newValue);
-    dispatch(setSearchValue(newValue));
+    dispatch(setSearchTerm(newValue));
   };
 
   // Media query for mobile that increases size of search bar
