@@ -30,12 +30,12 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import SnowboardingIcon from "@mui/icons-material/Snowboarding";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
-import GondolaIcon from "../assets/GondolaIcon.svg";
-import SkiliftIcon from "../assets/ChairLiftIcon.svg";
-import surfaceLiftIcon from "../assets/surfaceLiftIcon.svg";
-import LogoIcon from "../assets/logos/logo-black-cropped.svg";
-import Destination from "../interfaces/Destination";
-import tempImage from "../assets/Fischbach.jpg"
+import GondolaIcon from "../../assets/GondolaIcon.svg";
+import SkiliftIcon from "../../assets/ChairLiftIcon.svg";
+import surfaceLiftIcon from "../../assets/surfaceLiftIcon.svg";
+import LogoIcon from "../../assets/logos/logo-black-cropped.svg";
+import Destination from "../../interfaces/Destination";
+import tempImage from "../../assets/Fischbach.jpg"
 
 // ListItemIconCentered is a new MUI class which copies ListItemIcon
 // The difference is that it also has 'justifyContent: "center"'

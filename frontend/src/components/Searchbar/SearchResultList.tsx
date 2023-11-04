@@ -2,7 +2,7 @@ import { Alert, List, ListItemButton, Paper, Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
-import getSearchResult from "./getSearchResult";
+import getSearchResult from "../../api/getSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
 import {

@@ -1,6 +1,8 @@
 import { GraphQLClient, gql } from "graphql-request";
-import DestinationResponse from "../../interfaces/DestinationResponse";
-import { backendEndpoint } from "../../config";
+import DestinationResponse from "../interfaces/DestinationResponse";
+import getGraphQLClient from "./getGraphQLClient";
+
+const client: GraphQLClient = getGraphQLClient();
 
 export default async function getDestinationPageProps(
   resort: string
@@ -33,8 +35,6 @@ export default async function getDestinationPageProps(
   const variables: { resort: string } = {
     resort,
   };
-
-  const client: GraphQLClient = new GraphQLClient(backendEndpoint);;
 
   try {
     const data: DestinationResponse = await client.request(query, variables);

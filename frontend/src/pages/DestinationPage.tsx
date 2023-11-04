@@ -1,8 +1,8 @@
 import { Alert, Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import Destination from "../components/Destination";
-import getDestinationPageProps from "../components/Destination/getDestinationPageProps";
+import Destination from "../components/Destination/Destination";
+import getDestinationPageProps from "../api/getDestinationPageProps";
 import Navbar from "../components/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
