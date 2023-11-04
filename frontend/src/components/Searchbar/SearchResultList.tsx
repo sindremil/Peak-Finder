@@ -51,7 +51,7 @@ function SearchResultListItems(props: {
     <List>
       {resorts.map(({ Resort }) => (
         <ListItem
-          onClick={handleClick}
+          onClick={() => handleClick}
           disableGutters
           key={encodeURI(Resort)}
           disablePadding
