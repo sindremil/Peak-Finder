@@ -1,7 +1,9 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
 import {
   Alert,
+  Box,
   Breadcrumbs,
+  Button,
   Container,
   Drawer,
   Fab,
@@ -10,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import getFilteredDestinations from "../api/getFilteredDestinations";
 import Filter from "../components/Filter/Filter";
@@ -67,7 +69,6 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
 }
 export default function Result() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const cursor = useRef<string>("")
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -76,19 +77,27 @@ export default function Result() {
   const { country } = useParams(); // Get the selected country from the URL params
   const decodedCountry = decodeURI(country || "");
 
-  const { isPending, isError, data, error } = useInfiniteQuery<DestinationCardResponse>(
-    {
-      queryKey: ["Country", decodedCountry, cursor.current],
-      queryFn: () => getFilteredDestinations(decodedCountry, cursor.current),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => {
-        const lastEdge = lastPage.getFilteredDestinations.edges;
-        // If the last page has fewer than the max number of results, there may be no more pages.
-        return lastEdge.length > 0 ? lastEdge[lastEdge.length - 1].cursor : undefined;
-      },
-      staleTime: Infinity,
-    }
-  );
+  const {
+    isPending,
+    isError,
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage, // This indicates if there's a next page available
+    isFetchingNextPage, // This indicates if the next page is currently being fetched
+  } = useInfiniteQuery<DestinationCardResponse>({
+    queryKey: ["Country", decodedCountry],
+    queryFn: ({ pageParam }) =>
+      getFilteredDestinations(decodedCountry, pageParam),
+    initialPageParam: "0",
+    getNextPageParam: (lastPage) => {
+      const lastEdge = lastPage.getFilteredDestinations.edges;
+      return lastEdge.length > 0
+        ? lastEdge[lastEdge.length - 1].cursor
+        : undefined;
+    },
+    staleTime: Infinity,
+  });
 
   const getDestinations = (): JSX.Element | null => {
     if (isPending) {
@@ -99,16 +108,27 @@ export default function Result() {
       return <Alert severity="error">{error.message}</Alert>;
     }
 
-    const destinations = data.pages.map((page) => page.getFilteredDestinations.edges);
+    const destinations = data.pages.map(
+      (page) => page.getFilteredDestinations.edges,
+    );
 
     if (!destinations) {
       return null;
     }
 
-    const nodes = destinations.flatMap((destination) => destination.map((edge) => edge.node));
+    const nodes = destinations.flatMap((destination) =>
+      destination.map((edge) => edge.node),
+    );
 
     return <>{addResults(nodes)}</>;
   };
+
+  const handleLoadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
   return (
     <>
       <SetPageTitle title={country || "Resultater "} />
@@ -127,6 +147,16 @@ export default function Result() {
           <ResultsBreadCrumbs />
           {getDestinations()}
         </Grid>
+        <Box display="flex" justifyContent="center" my={2}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleLoadMore}
+            disabled={!hasNextPage || isFetchingNextPage} // Disable button if there's no next page or if it's currently fetching
+          >
+            {isFetchingNextPage ? "Laster..." : "Last inn mer"}
+          </Button>
+        </Box>
         <Drawer
           anchor="left"
           open={drawerOpen}

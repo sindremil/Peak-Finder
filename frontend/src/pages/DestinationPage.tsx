@@ -20,14 +20,12 @@ export default function DestinationPage() {
     staleTime: Infinity,
   });
 
-  const addTitleAndNavbar = (title: string): JSX.Element => {
-    return (
-      <>
-        <SetPageTitle title={title || "Destination"} />
-        <Navbar />
-      </>
-    );
-  };
+  const addTitleAndNavbar = (title: string): JSX.Element => (
+    <>
+      <SetPageTitle title={title || "Destination"} />
+      <Navbar />
+    </>
+  );
 
   const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {

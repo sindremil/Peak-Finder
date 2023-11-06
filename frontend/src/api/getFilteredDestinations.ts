@@ -6,8 +6,8 @@ const client: GraphQLClient = getGraphQLClient();
 
 export default async function getFilteredDestinations(
   country: string,
-  after: string,
-  first: number = 9
+  after: string | unknown,
+  first: number = 9,
 ): Promise<DestinationCardResponse> {
   const query = gql`
     query getFilteredDestinations(
@@ -33,16 +33,17 @@ export default async function getFilteredDestinations(
     }
   `;
 
-  const variables: { country: string; after: string; first: number } = {
-    country,
-    after,
-    first,
-  };
+  const variables: { country: string; after: string | unknown; first: number } =
+    {
+      country,
+      after,
+      first,
+    };
 
   try {
     const data: DestinationCardResponse = await client.request(
       query,
-      variables
+      variables,
     );
     return data;
   } catch (error) {

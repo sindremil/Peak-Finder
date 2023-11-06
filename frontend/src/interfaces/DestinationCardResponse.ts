@@ -5,6 +5,6 @@ export default interface DestinationCardResponse {
     edges: {
       cursor: string;
       node: DestinationCard;
-    }[]
+    }[];
   };
 }
