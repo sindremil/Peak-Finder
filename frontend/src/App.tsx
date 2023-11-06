@@ -17,7 +17,6 @@ function App() {
             </>
           }
         />
-        <Route path="/results" element={<Result />} />
         <Route path="/results/:country" element={<Result />} />
         <Route path="/:name" element={<DestinationPage />} />
       </Routes>

@@ -26,6 +26,21 @@ const typeDefs = `#graphql
     Certified: Boolean
   }
 
+type DestinationConnection {
+  edges: [DestinationEdge]
+  pageInfo: PageInfo
+}
+
+type DestinationEdge {
+  node: Destination
+  cursor: String
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean
+}
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "destination" query returns an array of zero or more Destinations (defined above).
@@ -34,6 +49,7 @@ const typeDefs = `#graphql
     getDestination(Resort: String!): Destination
     getDestinations(searchTerm: String!, maxResults: Int!): [Destination]
     getDestinationsByCountry(Country: String!, maxResults: Int!): [Destination]
+    getFilteredDestinations(Country: String!, after: String, first: Int): DestinationConnection
   }
 
   type Mutation {

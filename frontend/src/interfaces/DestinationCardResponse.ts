@@ -1,5 +1,10 @@
 import DestinationCard from "./DestinationCard";
 
 export default interface DestinationCardResponse {
-  getDestinationsByCountry: DestinationCard[];
+  getFilteredDestinations: {
+    edges: {
+      cursor: string;
+      node: DestinationCard;
+    }[]
+  };
 }

@@ -9,10 +9,10 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import getDestinationsByCountry from "../api/getDestinationsByCountry";
+import getFilteredDestinations from "../api/getFilteredDestinations";
 import Filter from "../components/Filter/Filter";
 import Navbar from "../components/Navbar";
 import DestinationCard from "../interfaces/DestinationCard";
@@ -67,6 +67,7 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
 }
 export default function Result() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const cursor = useRef<string>("")
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -75,15 +76,21 @@ export default function Result() {
   const { country } = useParams(); // Get the selected country from the URL params
   const decodedCountry = decodeURI(country || "");
 
-  const { isPending, isError, data, error } = useQuery<DestinationCardResponse>(
+  const { isPending, isError, data, error } = useInfiniteQuery<DestinationCardResponse>(
     {
-      queryKey: ["Country", decodedCountry, 9],
-      queryFn: () => getDestinationsByCountry(decodedCountry, 9),
+      queryKey: ["Country", decodedCountry, cursor.current],
+      queryFn: () => getFilteredDestinations(decodedCountry, cursor.current),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        const lastEdge = lastPage.getFilteredDestinations.edges;
+        // If the last page has fewer than the max number of results, there may be no more pages.
+        return lastEdge.length > 0 ? lastEdge[lastEdge.length - 1].cursor : undefined;
+      },
       staleTime: Infinity,
-    },
+    }
   );
 
-  function getDestinations(): JSX.Element | null {
+  const getDestinations = (): JSX.Element | null => {
     if (isPending) {
       return <Navbar />;
     }
@@ -92,47 +99,49 @@ export default function Result() {
       return <Alert severity="error">{error.message}</Alert>;
     }
 
-    const destinations: DestinationCard[] = data.getDestinationsByCountry;
+    const destinations = data.pages.map((page) => page.getFilteredDestinations.edges);
 
     if (!destinations) {
       return null;
     }
 
-    return (
-      <>
-        <SetPageTitle title={country || "Resultater "} />
-        <Navbar />
-        <Container sx={{ marginBottom: "2rem" }}>
-          <Fab
-            aria-label="filter"
-            variant="extended"
-            sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
-            onClick={handleDrawer}
-          >
-            <FilterListIcon />
-            Filtrer
-          </Fab>
-          <Grid container spacing={4} sx={{ marginTop: "0.2vw" }}>
-            <ResultsBreadCrumbs />
-            {destinations && addResults(destinations)}
-          </Grid>
-          <Drawer
-            anchor="left"
-            open={drawerOpen}
-            sx={{ display: "flex", flexDirection: "column" }}
-            onClose={handleDrawer}
-            // To change the width of the drawer, the paper props must be manipulated
-            PaperProps={{
-              sx: {
-                maxWidth: "300px",
-              },
-            }}
-          >
-            <Filter />
-          </Drawer>
-        </Container>
-      </>
-    );
-  }
-  return getDestinations();
+    const nodes = destinations.flatMap((destination) => destination.map((edge) => edge.node));
+
+    return <>{addResults(nodes)}</>;
+  };
+  return (
+    <>
+      <SetPageTitle title={country || "Resultater "} />
+      <Navbar />
+      <Container sx={{ marginBottom: "2rem" }}>
+        <Fab
+          aria-label="filter"
+          variant="extended"
+          sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
+          onClick={handleDrawer}
+        >
+          <FilterListIcon />
+          Filtrer
+        </Fab>
+        <Grid container spacing={4} sx={{ marginTop: "0.2vw" }}>
+          <ResultsBreadCrumbs />
+          {getDestinations()}
+        </Grid>
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          sx={{ display: "flex", flexDirection: "column" }}
+          onClose={handleDrawer}
+          // To change the width of the drawer, the paper props must be manipulated
+          PaperProps={{
+            sx: {
+              maxWidth: "300px",
+            },
+          }}
+        >
+          <Filter />
+        </Drawer>
+      </Container>
+    </>
+  );
 }
