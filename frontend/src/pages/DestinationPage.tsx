@@ -31,7 +31,7 @@ export default function DestinationPage() {
 
   const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {
-      return <p>Loading...</p>;
+      return <Navbar />;
     }
 
     if (isError) {

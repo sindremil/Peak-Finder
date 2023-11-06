@@ -2,6 +2,20 @@ import Destination from "../models/Destination.js";
 
 const resolvers = {
   Query: {
+    getCountries: async (_: any) => {
+      // Use Mongoose to fetch all countries from MongoDB
+      try {
+        const destinations = await Destination.find();
+        const countries = destinations.map(
+          (destination) => destination.Country
+        );
+        const uniqueCountries = [...new Set(countries)];
+        return uniqueCountries;
+      } catch (error) {
+        console.log("Error fetching countries:", error);
+        return null;
+      }
+    },
     getDestination: async (_: any, { Resort }: { Resort: string }) => {
       // Use Mongoose to fetch data from MongoDB and filter by resort
       try {
@@ -17,7 +31,7 @@ const resolvers = {
     },
     getDestinations: async (
       _: any,
-      { searchTerm, maxResults }: { searchTerm: string; maxResults: number },
+      { searchTerm, maxResults }: { searchTerm: string; maxResults: number }
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by searchTerm
       try {
@@ -32,12 +46,12 @@ const resolvers = {
     },
     getDestinationsByCountry: async (
       _: any,
-      { Country, maxResults }: { Country: string; maxResults: number },
+      { Country, maxResults }: { Country: string; maxResults: number }
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by country
       try {
         const destinations = await Destination.find({ Country }).limit(
-          maxResults,
+          maxResults
         );
         return destinations;
       } catch (error) {
@@ -49,14 +63,14 @@ const resolvers = {
   Mutation: {
     giveRating: async (
       _: any,
-      { Resort, Rating }: { Resort: string; Rating: number },
+      { Resort, Rating }: { Resort: string; Rating: number }
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by resort
       try {
         const destination = await Destination.findOneAndUpdate(
           { Resort },
           { $inc: { TotalRating: Rating, AmountOfRatings: 1 } },
-          { new: true },
+          { new: true }
         );
         if (!destination) {
           console.log(`No destination found for resort: ${Resort}`);
