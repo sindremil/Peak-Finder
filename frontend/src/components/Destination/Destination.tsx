@@ -1,48 +1,26 @@
 import {
-  Typography,
+  Breadcrumbs,
+  Button,
   Card,
-  List,
+  CardContent,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Link,
   ListItem,
   ListItemText,
-  Box,
-  ListItemIcon,
-  SvgIconTypeMap,
-  CardMedia,
-  CardContent,
   Rating,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Grid,
-  styled,
-  useMediaQuery,
-  useTheme,
-  Breadcrumbs,
-  Link,
+  Typography,
 } from "@mui/material";
-import CircleIcon from "@mui/icons-material/Circle";
-import SquareIcon from "@mui/icons-material/Square";
-import PentagonIcon from "@mui/icons-material/Pentagon";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import NightlightIcon from "@mui/icons-material/Nightlight";
-import SnowboardingIcon from "@mui/icons-material/Snowboarding";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { useEffect, useState } from "react";
-import GondolaIcon from "../../assets/GondolaIcon.svg";
-import SkiliftIcon from "../../assets/ChairLiftIcon.svg";
-import surfaceLiftIcon from "../../assets/surfaceLiftIcon.svg";
-import LogoIcon from "../../assets/logos/logo-black-cropped.svg";
+import tempImage from "../../assets/Fischbach.jpg";
 import Destination from "../../interfaces/Destination";
-import tempImage from "../../assets/Fischbach.jpg"
-
-// ListItemIconCentered is a new MUI class which copies ListItemIcon
-// The difference is that it also has 'justifyContent: "center"'
-// This is used instead of having a similar sx tag in all the ListItemIcons
-const ListItemIconCentered = styled(ListItemIcon)({
-  justifyContent: "center",
-});
+import Extras from "./Extras";
+import Header from "./Header";
+import PistesAndLifts from "./PistesAndLifts";
 
 // This component displays an image associated with a destination.
 function DestinationImage({
@@ -62,17 +40,8 @@ function DestinationImage({
   );
 }
 
-// This component displays the name of a destination.
-function DestinationName({ name }: { name: string }): JSX.Element {
-  return (
-    <Grid item xs={12} sm={9}>
-      <Typography variant="h2">{name}</Typography>
-    </Grid>
-  );
-}
-
 // This component displays the country of a destination.
-function DestinationCountry({ country }: { country: string }): JSX.Element {
+function Country({ country }: { country: string }): JSX.Element {
   return (
     <ListItem>
       <ListItemText primary="Land" secondary={country} />
@@ -81,26 +50,26 @@ function DestinationCountry({ country }: { country: string }): JSX.Element {
 }
 
 // This component displays the height range of a destination.
-function DestinationHeight({
-  minHeight,
-  maxHeight,
+function Altitude({
+  lowestPoint,
+  highestPoint,
 }: {
-  minHeight: number;
-  maxHeight: number;
+  lowestPoint: number;
+  highestPoint: number;
 }): JSX.Element {
-  const heightDiff = maxHeight - minHeight;
+  const heightDiff = highestPoint - lowestPoint;
   return (
     <ListItem>
       <ListItemText
         primary="Meter over havet"
-        secondary={`${minHeight} m - ${maxHeight} m (${heightDiff} m)`}
+        secondary={`${lowestPoint} m - ${highestPoint} m (${heightDiff} m)`}
       />
     </ListItem>
   );
 }
 
 // This component displays information about ski pass prices.
-function DestinationPass({ passPrice }: { passPrice: number }): JSX.Element {
+function Pass({ passPrice }: { passPrice: number }): JSX.Element {
   return (
     <ListItem>
       <ListItemText primary="Dagspass voksen" secondary={`${passPrice} €`} />
@@ -110,88 +79,33 @@ function DestinationPass({ passPrice }: { passPrice: number }): JSX.Element {
 
 // This component displays a list of destination information,
 // including country and height, using the previously defined functions.
-function DestinationInfo({
+function Info({
   country,
-  minHeight,
-  maxHeight,
+  lowestPoint,
+  highestPoint,
   passPrice,
 }: {
   country: string;
-  minHeight: number;
-  maxHeight: number;
+  lowestPoint: number;
+  highestPoint: number;
   passPrice: number;
 }): JSX.Element {
   return (
     <Grid container spacing={1} tabIndex={0}>
       <Grid item xs={12} sm={4}>
-        <DestinationCountry country={country} />
+        <Country country={country} />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <DestinationHeight minHeight={minHeight} maxHeight={maxHeight} />
+        <Altitude lowestPoint={lowestPoint} highestPoint={highestPoint} />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <DestinationPass passPrice={passPrice} />
+        <Pass passPrice={passPrice} />
       </Grid>
     </Grid>
   );
 }
 
-// This component displays the rating of a destination
-function DestinationRating({
-  rating,
-  ratings,
-}: {
-  rating: number;
-  ratings: number;
-}): JSX.Element {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const ratingString = rating.toFixed(1);
-  return (
-    <Grid item xs={12} sm={3}>
-      <Grid
-        container
-        spacing={1}
-        sx={{
-          margin: 0,
-          paddingLeft: "5px",
-          justifyContent: isSmallScreen ? "left" : "right",
-        }}
-      >
-        <Typography sx={{ paddingRight: "5px" }} aria-hidden="true">
-          {ratingString}
-        </Typography>
-        <Rating name="showRating" value={rating} precision={0.5} readOnly />
-        <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
-          ({ratings})
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
-
-// This function displays what is meant to be in the header
-function DestinationHeader({
-  destinationName,
-  totalRating,
-  amountOfRatings,
-}: {
-  destinationName: string;
-  totalRating: number;
-  amountOfRatings: number;
-}): JSX.Element {
-  const averageRating = totalRating / amountOfRatings;
-  return (
-    <CardContent>
-      <Grid container spacing={2} tabIndex={0}>
-        <DestinationName name={destinationName} />
-        <DestinationRating rating={averageRating} ratings={amountOfRatings} />
-      </Grid>
-    </CardContent>
-  );
-}
-
-function DestinationReviewButton({
+function ReviewButton({
   handleRatingDialogOpen,
 }: {
   handleRatingDialogOpen: () => void;
@@ -210,8 +124,8 @@ function DestinationReviewButton({
 }
 
 // This component displays a Dialog to add a review
-// It sends the value to the Destination funciton
-function DestinationGiveReview({
+// It sends the value to the Destination function
+function GiveReview({
   isOpen,
   handleClose,
   handleGiveRating,
@@ -249,314 +163,8 @@ function DestinationGiveReview({
   );
 }
 
-// This component displays a total of the pistes/lifts availible
-function DestinationTotal({
-  totalType,
-  totalNumber,
-}: {
-  totalType: string;
-  totalNumber: number;
-}): JSX.Element {
-  return (
-    <ListItem>
-      <ListItemIconCentered>
-        <DragHandleIcon sx={{ color: "Black" }} />
-      </ListItemIconCentered>
-      <ListItemText
-        primary="Totalt"
-        secondary={`${totalNumber} ${
-          totalType.toLowerCase() === "piste" ? "km" : ""
-        }`}
-      />
-    </ListItem>
-  );
-}
-
-// This component displays information about destination's piste.
-function DestinationPiste({
-  pisteType,
-  pisteDistance,
-  PisteIcon,
-  iconColor,
-}: {
-  pisteType: string;
-  pisteDistance: number;
-  // OverridableComponent... is the type of MUI Icons
-  PisteIcon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-    muiName: string;
-  };
-  iconColor: string;
-}): JSX.Element {
-  return (
-    <ListItem>
-      <ListItemIconCentered>
-        <PisteIcon sx={{ color: iconColor }} />
-      </ListItemIconCentered>
-      <ListItemText primary={pisteType} secondary={`${pisteDistance} km`} />
-    </ListItem>
-  );
-}
-
-// This component displays a list of pistes
-// of different difficulty levels (beginner, intermediate, difficult)
-// using the previously defined DestinationPiste function.
-function DestinationPistes({
-  beginner,
-  intermediate,
-  advanced,
-  totalSlope,
-}: {
-  beginner: number;
-  intermediate: number;
-  advanced: number;
-  totalSlope: number;
-}): JSX.Element {
-  return (
-    <Grid item xs={12} sm={6} tabIndex={0}>
-      <Typography variant="h4" gutterBottom>
-        Skibakker
-      </Typography>
-      <List>
-        <DestinationPiste
-          pisteType="Nybegynner"
-          pisteDistance={beginner}
-          PisteIcon={CircleIcon}
-          iconColor="Blue"
-        />
-        <DestinationPiste
-          pisteType="Middels"
-          pisteDistance={intermediate}
-          PisteIcon={SquareIcon}
-          iconColor="Red"
-        />
-        <DestinationPiste
-          pisteType="Vanskelig"
-          pisteDistance={advanced}
-          PisteIcon={PentagonIcon}
-          iconColor="Black"
-        />
-        <DestinationTotal
-          totalType="Piste"
-          totalNumber={totalSlope}
-        />
-      </List>
-    </Grid>
-  );
-}
-
-// This function converts a svg path to just the file name
-function extractFileName(path: string): string {
-  const parts = path.split("/");
-  let fileName = parts[parts.length - 1].replace(".svg", "");
-
-  // Remove "icon" if it's part of the filename
-  fileName = fileName.replace(/icon/gi, "");
-
-  return fileName;
-}
-
-// This component displays information about the ski lifts.
-function DestinationLift({
-  liftType,
-  liftAmount,
-  liftIcon,
-}: {
-  liftType: string;
-  liftAmount: number;
-  liftIcon: string;
-}): JSX.Element {
-  return (
-    <ListItem>
-      <ListItemIconCentered>
-        <Box
-          component="img"
-          src={liftIcon}
-          alt={extractFileName(liftIcon)}
-          sx={{ maxWidth: "50px" }}
-          aria-hidden="true"
-        />
-      </ListItemIconCentered>
-      <ListItemText
-        primary={liftType}
-        secondary={liftAmount}
-        sx={{ paddingLeft: "5px" }}
-      />
-    </ListItem>
-  );
-}
-
-// This component displays a list of different types of ski lifts
-// (e.g., gondolas, chairlifts and surfaces lifts)
-// using the previously defined DestinationLift function.
-function DestinationLifts({
-  gondolas,
-  chairlifts,
-  surfaceLifts,
-  totalLifts,
-}: {
-  gondolas: number;
-  chairlifts: number;
-  surfaceLifts: number;
-  totalLifts: number;
-}): JSX.Element {
-  return (
-    <Grid item xs={12} sm={6} tabIndex={0}>
-      <Typography variant="h4" gutterBottom>
-        Skiheiser
-      </Typography>
-      <List>
-        <DestinationLift
-          liftType="Gondoler"
-          liftAmount={gondolas}
-          liftIcon={GondolaIcon}
-        />
-        <DestinationLift
-          liftType="Stolheiser"
-          liftAmount={chairlifts}
-          liftIcon={SkiliftIcon}
-        />
-        <DestinationLift
-          liftType="Ankerheiser"
-          liftAmount={surfaceLifts}
-          liftIcon={surfaceLiftIcon}
-        />
-        <DestinationTotal
-          totalType="Lifts"
-          totalNumber={totalLifts}
-        />
-      </List>
-    </Grid>
-  );
-}
-
-// This component displays Pists and Lifts
-function DestinationPistesAndLifts({
-  beginner,
-  intermediate,
-  advanced,
-  totalSlope,
-  gondolas,
-  chairlifts,
-  surfaceLifts,
-  totalLifts,
-}: {
-  beginner: number;
-  intermediate: number;
-  advanced: number;
-  totalSlope: number;
-  gondolas: number;
-  chairlifts: number;
-  surfaceLifts: number;
-  totalLifts: number;
-}): JSX.Element {
-  return (
-    <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
-      <DestinationPistes
-        beginner={beginner}
-        intermediate={intermediate}
-        advanced={advanced}
-        totalSlope={totalSlope}
-      />
-      <DestinationLifts
-        gondolas={gondolas}
-        chairlifts={chairlifts}
-        surfaceLifts={surfaceLifts}
-        totalLifts={totalLifts}
-      />
-    </Grid>
-  );
-}
-
-// This component displays information about a specific extra for the destination
-function DestinationExtra({
-  text,
-  boolean,
-  Icon,
-}: {
-  text: string;
-  boolean: boolean;
-  // OverridableComponent... is the type of MUI Icons
-  // Imgs/Svgs in this project are imported as string paths
-  // Therefore "Icon" is either a OverridableComponent or a string
-  Icon:
-    | (OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-      })
-    | string;
-}): JSX.Element {
-  const tekst = boolean ? "Ja" : "Nei";
-  let icon;
-  // Handles if the "Icon" is a MUI Icon or a path string
-  if (typeof Icon === "string") {
-    icon = (
-      <Box
-        component="img"
-        src={LogoIcon}
-        alt="Logo"
-        sx={{ maxWidth: "40px" }}
-      />
-    );
-  } else {
-    icon = <Icon sx={{ minWidth: "40px" }} />;
-  }
-  return (
-    <ListItem
-      aria-label={
-        boolean ? `Har ${text.toLowerCase()}` : `Mangler ${text.toLowerCase()}`
-      }
-    >
-      {icon}
-      <ListItemText
-        primary={text}
-        secondary={tekst}
-        sx={{ paddingLeft: "5px" }}
-      />
-    </ListItem>
-  );
-}
-
-// This component displays if the destination has a snow park, night ski or is certified
-function DestinationExtras({
-  snowPark,
-  nightSki,
-  certified,
-}: {
-  snowPark: boolean;
-  nightSki: boolean;
-  certified: boolean;
-}): JSX.Element {
-  return (
-    <>
-      <Typography variant="h4">Ekstra</Typography>
-      <Grid container spacing={2} tabIndex={0}>
-        <Grid item xs={12} sm={3}>
-          <DestinationExtra
-            text="Park"
-            boolean={snowPark}
-            Icon={SnowboardingIcon}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <DestinationExtra
-            text="Kveldskjøring"
-            boolean={nightSki}
-            Icon={NightlightIcon}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5}>
-          <DestinationExtra
-            text="Peak Finder sertifisering"
-            boolean={certified}
-            Icon={LogoIcon}
-          />
-        </Grid>
-      </Grid>
-    </>
-  );
-}
-
-// This funciton creates bread crumbs used for navigation between pages
-function DestinationBreadCrumbs(): JSX.Element {
+// This function creates bread crumbs used for navigation between pages
+function BreadCrumbs(): JSX.Element {
   return (
     <Breadcrumbs aria-label="Navigasjon">
       <Link underline="hover" color="inherit" href="/">
@@ -582,16 +190,16 @@ export default function Destination({
   const {
     Resort: name,
     Country: country,
-    HighestPoint: maxHeight,
-    LowestPoint: minHeight,
+    HighestPoint: highestPoint,
+    LowestPoint: lowestPoint,
     DayPassPriceAdult: passPrice,
-    BeginnerSlope: beginner,
-    IntermediateSlope: intermediate,
-    DifficultSlope : advanced,
+    BeginnerSlope: beginnerSlope,
+    IntermediateSlope: intermediateSlope,
+    DifficultSlope: difficultSlope,
     TotalSlope: totalSlope,
     Snowparks: snowPark,
     NightSki: nightSki,
-    GondolaLifts: gondolas,
+    GondolaLifts: gondolaLifts,
     ChairLifts: chairlifts,
     SurfaceLifts: surfaceLifts,
     TotalLifts: totalLifts,
@@ -622,41 +230,42 @@ export default function Destination({
 
   // Scroll back to top
   window.scrollTo(0, 0);
-  console.log(destination)
   return (
     <>
-      <DestinationBreadCrumbs />
+      <BreadCrumbs />
       <Card raised>
         <DestinationImage name={name} img={tempImage} />
-        <DestinationHeader destinationName={name} totalRating={totalRating} amountOfRatings={amountOfRatings} />
+        <Header
+          destinationName={name}
+          totalRating={totalRating}
+          amountOfRatings={amountOfRatings}
+        />
         <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
-          <DestinationInfo
+          <Info
             country={country}
-            minHeight={minHeight}
-            maxHeight={maxHeight}
+            lowestPoint={lowestPoint}
+            highestPoint={highestPoint}
             passPrice={passPrice}
           />
-          <DestinationPistesAndLifts
-            beginner={beginner}
-            intermediate={intermediate}
-            advanced={advanced}
+          <PistesAndLifts
+            beginner={beginnerSlope}
+            intermediate={intermediateSlope}
+            advanced={difficultSlope}
             totalSlope={totalSlope}
-            gondolas={gondolas}
+            gondolas={gondolaLifts}
             chairlifts={chairlifts}
             surfaceLifts={surfaceLifts}
             totalLifts={totalLifts}
           />
-          <DestinationExtras
+          <Extras
             snowPark={snowPark}
             nightSki={nightSki}
             certified={certified}
           />
-          <DestinationReviewButton
-            handleRatingDialogOpen={handleRatingDialogOpen}
-          />
+          <ReviewButton handleRatingDialogOpen={handleRatingDialogOpen} />
         </CardContent>
       </Card>
-      <DestinationGiveReview
+      <GiveReview
         isOpen={isRatingDialogOpen}
         handleClose={handleRatingDialogClose}
         handleGiveRating={handleGiveRating}

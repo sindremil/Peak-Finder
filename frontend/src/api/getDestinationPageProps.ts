@@ -40,6 +40,6 @@ export default async function getDestinationPageProps(
     const data: DestinationResponse = await client.request(query, variables);
     return data;
   } catch (error) {
-    throw new Error(`Failed to fetch search result: ${error}`);
+    throw new Error(`Failed to fetch destination: ${error}`);
   }
 }
