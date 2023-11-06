@@ -163,7 +163,7 @@ export default function DestinationCard({
 
   return (
     <Card raised>
-      <CardActionArea component={Link} to="/destination">
+      <CardActionArea component={Link} to={`/${name}`}>
         <DestinationName name={name} />
         <DestinationImage src={imageSrc} alt={imageAlt} />
         <DestinationInfo

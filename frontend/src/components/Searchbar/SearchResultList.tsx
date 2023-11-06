@@ -11,7 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import getSearchResult from "./getSearchResult";
+import getSearchResult from "../../api/getSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
 import {
@@ -22,6 +22,7 @@ import { setSearchTerm } from "./searchSlice";
 
 // A placeholder component which is displayed when data being fetched
 function LoadingSearchResultListItems(): JSX.Element {
+  // TODO make length dynamic from last search result
   return (
     <List>
       {Array.from({ length: maxSearchQueryResults }).map((_, number) => (
