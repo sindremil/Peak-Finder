@@ -11,12 +11,9 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./store";
 import themeConfig from "./utils/themeConfig";
-import { GraphQLClient } from "graphql-request";
-import { backendEndpoint } from "./config";
 
 const theme = createTheme(themeConfig);
 const tanstackClient = new QueryClient();
-export const gqlClient = new GraphQLClient(backendEndpoint);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -29,5 +26,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       </Provider>
       <ReactQueryDevtools />
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

@@ -28,7 +28,7 @@ function App() {
             </>
           }
         />
-        <Route path={`/:name`} element={<DestinationPage />} />
+        <Route path="/:name" element={<DestinationPage />} />
       </Routes>
     </Router>
   );

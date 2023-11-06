@@ -6,4 +6,3 @@ export const maxSearchQueryResults: number = 5;
 
 // The endpoint of the backend
 export const backendEndpoint = "http://localhost:4000/";
-

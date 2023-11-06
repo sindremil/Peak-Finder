@@ -5,7 +5,7 @@ import getGraphQLClient from "./getGraphQLClient";
 const client: GraphQLClient = getGraphQLClient();
 
 export default async function getDestinationPageProps(
-  resort: string
+  resort: string,
 ): Promise<DestinationResponse> {
   const query = gql`
     query GetDestination($resort: String!) {

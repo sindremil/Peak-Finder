@@ -20,8 +20,8 @@ export default function DestinationPage() {
     staleTime: Infinity,
   });
 
-  function setTitle(name: string): JSX.Element {
-    return <SetPageTitle title={name || "Destination"} />;
+  function setTitle(title: string): JSX.Element {
+    return <SetPageTitle title={title || "Destination"} />;
   }
 
   function getDestinationContent(): JSX.Element | null {
@@ -43,7 +43,9 @@ export default function DestinationPage() {
       <>
         {setTitle(destination.Resort)}
         <Navbar />
-        <Box>{<Destination destination={destination} />}</Box>
+        <Box>
+          <Destination destination={destination} />
+        </Box>
       </>
     ) : (
       <>
@@ -51,7 +53,7 @@ export default function DestinationPage() {
         <Navbar />
         <br />
         <Container maxWidth="md">
-          {<Destination destination={destination} />}
+          <Destination destination={destination} />
         </Container>
         <br />
       </>

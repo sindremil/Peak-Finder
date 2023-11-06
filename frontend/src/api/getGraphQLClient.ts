@@ -9,5 +9,5 @@ export default function getGraphQLClient(): GraphQLClient {
     clientInstance = new GraphQLClient(backendEndpoint);
   }
 
-  return clientInstance
+  return clientInstance;
 }

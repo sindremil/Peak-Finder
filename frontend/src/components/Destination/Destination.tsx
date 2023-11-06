@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import tempImage from "../../assets/Fischbach.jpg";
-import Destination from "../../interfaces/Destination";
+import DestinationInterface from "../../interfaces/Destination";
 import Extras from "./Extras";
 import Header from "./Header";
 import PistesAndLifts from "./PistesAndLifts";
@@ -185,7 +185,7 @@ function BreadCrumbs(): JSX.Element {
 export default function Destination({
   destination,
 }: {
-  destination: Destination;
+  destination: DestinationInterface;
 }): JSX.Element {
   const {
     Resort: name,

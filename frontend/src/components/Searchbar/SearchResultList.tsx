@@ -56,8 +56,7 @@ export default function SearchResultList(): JSX.Element | null {
 
   const { isPending, isError, data, error } = useQuery<SearchResult>({
     queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
-    queryFn: () =>
-      getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
+    queryFn: () => getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
     enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
