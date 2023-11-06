@@ -30,6 +30,7 @@ const typeDefs = `#graphql
   # clients can execute, along with the return type for each. In this
   # case, the "destination" query returns an array of zero or more Destinations (defined above).
   type Query {
+    getCountries: [String]
     getDestination(Resort: String!): Destination
     getDestinations(searchTerm: String!, maxResults: Int!): [Destination]
     getDestinationsByCountry(Country: String!, maxResults: Int!): [Destination]
