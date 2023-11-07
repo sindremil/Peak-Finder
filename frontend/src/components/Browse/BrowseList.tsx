@@ -1,4 +1,4 @@
-import { Alert, ListItemButton } from "@mui/material";
+import { Alert, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import getCountries from "../../api/getCountries";
@@ -8,13 +8,18 @@ function CountryListItems({ countries }: { countries: string[] }): JSX.Element {
   return (
     <>
       {countries.map((country) => (
-        <ListItemButton
-          key={encodeURI(country)}
-          component={Link}
-          to={`/results/${encodeURI(country)}`}
+        <ListItem
+          key={encodeURIComponent(country)}
+          disableGutters
+          disablePadding
         >
-          {country}
-        </ListItemButton>
+          <ListItemButton
+            component={Link}
+            to={`/results/${encodeURIComponent(country)}`}
+          >
+            <ListItemText>{country}</ListItemText>
+          </ListItemButton>
+        </ListItem>
       ))}
     </>
   );
@@ -23,7 +28,7 @@ function CountryListItems({ countries }: { countries: string[] }): JSX.Element {
 export default function BrowseList(): JSX.Element | null {
   // State for the selected country
   const { isPending, isError, data, error } = useQuery<CountriesResponse>({
-    queryKey: [],
+    queryKey: ["Countries"],
     queryFn: () => getCountries(),
     staleTime: Infinity,
   });

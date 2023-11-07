@@ -54,10 +54,13 @@ function SearchResultListItems(props: {
         <ListItem
           onClick={() => handleClick}
           disableGutters
-          key={encodeURI(Resort)}
+          key={encodeURIComponent(Resort)}
           disablePadding
         >
-          <ListItemButton component={Link} to={`/${encodeURI(Resort)}`}>
+          <ListItemButton
+            component={Link}
+            to={`/${encodeURIComponent(Resort)}`}
+          >
             <ListItemText>{Resort}</ListItemText>
           </ListItemButton>
         </ListItem>
@@ -117,7 +120,7 @@ export default function SearchResultList(): JSX.Element | null {
         width: "100%",
       }}
     >
-      {content()}
+      {content}
     </Paper>
   );
 }

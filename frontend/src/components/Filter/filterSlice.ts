@@ -1,18 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface FilterState {
-  hasPark: boolean;
-  hasNightSkiing: boolean;
-  hasChairlift: boolean;
-  hasGondola: boolean;
-  isCertified: boolean;
-
-  minElevationDifference: number;
-  minBaseElevation: number;
-  minTotalPiste: number;
-  minTotalLifts: number;
-  maxDayPassPrice: number;
-}
+import FilterState from "../../../../shared/types/FilterState";
 
 const initialState: FilterState = {
   hasPark: false,

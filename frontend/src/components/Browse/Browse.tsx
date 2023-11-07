@@ -3,7 +3,7 @@ import BrowseList from "./BrowseList";
 
 export default function Browse(): JSX.Element {
   return (
-    <FormControl sx={{ m: 1, minWidth: 300 }}>
+    <FormControl sx={{ m: 1, minWidth: 200 }}>
       <InputLabel id="browseSelectLabel">Land</InputLabel>
       <Select
         labelId="browseSelectLabel"

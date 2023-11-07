@@ -1,4 +1,5 @@
 import Destination from "../models/Destination.js";
+import FilterState from "../../../shared/types/FilterState";
 
 const resolvers = {
   Query: {
@@ -56,6 +57,91 @@ const resolvers = {
         return destinations;
       } catch (error) {
         console.log("Error fetching destinations by country:", error);
+        return null;
+      }
+    },
+    getFilteredDestinations: async (
+      _: any,
+      {
+        Country,
+        filter,
+        after,
+        first = 9,
+      }: { Country: string; filter: FilterState; after: string; first?: number }
+    ) => {
+      try {
+        // Initialize the query with the Country and dynamic keys like 'Resort'.
+        let query: any = { Country: Country };
+
+        // If an 'after' cursor is provided, add the 'Resort' property to the query.
+        if (after) {
+          query["Resort"] = { $gt: after };
+        }
+
+        console.log(filter);
+
+        // Apply the filters from the 'filter' object to the query.
+        if (filter) {
+          if (filter.hasPark) query["Snowparks"] = filter.hasPark;
+          if (filter.hasNightSkiing) query["NightSki"] = filter.hasNightSkiing;
+          if (filter.hasChairlift) query["ChairLifts"] = { $gte: 1 };
+          if (filter.hasGondola) query["GondolaLifts"] = { $gte: 1 };
+          if (filter.isCertified) query["Certified"] = filter.isCertified;
+          if (filter.minElevationDifference) {
+            query["$where"] = function () {
+              return (
+                this.HighestPoint - this.LowestPoint >=
+                filter.minElevationDifference
+              );
+            };
+          }
+          if (filter.minBaseElevation)
+            query["LowestPoint"] = { $gte: filter.minBaseElevation };
+          if (filter.minTotalPiste)
+            query["TotalSlope"] = { $gte: filter.minTotalPiste };
+          if (filter.minTotalLifts)
+            query["TotalLifts"] = { $gte: filter.minTotalLifts };
+          if (filter.maxDayPassPrice)
+            query["DayPassPriceAdult"] = { $lte: filter.maxDayPassPrice };
+        }
+
+        // Execute the query with sorting and limiting to implement pagination.
+        const destinations = await Destination.find(query)
+          .sort({ Resort: 1 }) // Sort by the Resort field
+          .limit(first);
+
+        // Transform the result into the shape expected for pagination.
+        const edges = destinations.map((destination) => ({
+          node: destination,
+          cursor: destination.Resort, // Use Resort name as the cursor
+        }));
+
+        // Find out if there is a next page.
+        let hasNextPage = false;
+        if (destinations.length > 0) {
+          const lastDestination = destinations[destinations.length - 1];
+          // Count if there are more destinations after the last one we fetched.
+          hasNextPage =
+            (await Destination.countDocuments({
+              ...query,
+              Resort: { $gt: lastDestination.Resort },
+            })) > 0;
+        }
+
+        // Prepare the endCursor from the last destination's Resort if available.
+        const endCursor =
+          edges.length > 0 ? edges[edges.length - 1].cursor : null;
+
+        // Return in the shape of a paginated response.
+        return {
+          edges: edges,
+          pageInfo: {
+            endCursor: endCursor,
+            hasNextPage: hasNextPage,
+          },
+        };
+      } catch (error) {
+        console.error("Error fetching filtered destinations:", error);
         return null;
       }
     },
