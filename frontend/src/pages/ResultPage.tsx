@@ -1,13 +1,5 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
-import {
-  Breadcrumbs,
-  Container,
-  Drawer,
-  Fab,
-  Grid,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Container, Drawer, Fab } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Filter from "../components/Filter/Filter";
@@ -16,20 +8,7 @@ import Result from "../components/Result/Result";
 import { useAppSelector } from "../hooks";
 import useDebounce from "../hooks/useDebounce";
 import SetPageTitle from "../utils/SetPageTitle";
-
-// This function creates bread crumbs used for navigation between pages
-function ResultsBreadCrumbs(): JSX.Element {
-  return (
-    <Grid item xs={12}>
-      <Breadcrumbs aria-label="Navigasjon">
-        <Link underline="hover" color="inherit" href="/">
-          Hjem
-        </Link>
-        <Typography color="text.primary">Resultater</Typography>
-      </Breadcrumbs>
-    </Grid>
-  );
-}
+import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 
 export default function ResultPage() {
   const filter = useAppSelector((state) => state.filter);
@@ -46,7 +25,7 @@ export default function ResultPage() {
       <SetPageTitle title={country || "Result"} />
       <Navbar />
       <Container sx={{ paddingTop: "24px", paddingBottom: "24px" }}>
-        <ResultsBreadCrumbs />
+        {BreadCrumbs()}
       </Container>
       <Fab
         aria-label="filter"
