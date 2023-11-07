@@ -8,10 +8,10 @@ function CountryListItems({ countries }: { countries: string[] }): JSX.Element {
   return (
     <>
       {countries.map((country) => (
-        <ListItem key={encodeURI(country)} disableGutters disablePadding>
+        <ListItem key={encodeURIComponent(country)} disableGutters disablePadding>
           <ListItemButton
             component={Link}
-            to={`/results/${encodeURI(country)}`}
+            to={`/results/${encodeURIComponent(country)}`}
           >
             <ListItemText>{country}</ListItemText>
           </ListItemButton>

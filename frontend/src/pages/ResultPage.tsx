@@ -22,6 +22,7 @@ import DestinationCardProps from "../interfaces/DestinationCardProps";
 import DestinationCardResponse from "../interfaces/DestinationCardResponse";
 import SetPageTitle from "../utils/SetPageTitle";
 import addResult from "../utils/addResult";
+import { useAppSelector } from "../hooks";
 
 // This function creates bread crumbs used for navigation between pages
 function ResultsBreadCrumbs(): JSX.Element {
@@ -69,6 +70,7 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
 }
 export default function Result() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const filter = useAppSelector(state => state.filter)
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -88,7 +90,7 @@ export default function Result() {
   } = useInfiniteQuery<DestinationCardResponse>({
     queryKey: ["Country", decodedCountry],
     queryFn: ({ pageParam }) =>
-      getFilteredDestinations(decodedCountry, pageParam),
+      getFilteredDestinations(decodedCountry, filter, pageParam),
     initialPageParam: "0",
     getNextPageParam: (lastPage) => {
       const lastEdge = lastPage.getFilteredDestinations.edges;
