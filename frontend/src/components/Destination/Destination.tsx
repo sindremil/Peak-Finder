@@ -1,5 +1,5 @@
 import {
-  Breadcrumbs,
+  Alert,
   Button,
   Card,
   CardContent,
@@ -9,11 +9,10 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Link,
   ListItem,
   ListItemText,
   Rating,
-  Typography,
+  Snackbar,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import tempImage from "../../assets/Fischbach.jpg";
@@ -163,21 +162,6 @@ function GiveReview({
   );
 }
 
-// This function creates bread crumbs used for navigation between pages
-function BreadCrumbs(): JSX.Element {
-  return (
-    <Breadcrumbs aria-label="Navigasjon">
-      <Link underline="hover" color="inherit" href="/">
-        Hjem
-      </Link>
-      <Link underline="hover" color="inherit" href="/project2/results">
-        Resultater
-      </Link>
-      <Typography color="text.primary">Destinasjon</Typography>
-    </Breadcrumbs>
-  );
-}
-
 // This is the main component exported from the module.
 // It uses the previously defined functions to display
 // information about the destination, including
@@ -232,7 +216,6 @@ export default function Destination({
   window.scrollTo(0, 0);
   return (
     <>
-      <BreadCrumbs />
       <Card raised>
         <DestinationImage name={name} img={tempImage} />
         <Header
