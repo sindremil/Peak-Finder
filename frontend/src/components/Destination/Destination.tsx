@@ -1,4 +1,5 @@
 import {
+  Alert,
   Breadcrumbs,
   Button,
   Card,
@@ -13,9 +14,12 @@ import {
   ListItem,
   ListItemText,
   Rating,
+  Snackbar,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import giveRating from "../../api/giveRating";
 import tempImage from "../../assets/Fischbach.jpg";
 import DestinationInterface from "../../interfaces/Destination";
 import Extras from "./Extras";
@@ -203,13 +207,33 @@ export default function Destination({
     ChairLifts: chairlifts,
     SurfaceLifts: surfaceLifts,
     TotalLifts: totalLifts,
-    TotalRating: totalRating,
-    AmountOfRatings: amountOfRatings,
     Certified: certified,
   } = destination;
+  let { TotalRating: totalRating, AmountOfRatings: amountOfRatings } =
+    destination;
 
   const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
-  const [newRating, setNewRating] = useState(0);
+  const [responseOpen, setResponseOpen] = useState(false);
+
+  const mutation = useMutation({
+    mutationFn: (newRating: number) =>
+      giveRating({ resort: name, rating: newRating }),
+  });
+
+  const handleClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setResponseOpen(false);
+  };
+  if (mutation.isSuccess) {
+    totalRating = mutation.data.giveRating.TotalRating;
+    amountOfRatings = mutation.data.giveRating.AmountOfRatings;
+  }
 
   const handleRatingDialogOpen = () => {
     setIsRatingDialogOpen(true);
@@ -220,16 +244,11 @@ export default function Destination({
   };
 
   const handleGiveRating = (newValue: number) => {
-    setNewRating(newValue);
+    mutation.mutate(newValue);
+    setResponseOpen(true);
     handleRatingDialogClose();
   };
 
-  // Is going to be used to send the newRating to the backend
-  // when a user submits a review
-  useEffect(() => {}, [newRating]);
-
-  // Scroll back to top
-  window.scrollTo(0, 0);
   return (
     <>
       <BreadCrumbs />
@@ -270,6 +289,13 @@ export default function Destination({
         handleClose={handleRatingDialogClose}
         handleGiveRating={handleGiveRating}
       />
+      <Snackbar
+        open={responseOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert severity="success">Vurdering sendt!</Alert>
+      </Snackbar>
     </>
   );
 }
