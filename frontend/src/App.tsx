@@ -1,9 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import DestinationPage from "./pages/DestinationPage";
-import Navbar from "./components/Navbar";
-import SetPageTitle from "./utils/SetPageTitle";
-import Result from "./pages/ResultPage";
 import HomePage from "./pages/HomePage";
+import Result from "./pages/ResultPage";
+import SetPageTitle from "./utils/SetPageTitle";
 
 function App() {
   return (
@@ -18,16 +17,8 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/results"
-          element={
-            <>
-              <Navbar />
-              <SetPageTitle title="Resultater " />
-              <Result />
-            </>
-          }
-        />
+        <Route path="/results" element={<Result />} />
+        <Route path="/results/:country" element={<Result />} />
         <Route path="/:name" element={<DestinationPage />} />
       </Routes>
     </Router>

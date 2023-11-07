@@ -1,5 +1,6 @@
 export default interface DestinationCardProps {
   name: string;
+  country: string;
   imageSrc: string;
   imageAlt: string;
   lowestPoint: number;
