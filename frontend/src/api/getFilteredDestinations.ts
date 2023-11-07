@@ -9,7 +9,7 @@ export default async function getFilteredDestinations(
   country: string,
   filter: FilterState,
   after: string | unknown,
-  first: number = 9
+  first: number = 9,
 ): Promise<DestinationCardResponse> {
   const query = gql`
     query getFilteredDestinations(
@@ -54,10 +54,9 @@ export default async function getFilteredDestinations(
   };
 
   try {
-    console.log(variables)
     const data: DestinationCardResponse = await client.request(
       query,
-      variables
+      variables,
     );
     return data;
   } catch (error) {

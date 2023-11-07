@@ -23,6 +23,7 @@ import DestinationCardResponse from "../interfaces/DestinationCardResponse";
 import SetPageTitle from "../utils/SetPageTitle";
 import addResult from "../utils/addResult";
 import { useAppSelector } from "../hooks";
+import useDebounce from "../hooks/useDebounce";
 
 // This function creates bread crumbs used for navigation between pages
 function ResultsBreadCrumbs(): JSX.Element {
@@ -70,15 +71,9 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
 }
 export default function Result() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const filter = useAppSelector(state => state.filter)
-
-  const handleDrawer = () => {
-    setDrawerOpen(!drawerOpen);
-  };
-
-  const { country } = useParams(); // Get the selected country from the URL params
-  const decodedCountry = decodeURI(country || "");
-
+  const filter = useAppSelector((state) => state.filter);
+  const country = useParams().country ?? "";
+  const debouncedFilter = useDebounce(filter, 500);
   const {
     isPending,
     isError,
@@ -88,9 +83,13 @@ export default function Result() {
     hasNextPage, // This indicates if there's a next page available
     isFetchingNextPage, // This indicates if the next page is currently being fetched
   } = useInfiniteQuery<DestinationCardResponse>({
-    queryKey: ["Country", decodedCountry],
+    queryKey: ["country", decodeURIComponent(country), debouncedFilter],
     queryFn: ({ pageParam }) =>
-      getFilteredDestinations(decodedCountry, filter, pageParam),
+      getFilteredDestinations(
+        decodeURIComponent(country),
+        debouncedFilter,
+        pageParam,
+      ),
     initialPageParam: "0",
     getNextPageParam: (lastPage) => {
       const lastEdge = lastPage.getFilteredDestinations.edges;
@@ -100,6 +99,10 @@ export default function Result() {
     },
     staleTime: Infinity,
   });
+
+  const handleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
   const getDestinations = (): JSX.Element | null => {
     if (isPending) {
