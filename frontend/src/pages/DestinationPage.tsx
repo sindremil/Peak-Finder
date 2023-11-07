@@ -20,11 +20,16 @@ export default function DestinationPage() {
     staleTime: Infinity,
   });
 
-  function setTitle(title: string): JSX.Element {
-    return <SetPageTitle title={title || "Destination"} />;
-  }
+  const addTitleAndNavbar = (title: string): JSX.Element => {
+    return (
+      <>
+        <SetPageTitle title={title || "Destination"} />
+        <Navbar />
+      </>
+    );
+  };
 
-  function getDestinationContent(): JSX.Element | null {
+  const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {
       return <Navbar />;
     }
@@ -41,16 +46,14 @@ export default function DestinationPage() {
 
     return isSmallScreen ? (
       <>
-        {setTitle(destination.Resort)}
-        <Navbar />
+        {addTitleAndNavbar(destination.Resort)}
         <Box>
           <Destination destination={destination} />
         </Box>
       </>
     ) : (
       <>
-        {setTitle(destination.Resort)}
-        <Navbar />
+        {addTitleAndNavbar(destination.Resort)}
         <br />
         <Container maxWidth="md">
           <Destination destination={destination} />
@@ -58,6 +61,6 @@ export default function DestinationPage() {
         <br />
       </>
     );
-  }
+  };
   return getDestinationContent();
 }
