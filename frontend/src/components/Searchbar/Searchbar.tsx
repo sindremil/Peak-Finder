@@ -39,6 +39,7 @@ export default function Searchbar(): JSX.Element {
           flex: 1,
           borderColor: "#2074d4",
         }}
+        autoComplete="off"
       />
       <SearchResultList />
     </Box>
