@@ -21,6 +21,12 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       DifficultSlope,
       TotalLifts,
     } = destinationCard;
+    const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
+      /[^a-z]/g,
+      "",
+    )}.jpg`;
+    const imageAlt = `Bilde av ${Resort}`;
+
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
       country: Country,
@@ -30,8 +36,8 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       intermediate: IntermediateSlope,
       advanced: DifficultSlope,
       lifts: TotalLifts,
-      imageSrc: "https://picsum.photos/200/300",
-      imageAlt: "Placeholder image",
+      imageSrc: imagePath,
+      imageAlt,
     };
     resultArray.push(addResult(destinationCardProps));
   });
