@@ -16,9 +16,9 @@ npm run dev
 
 ## Current limitations
 
-We are following the requirements for each partial delivery, so at this point there are no tests. There are also some minor bugs with the frontend that will be fixed for the final delivery. All the functionality is in place however.
+We are following the requirements for each partial delivery, so at this point there are no tests. All the functionality is in place however.
 
-## Assumptioms
+## Assumptions
 
 We have assumed a grid of results is sufficient for the list requirement since a grid is virtually a list spread across multiple rows.
 
