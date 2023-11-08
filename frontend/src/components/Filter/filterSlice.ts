@@ -52,6 +52,18 @@ export const filterSlice = createSlice({
     setMaxDayPassPrice: (state, action) => {
       state.maxDayPassPrice = action.payload;
     },
+    resetFilter: (state) => {
+      state.hasPark = false;
+      state.hasNightSkiing = false;
+      state.hasChairlift = false;
+      state.hasGondola = false;
+      state.isCertified = false;
+      state.minElevationDifference = 0;
+      state.minBaseElevation = 0;
+      state.minTotalPiste = 0;
+      state.minTotalLifts = 0;
+      state.maxDayPassPrice = 200;
+    },
   },
 });
 /* eslint-enable no-param-reassign */
@@ -68,6 +80,8 @@ export const {
   setMinTotalPiste,
   setMinTotalLifts,
   setMaxDayPassPrice,
+
+  resetFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

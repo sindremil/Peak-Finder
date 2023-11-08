@@ -104,7 +104,7 @@ export default function Result({
   function getErrorOrEmptyContent(displayString: string): JSX.Element {
     return (
       <Container sx={{ marginBottom: "2rem" }}>
-        <Grid container spacing={12}>
+        <Grid container spacing={12} sx={{ marginTop: "0" }}>
           <Grid item xs={12}>
             <Typography variant="h5" sx={{ textAlign: "center" }}>
               {displayString}
