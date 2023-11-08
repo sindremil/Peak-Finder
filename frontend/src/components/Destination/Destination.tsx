@@ -17,7 +17,6 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import giveRating from "../../api/giveRating";
-import tempImage from "../../assets/Fischbach.jpg";
 import DestinationInterface from "../../interfaces/Destination";
 import Extras from "./Extras";
 import Header from "./Header";
@@ -231,10 +230,14 @@ export default function Destination({
     handleRatingDialogClose();
   };
 
+  const imagePath = `../images/resorts/${name
+    .toLowerCase()
+    .replace(/[^a-z]/g, "")}.jpg`;
+
   return (
     <>
       <Card raised>
-        <DestinationImage name={name} img={tempImage} />
+        <DestinationImage name={name} img={imagePath} />
         <Header
           destinationName={name}
           totalRating={totalRating}

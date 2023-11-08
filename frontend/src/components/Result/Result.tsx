@@ -21,8 +21,11 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       DifficultSlope,
       TotalLifts,
     } = destinationCard;
-    const imagePath = "../images/resorts/" + Resort.toLowerCase().replace(/[^a-z]/g, "") + ".jpg";
-    const imageAlt = "An image of " + Resort;
+    const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
+      /[^a-z]/g,
+      "",
+    )}.jpg`;
+    const imageAlt = `Bilde av ${Resort}`;
 
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
@@ -34,7 +37,7 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       advanced: DifficultSlope,
       lifts: TotalLifts,
       imageSrc: imagePath,
-      imageAlt: imageAlt,
+      imageAlt,
     };
     resultArray.push(addResult(destinationCardProps));
   });
