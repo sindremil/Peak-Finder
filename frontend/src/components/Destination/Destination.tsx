@@ -231,10 +231,14 @@ export default function Destination({
     handleRatingDialogClose();
   };
 
+  const imagePath = `images/resorts/${name
+    .toLowerCase()
+    .replace(/[^a-z]/g, "")}.jpg`;
+
   return (
     <>
       <Card raised>
-        <DestinationImage name={name} img={tempImage} />
+        <DestinationImage name={name} img={imagePath} />
         <Header
           destinationName={name}
           totalRating={totalRating}
