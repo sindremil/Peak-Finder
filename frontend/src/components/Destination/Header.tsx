@@ -26,7 +26,10 @@ function DestinationRating({
 }): JSX.Element {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const ratingString = rating.toFixed(1);
+  let ratingString: string = "";
+  if (!Number.isNaN(rating)) {
+    ratingString = rating.toFixed(1);
+  }
   return (
     <Grid item xs={12} sm={3}>
       <Grid
