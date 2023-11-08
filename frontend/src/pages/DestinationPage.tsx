@@ -57,7 +57,11 @@ export default function DestinationPage() {
       <>
         {addTitleAndNavbar(destination.Resort)}
         <Box>
-          {BreadCrumbs(isFromResult, destination.Country)}
+          {BreadCrumbs({
+            country: destination.Country,
+            destination: destination.Resort,
+            isFromResult,
+          })}
           <Destination destination={destination} />
         </Box>
       </>
@@ -66,7 +70,11 @@ export default function DestinationPage() {
         {addTitleAndNavbar(destination.Resort)}
         <br />
         <Container maxWidth="md">
-          {BreadCrumbs(isFromResult, destination.Country)}
+          {BreadCrumbs({
+            country: destination.Country,
+            destination: destination.Resort,
+            isFromResult,
+          })}
           <Destination destination={destination} />
         </Container>
         <br />

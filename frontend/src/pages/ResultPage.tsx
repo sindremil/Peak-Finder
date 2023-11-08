@@ -25,7 +25,7 @@ export default function ResultPage() {
       <SetPageTitle title={country || "Result"} />
       <Navbar />
       <Container sx={{ paddingTop: "24px", paddingBottom: "24px" }}>
-        {BreadCrumbs()}
+        {BreadCrumbs({ country, isResult: true })}
       </Container>
       <Fab
         aria-label="filter"

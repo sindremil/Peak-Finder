@@ -133,7 +133,6 @@ export default function Result({
         </Box>
       </Container>
     );
-  } else {
-    return getErrorOrEmptyContent("Ingen resultater samsvarte med søket");
   }
+  return getErrorOrEmptyContent("Ingen resultater samsvarte med søket");
 }
