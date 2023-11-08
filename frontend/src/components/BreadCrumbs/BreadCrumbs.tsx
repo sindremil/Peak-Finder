@@ -9,6 +9,7 @@ interface BreadCrumbsProps {
   destination?: string;
   isResult?: boolean;
   isFromResult?: boolean;
+  isSmallScreen?: boolean;
 }
 
 export default function BreadCrumbs({
@@ -16,9 +17,13 @@ export default function BreadCrumbs({
   destination,
   isResult,
   isFromResult,
+  isSmallScreen,
 }: BreadCrumbsProps): JSX.Element {
   return (
-    <Breadcrumbs aria-label="Navigasjon">
+    <Breadcrumbs
+      aria-label="Navigasjon"
+      sx={isSmallScreen ? { padding: "10px 0 10px 10px" } : {}}
+    >
       <MuiLink component={Link} underline="hover" color="inherit" to="/">
         Hjem
       </MuiLink>
@@ -43,4 +48,5 @@ BreadCrumbs.defaultProps = {
   destination: "",
   isResult: false,
   isFromResult: false,
+  isSmallScreen: false,
 } as BreadCrumbsProps;

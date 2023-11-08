@@ -61,6 +61,7 @@ export default function DestinationPage() {
             country: destination.Country,
             destination: destination.Resort,
             isFromResult,
+            isSmallScreen,
           })}
           <Destination destination={destination} />
         </Box>
