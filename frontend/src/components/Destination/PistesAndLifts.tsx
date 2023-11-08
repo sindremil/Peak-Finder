@@ -16,7 +16,7 @@ import {
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import SkiliftIcon from "../../assets/ChairLiftIcon.svg";
 import GondolaIcon from "../../assets/GondolaIcon.svg";
-import surfaceLiftIcon from "../../assets/surfaceLiftIcon.svg";
+import surfaceLiftIcon from "../../assets/SurfaceLiftIcon.svg";
 
 // ListItemIconCentered is a new MUI class which copies ListItemIcon
 // The difference is that it also has 'justifyContent: "center"'
