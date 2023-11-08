@@ -224,7 +224,21 @@ export default function Destination({
     setIsRatingDialogOpen(false);
   };
 
+  let reviewed: boolean = false;
+  const reviewedString = localStorage.getItem("reviewed");
+  let reviewedArray: string[] = [];
+  if (reviewedString) {
+    reviewedArray = JSON.parse(reviewedString);
+  }
+  if (reviewedArray.includes(name)) {
+    reviewed = true;
+  }
+
   const handleGiveRating = (newValue: number) => {
+    localStorage.setItem(
+      "reviewed",
+      JSON.stringify(reviewedArray.concat(name)),
+    );
     mutation.mutate(newValue);
     setResponseOpen(true);
     handleRatingDialogClose();
@@ -265,7 +279,9 @@ export default function Destination({
             nightSki={nightSki}
             certified={certified}
           />
-          <ReviewButton handleRatingDialogOpen={handleRatingDialogOpen} />
+          {!reviewed && (
+            <ReviewButton handleRatingDialogOpen={handleRatingDialogOpen} />
+          )}
         </CardContent>
       </Card>
       <GiveReview
