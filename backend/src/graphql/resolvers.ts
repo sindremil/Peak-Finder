@@ -3,12 +3,12 @@ import FilterState from "../../../shared/types/FilterState";
 
 const resolvers = {
   Query: {
-    getCountries: async (_: any) => {
+    getCountries: async () => {
       // Use Mongoose to fetch all countries from MongoDB
       try {
         const destinations = await Destination.find();
         const countries = destinations.map(
-          (destination) => destination.Country
+          (destination) => destination.Country,
         );
         const uniqueCountries = [...new Set(countries)];
         return uniqueCountries;
@@ -32,7 +32,7 @@ const resolvers = {
     },
     getDestinations: async (
       _: any,
-      { searchTerm, maxResults }: { searchTerm: string; maxResults: number }
+      { searchTerm, maxResults }: { searchTerm: string; maxResults: number },
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by searchTerm
       try {
@@ -47,12 +47,12 @@ const resolvers = {
     },
     getDestinationsByCountry: async (
       _: any,
-      { Country, maxResults }: { Country: string; maxResults: number }
+      { Country, maxResults }: { Country: string; maxResults: number },
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by country
       try {
         const destinations = await Destination.find({ Country }).limit(
-          maxResults
+          maxResults,
         );
         return destinations;
       } catch (error) {
@@ -67,42 +67,45 @@ const resolvers = {
         filter,
         after,
         first = 9,
-      }: { Country: string; filter: FilterState; after: string; first?: number }
+      }: {
+        Country: string;
+        filter: FilterState;
+        after: string;
+        first?: number;
+      },
     ) => {
       try {
         // Initialize the query with the Country and dynamic keys like 'Resort'.
-        let query: any = { Country: Country };
+        const query: any = { Country };
 
         // If an 'after' cursor is provided, add the 'Resort' property to the query.
         if (after) {
-          query["Resort"] = { $gt: after };
+          query.Resort = { $gt: after };
         }
-
-        console.log(filter);
 
         // Apply the filters from the 'filter' object to the query.
         if (filter) {
-          if (filter.hasPark) query["Snowparks"] = filter.hasPark;
-          if (filter.hasNightSkiing) query["NightSki"] = filter.hasNightSkiing;
-          if (filter.hasChairlift) query["ChairLifts"] = { $gte: 1 };
-          if (filter.hasGondola) query["GondolaLifts"] = { $gte: 1 };
-          if (filter.isCertified) query["Certified"] = filter.isCertified;
+          if (filter.hasPark) query.Snowparks = filter.hasPark;
+          if (filter.hasNightSkiing) query.NightSki = filter.hasNightSkiing;
+          if (filter.hasChairlift) query.ChairLifts = { $gte: 1 };
+          if (filter.hasGondola) query.GondolaLifts = { $gte: 1 };
+          if (filter.isCertified) query.Certified = filter.isCertified;
           if (filter.minElevationDifference) {
-            query["$where"] = function () {
-              return (
-                this.HighestPoint - this.LowestPoint >=
-                filter.minElevationDifference
-              );
+            query.$expr = {
+              $gte: [
+                { $subtract: ["$HighestPoint", "$LowestPoint"] },
+                filter.minElevationDifference,
+              ],
             };
           }
           if (filter.minBaseElevation)
-            query["LowestPoint"] = { $gte: filter.minBaseElevation };
+            query.LowestPoint = { $gte: filter.minBaseElevation };
           if (filter.minTotalPiste)
-            query["TotalSlope"] = { $gte: filter.minTotalPiste };
+            query.TotalSlope = { $gte: filter.minTotalPiste };
           if (filter.minTotalLifts)
-            query["TotalLifts"] = { $gte: filter.minTotalLifts };
+            query.TotalLifts = { $gte: filter.minTotalLifts };
           if (filter.maxDayPassPrice)
-            query["DayPassPriceAdult"] = { $lte: filter.maxDayPassPrice };
+            query.DayPassPriceAdult = { $lte: filter.maxDayPassPrice };
         }
 
         // Execute the query with sorting and limiting to implement pagination.
@@ -134,10 +137,10 @@ const resolvers = {
 
         // Return in the shape of a paginated response.
         return {
-          edges: edges,
+          edges,
           pageInfo: {
-            endCursor: endCursor,
-            hasNextPage: hasNextPage,
+            endCursor,
+            hasNextPage,
           },
         };
       } catch (error) {
@@ -149,14 +152,14 @@ const resolvers = {
   Mutation: {
     giveRating: async (
       _: any,
-      { Resort, Rating }: { Resort: string; Rating: number }
+      { Resort, Rating }: { Resort: string; Rating: number },
     ) => {
       // Use Mongoose to fetch data from MongoDB and filter by resort
       try {
         const destination = await Destination.findOneAndUpdate(
           { Resort },
           { $inc: { TotalRating: Rating, AmountOfRatings: 1 } },
-          { new: true }
+          { new: true },
         );
         if (!destination) {
           console.log(`No destination found for resort: ${Resort}`);

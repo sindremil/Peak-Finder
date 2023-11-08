@@ -17,7 +17,6 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import giveRating from "../../api/giveRating";
-import tempImage from "../../assets/Fischbach.jpg";
 import DestinationInterface from "../../interfaces/Destination";
 import Extras from "./Extras";
 import Header from "./Header";

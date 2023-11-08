@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import FilterState from "../../../../shared/types/FilterState";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
@@ -21,6 +21,12 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       DifficultSlope,
       TotalLifts,
     } = destinationCard;
+    const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
+      /[^a-z]/g,
+      "",
+    )}.jpg`;
+    const imageAlt = `Bilde av ${Resort}`;
+
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
       country: Country,
@@ -30,8 +36,8 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       intermediate: IntermediateSlope,
       advanced: DifficultSlope,
       lifts: TotalLifts,
-      imageSrc: "https://picsum.photos/200/300",
-      imageAlt: "Placeholder image",
+      imageSrc: imagePath,
+      imageAlt,
     };
     resultArray.push(addResult(destinationCardProps));
   });
@@ -71,15 +77,14 @@ export default function Result({
     staleTime: Infinity,
   });
 
-  const getResults = (): DestinationCard[] => {
+  const getResults = (): DestinationCard[] | null => {
     if (isPending || isError) {
-      return [];
+      return null;
     }
 
     const destinations = data.pages.map(
       (page) => page.getFilteredDestinations.edges,
     );
-
     if (!destinations) {
       return [];
     }
@@ -96,21 +101,44 @@ export default function Result({
     }
   };
 
-  return (
-    <Container sx={{ marginBottom: "2rem" }}>
-      <Grid container spacing={4}>
-        {addResults(getResults())}
-      </Grid>
-      <Box display="flex" justifyContent="center" my={2}>
-        <Button
-          variant="contained"
-          size="large"
-          onClick={handleLoadMore}
-          disabled={!hasNextPage || isFetchingNextPage} // Disable button if there's no next page or if it's currently fetching
-        >
-          {isFetchingNextPage ? "Laster..." : "Last inn mer"}
-        </Button>
-      </Box>
-    </Container>
-  );
+  function getErrorOrEmptyContent(displayString: string): JSX.Element {
+    return (
+      <Container sx={{ marginBottom: "2rem" }}>
+        <Grid container spacing={12}>
+          <Grid item xs={12}>
+            <Typography variant="h5" sx={{ textAlign: "center" }}>
+              {displayString}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Container>
+    );
+  }
+
+  const results = getResults();
+
+  if (results === null) {
+    return getErrorOrEmptyContent("Laster inn resultater...");
+  }
+  if (results.length > 0) {
+    return (
+      <Container sx={{ marginBottom: "2rem" }}>
+        <Grid container spacing={4}>
+          {addResults(results)}
+        </Grid>
+        <Box display="flex" justifyContent="center" my={2}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleLoadMore}
+            // Disable button if there's no next page or if it's currently fetching
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage ? "Laster..." : "Last inn mer"}
+          </Button>
+        </Box>
+      </Container>
+    );
+  }
+  return getErrorOrEmptyContent("Ingen resultater samsvarte med søket");
 }
