@@ -93,7 +93,7 @@ function MinimumElevationDifferenceSlider(): JSX.Element {
     <CustomSlider
       label="Minimum fallhøyde"
       Icon={HeightIcon}
-      defaultValue={0}
+      defaultValue={(state) => state.filter.minElevationDifference}
       minValue={0}
       maxValue={3000}
       step={10}
@@ -107,7 +107,7 @@ function MinimumBaseElevationSlider(): JSX.Element {
     <CustomSlider
       label="Minimum basehøyde"
       Icon={LocationCityIcon}
-      defaultValue={0}
+      defaultValue={(state) => state.filter.minBaseElevation}
       minValue={0}
       maxValue={3000}
       step={10}
@@ -121,7 +121,7 @@ function MinimumTotalPisteSlider(): JSX.Element {
     <CustomSlider
       label="Minimum total løypelegende"
       Icon={RouteIcon}
-      defaultValue={0}
+      defaultValue={(state) => state.filter.minTotalPiste}
       minValue={0}
       maxValue={600}
       step={10}
@@ -135,7 +135,7 @@ function MinimumTotalLiftsSlider(): JSX.Element {
     <CustomSlider
       label="Minimum total heiser"
       Icon={ArrowOutwardIcon}
-      defaultValue={0}
+      defaultValue={(state) => state.filter.minTotalLifts}
       minValue={0}
       maxValue={200}
       step={1}
@@ -149,7 +149,7 @@ function MaximumDayPassPriceSlider(): JSX.Element {
     <CustomSlider
       label="Makspris dagspass"
       Icon={EuroIcon}
-      defaultValue={200}
+      defaultValue={(state) => state.filter.maxDayPassPrice}
       minValue={0}
       maxValue={200}
       step={5}

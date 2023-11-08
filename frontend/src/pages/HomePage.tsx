@@ -1,7 +1,10 @@
 import { Box, Container, useMediaQuery } from "@mui/material";
+import { useEffect } from "react";
 import logo from "../assets/logos/logo-color.svg";
-import Searchbar from "../components/Searchbar/Searchbar";
 import Browse from "../components/Browse/Browse";
+import { resetFilter } from "../components/Filter/filterSlice";
+import Searchbar from "../components/Searchbar/Searchbar";
+import { useAppDispatch } from "../hooks";
 
 function Logo(): JSX.Element {
   // Media query for mobile that increases size of logo
@@ -21,6 +24,10 @@ function Logo(): JSX.Element {
 }
 
 export default function HomePage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(resetFilter());
+  }, [dispatch]);
   return (
     <Container
       sx={{
