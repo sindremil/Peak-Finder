@@ -2,9 +2,9 @@
 
 Peak Finder will allow users to find different ski resorts across Europe.
 
-## Running the app
+## Running the project
 
-The app can be run by navigating to the frontend folder (cd frontend) and running the following commands:
+The project was developed and built with node version 20.6.0 and npm version 9.8.0 and 9.8.1. While other versions might also work, these were the ones we used. Running the project is done by navigating to the frontend folder (cd frontend) and running the following commands:
 
 ```
 npm install
