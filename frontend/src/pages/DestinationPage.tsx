@@ -8,6 +8,8 @@ import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
 import SetPageTitle from "../utils/SetPageTitle";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
+import { useAppDispatch } from "../hooks";
+import { setSearchTerm } from "../components/Searchbar/searchSlice";
 
 function addTitleAndNavbar(title: string): JSX.Element {
   return (
@@ -24,6 +26,7 @@ export default function DestinationPage() {
   const { name } = useParams();
   const decodedName = decodeURI(name || "");
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   const { isPending, isError, data, error } = useQuery<DestinationResponse>({
     queryKey: ["Resort", decodedName],
@@ -47,6 +50,9 @@ export default function DestinationPage() {
     }
 
     const { isFromResult } = location.state || { isFromResult: false };
+    if (!isFromResult) {
+      dispatch(setSearchTerm(""));
+    }
     return isSmallScreen ? (
       <>
         {addTitleAndNavbar(destination.Resort)}
