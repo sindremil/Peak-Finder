@@ -165,7 +165,7 @@ export default function DestinationCard({
     <Card raised>
       <CardActionArea
         component={Link}
-        to={`/${name}`}
+        to={`/${encodeURIComponent(name)}`}
         state={{ isFromResult: true }}
       >
         <DestinationName name={name} />
