@@ -1,11 +1,8 @@
-import { graphql, HttpResponse } from 'msw';
-import { hemsedal } from './mockData';
+import { graphql, HttpResponse } from "msw";
+import hemsedal from "./mockData";
 
-
-export const handlers = [
-  graphql.query('GetDestination', ({ variables }) => {
-    const { Resort } = variables;
-
-    return HttpResponse.json(hemsedal);
-  })
+const handlers = [
+  graphql.query("GetDestination", () => HttpResponse.json(hemsedal)),
 ];
+
+export default handlers;

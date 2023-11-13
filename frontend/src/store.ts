@@ -1,4 +1,8 @@
-import { PreloadedState, combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  PreloadedState,
+  combineReducers,
+  configureStore,
+} from "@reduxjs/toolkit";
 import filterReducer from "./components/Filter/filterSlice";
 import searchReducer from "./components/Searchbar/searchSlice";
 
@@ -11,17 +15,16 @@ const store = configureStore({
 
 const rootReducer = combineReducers({
   filter: filterReducer,
-  search: searchReducer
-})
-
+  search: searchReducer,
+});
 
 export default store;
 
 export function setupStore(preloadedState?: PreloadedState<RootState>) {
   return configureStore({
     reducer: rootReducer,
-    preloadedState
-  })
+    preloadedState,
+  });
 }
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
