@@ -32,6 +32,8 @@ function DestinationImage({
 }): JSX.Element {
   return (
     <CardMedia
+      component="img"
+      alt={name}
       image={img}
       title={name}
       sx={{ height: "400px" }}
