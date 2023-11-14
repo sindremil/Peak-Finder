@@ -4,21 +4,15 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Grid,
   ListItem,
   ListItemText,
-  Rating,
   Snackbar,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import giveRating from "../../api/giveRating";
 import DestinationInterface from "../../interfaces/Destination";
 import Extras from "./Extras";
+import GiveReview from "./GiveReview";
 import Header from "./Header";
 import PistesAndLifts from "./PistesAndLifts";
 
@@ -106,9 +100,9 @@ function Info({
 }
 
 function ReviewButton({
-  handleRatingDialogOpen,
+  handleGiveReviewOpen: handleRatingDialogOpen,
 }: {
-  handleRatingDialogOpen: () => void;
+  handleGiveReviewOpen: () => void;
 }): JSX.Element {
   return (
     <Grid
@@ -120,46 +114,6 @@ function ReviewButton({
         Vurder destinasjon
       </Button>
     </Grid>
-  );
-}
-
-// This component displays a Dialog to add a review
-// It sends the value to the Destination function
-function GiveReview({
-  isOpen,
-  handleClose,
-  handleGiveRating,
-}: {
-  isOpen: boolean;
-  handleClose: () => void;
-  handleGiveRating: (rating: number) => void;
-}): JSX.Element {
-  const [newRating, setNewRating] = useState(0);
-  return (
-    <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>Gi en vurdering</DialogTitle>
-      <DialogContent sx={{ paddingBottom: 0 }}>
-        <Rating
-          name="newRating"
-          value={newRating}
-          onChange={(_event, value: number | null) => {
-            if (value != null) {
-              setNewRating(value);
-            }
-          }}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Avbryt</Button>
-        <Button
-          onClick={() => {
-            handleGiveRating(newRating);
-          }}
-        >
-          Send inn
-        </Button>
-      </DialogActions>
-    </Dialog>
   );
 }
 
@@ -190,39 +144,13 @@ export default function Destination({
     TotalLifts: totalLifts,
     Certified: certified,
   } = destination;
-  let { TotalRating: totalRating, AmountOfRatings: amountOfRatings } =
-    destination;
 
-  const [isRatingDialogOpen, setIsRatingDialogOpen] = useState(false);
-  const [responseOpen, setResponseOpen] = useState(false);
-
-  const mutation = useMutation({
-    mutationFn: (newRating: number) =>
-      giveRating({ resort: name, rating: newRating }),
-  });
-
-  const handleClose = (
-    _event: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setResponseOpen(false);
-  };
-  if (mutation.isSuccess) {
-    totalRating = mutation.data.giveRating.TotalRating;
-    amountOfRatings = mutation.data.giveRating.AmountOfRatings;
-  }
-
-  const handleRatingDialogOpen = () => {
-    setIsRatingDialogOpen(true);
-  };
-
-  const handleRatingDialogClose = () => {
-    setIsRatingDialogOpen(false);
-  };
+  const [totalRating, setTotalRating] = useState(destination.TotalRating);
+  const [amountOfRatings, setAmountOfRatings] = useState(
+    destination.AmountOfRatings,
+  );
+  const [isGiveReviewOpen, setIsGiveReviewOpen] = useState(false);
+  const [isSnackbarOpen, setIsSnackBarOpen] = useState(false);
 
   let reviewed: boolean = false;
   const reviewedString = localStorage.getItem("reviewed");
@@ -234,14 +162,36 @@ export default function Destination({
     reviewed = true;
   }
 
-  const handleGiveRating = (newValue: number) => {
+  const handleGiveReviewOpen = () => {
+    setIsGiveReviewOpen(true);
+  };
+
+  const handleGiveReviewClose = () => {
+    setIsGiveReviewOpen(false);
+  };
+
+  const handleReviewGiven = (
+    newTotalRating: number,
+    newAmountOfRatings: number,
+  ) => {
     localStorage.setItem(
       "reviewed",
       JSON.stringify(reviewedArray.concat(name)),
     );
-    mutation.mutate(newValue);
-    setResponseOpen(true);
-    handleRatingDialogClose();
+    setTotalRating(newTotalRating);
+    setAmountOfRatings(newAmountOfRatings);
+    handleGiveReviewClose();
+    setIsSnackBarOpen(true);
+  };
+
+  const handleSnackbarClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setIsSnackBarOpen(false);
   };
 
   const imagePath = `images/resorts/${name
@@ -280,19 +230,21 @@ export default function Destination({
             certified={certified}
           />
           {!reviewed && (
-            <ReviewButton handleRatingDialogOpen={handleRatingDialogOpen} />
+            <ReviewButton handleGiveReviewOpen={handleGiveReviewOpen} />
           )}
         </CardContent>
       </Card>
-      <GiveReview
-        isOpen={isRatingDialogOpen}
-        handleClose={handleRatingDialogClose}
-        handleGiveRating={handleGiveRating}
-      />
+      {isGiveReviewOpen && (
+        <GiveReview
+          name={name}
+          handleClose={handleGiveReviewClose}
+          handleReviewGiven={handleReviewGiven}
+        />
+      )}
       <Snackbar
-        open={responseOpen}
+        open={isSnackbarOpen}
         autoHideDuration={3000}
-        onClose={handleClose}
+        onClose={handleSnackbarClose}
       >
         <Alert severity="success">Vurdering sendt!</Alert>
       </Snackbar>
