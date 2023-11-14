@@ -13,6 +13,14 @@ const initialState: FilterState = {
   minTotalPiste: 0,
   minTotalLifts: 0,
   maxDayPassPrice: 200,
+
+  sortAZ: true,
+  sortZA: false,
+  sortElevationDifference: false,
+  sortBaseElevation: false,
+  sortTotalPiste: false,
+  sortTotalLifts: false,
+  sortDayPassPrice: false,
 };
 
 /* eslint-disable no-param-reassign */
@@ -52,6 +60,36 @@ export const filterSlice = createSlice({
     setMaxDayPassPrice: (state, action) => {
       state.maxDayPassPrice = action.payload;
     },
+    toggleSortAZ: (state, action) => {
+      state.sortAZ = action.payload;
+    },
+    toggleSortZA: (state, action) => {
+      state.sortZA = action.payload;
+    },
+    toggleSortElevationDifference: (state, action) => {
+      state.sortElevationDifference = action.payload;
+    },
+    toggleSortBaseElevation: (state, action) => {
+      state.sortBaseElevation = action.payload;
+    },
+    toggleSortTotalPiste: (state, action) => {
+      state.sortTotalPiste = action.payload;
+    },
+    toggleSortTotalLifts: (state, action) => {
+      state.sortTotalLifts = action.payload;
+    },
+    toggleSortDayPassPrice: (state, action) => {
+      state.sortDayPassPrice = action.payload;
+    },
+    resetSort: (state) => {
+      state.sortAZ = false;
+      state.sortZA = false;
+      state.sortElevationDifference = false;
+      state.sortBaseElevation = false;
+      state.sortTotalPiste = false;
+      state.sortTotalLifts = false;
+      state.sortDayPassPrice = false;
+    },
     resetFilter: (state) => {
       state.hasPark = false;
       state.hasNightSkiing = false;
@@ -63,6 +101,13 @@ export const filterSlice = createSlice({
       state.minTotalPiste = 0;
       state.minTotalLifts = 0;
       state.maxDayPassPrice = 200;
+      state.sortAZ = true;
+      state.sortZA = false;
+      state.sortElevationDifference = false;
+      state.sortBaseElevation = false;
+      state.sortTotalPiste = false;
+      state.sortTotalLifts = false;
+      state.sortDayPassPrice = false;
     },
   },
 });
@@ -81,6 +126,15 @@ export const {
   setMinTotalLifts,
   setMaxDayPassPrice,
 
+  toggleSortAZ,
+  toggleSortZA,
+  toggleSortElevationDifference,
+  toggleSortBaseElevation,
+  toggleSortTotalPiste,
+  toggleSortTotalLifts,
+  toggleSortDayPassPrice,
+
+  resetSort,
   resetFilter,
 } = filterSlice.actions;
 

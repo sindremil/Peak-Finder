@@ -9,11 +9,20 @@ const typeDefs = `#graphql
     hasChairlift: Boolean
     hasGondola: Boolean
     isCertified: Boolean
+
     minElevationDifference: Int
     minBaseElevation: Int
     minTotalPiste: Int
     minTotalLifts: Int
     maxDayPassPrice: Int
+
+    sortAZ: Boolean
+    sortZA: Boolean
+    sortElevationDifference: Boolean
+    sortBaseElevation: Boolean
+    sortTotalPiste: Boolean
+    sortTotalLifts: Boolean
+    sortDayPassPrice: Boolean
   }
 
   # This "Destination" type defines the queryable fields for every destination in our data source.
@@ -60,7 +69,6 @@ const typeDefs = `#graphql
     getCountries: [String]
     getDestination(Resort: String!): Destination
     getDestinations(searchTerm: String!, maxResults: Int!): [Destination]
-    getDestinationsByCountry(Country: String!, maxResults: Int!): [Destination]
     getFilteredDestinations(Country: String!, filter: FilterState!, after: String!, first: Int): DestinationConnection
   }
 
