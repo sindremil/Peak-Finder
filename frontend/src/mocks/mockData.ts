@@ -26,6 +26,16 @@ export const hemsedalPage = {
   },
 };
 
+// Data returned by Mock Service Worker for the giveRating mutation
+export const hemsedalAfterRating = {
+  data: {
+    giveRating: {
+      AmountOfRatings: 2,
+      TotalRating: 6,
+    },
+  },
+};
+
 // DestinationCardProps for Hemsedal used in the DestinationCard test
 export const hemsedalCard: DestinationCardProps = {
   name: "Hemsedal",

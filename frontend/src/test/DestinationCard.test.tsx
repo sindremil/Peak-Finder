@@ -1,17 +1,35 @@
 import { describe, it } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import DestinationCard from "../components/DestinationCard";
-import renderWithProviders from "../utils/testUtils";
 import { hemsedalCard } from "../mocks/mockData";
 
 describe("DestinationCard", () => {
-  it("Image should be visible", () => {
-    // Render component with mock data and necessary providers
-    // This mock data is not from MSW, but comes directly from mockData.ts
-    renderWithProviders(
-      true,
-      <DestinationCard destinationCardProps={hemsedalCard} />,
+  // Render component with mock data and BrowserRouter
+  // This mock data is not from MSW, but comes directly from mockData.ts
+  function renderDestinationCard() {
+    render(
+      <Router>
+        <DestinationCard destinationCardProps={hemsedalCard} />
+      </Router>,
     );
+  }
+
+  it("Title should be visible and display correct text", () => {
+    renderDestinationCard();
+
+    // Get title by text
+    const destinationTitle = screen.getByText(hemsedalCard.name);
+
+    // Expect title to be visible and have correct text
+    expect(destinationTitle).toBeVisible();
+    expect(destinationTitle).toHaveTextContent("Hemsedal");
+  });
+
+  it("Image should be visible", () => {
+    renderDestinationCard();
+
+    // Get image by role and alt text
     const destinationImage = screen.getByRole("img", {
       name: `Bilde av ${hemsedalCard.name}`,
     });

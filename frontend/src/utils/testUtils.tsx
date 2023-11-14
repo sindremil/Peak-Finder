@@ -5,7 +5,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router } from "react-router-dom";
 
 import type { AppStore, RootState } from "../store";
 import searchReducer from "../components/Searchbar/searchSlice";
@@ -40,11 +39,9 @@ const initialPreloadedState = {
   },
 };
 
-// This function is used by all component tests
-// Renders necessary providers and passes in the actual component to be tested
-// Some components only require a router, while others require a store
-function renderWithProviders(
-  router: boolean,
+// This function is used by tests that render components that use the redux store
+// Renders component with necessary redux providers
+export default function renderWithReduxProviders(
   ui: React.ReactElement,
   {
     preloadedState = initialPreloadedState,
@@ -57,9 +54,7 @@ function renderWithProviders(
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return router ? (
-      <Router>{children}</Router>
-    ) : (
+    return (
       <QueryClientProvider client={tanstackClient}>
         <Provider store={store}>{children}</Provider>
       </QueryClientProvider>
@@ -68,5 +63,3 @@ function renderWithProviders(
 
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
-
-export default renderWithProviders;
