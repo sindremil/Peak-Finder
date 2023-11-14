@@ -1,5 +1,7 @@
-// Data returned by Mock Service Worker
-const hemsedal = {
+import DestinationCardProps from "../interfaces/DestinationCardProps";
+
+// Data returned by Mock Service Worker for the GetDestination query
+export const hemsedalPage = {
   data: {
     getDestination: {
       AmountOfRatings: 1,
@@ -24,4 +26,16 @@ const hemsedal = {
   },
 };
 
-export default hemsedal;
+// DestinationCardProps for Hemsedal used in the DestinationCard test
+export const hemsedalCard: DestinationCardProps = {
+  name: "Hemsedal",
+  country: "Norge",
+  imageSrc: "../../public/images/resorts/hemsedal.jpg",
+  imageAlt: "Bilde av Hemsedal",
+  lowestPoint: 620,
+  highestPoint: 1450,
+  beginner: 20,
+  intermediate: 60,
+  advanced: 20,
+  lifts: 20,
+};

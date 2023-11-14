@@ -5,6 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import type { AppStore, RootState } from "../store";
 import searchReducer from "../components/Searchbar/searchSlice";
@@ -41,7 +42,9 @@ const initialPreloadedState = {
 
 // This function is used by all component tests
 // Renders necessary providers and passes in the actual component to be tested
+// Some components only require a router, while others require a store
 function renderWithProviders(
+  router: boolean,
   ui: React.ReactElement,
   {
     preloadedState = initialPreloadedState,
@@ -54,15 +57,16 @@ function renderWithProviders(
   }: ExtendedRenderOptions = {},
 ) {
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
-    return (
+    return router ? (
+      <Router>{children}</Router>
+    ) : (
       <QueryClientProvider client={tanstackClient}>
         <Provider store={store}>{children}</Provider>
       </QueryClientProvider>
     );
   }
 
-  // Return an object with the store and all of RTL's query functions
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
 export default renderWithProviders;
