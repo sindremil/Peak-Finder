@@ -14,7 +14,7 @@ const initialState: FilterState = {
   minTotalLifts: 0,
   maxDayPassPrice: 200,
 
-  sortType: "AZ",
+  sortType: "",
 };
 
 /* eslint-disable no-param-reassign */
@@ -68,7 +68,7 @@ export const filterSlice = createSlice({
       state.minTotalPiste = 0;
       state.minTotalLifts = 0;
       state.maxDayPassPrice = 200;
-      state.sortType = "AZ";
+      state.sortType = "";
     },
   },
 });

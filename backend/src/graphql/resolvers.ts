@@ -98,9 +98,10 @@ const resolvers = {
             query.DayPassPriceAdult = { $lte: filter.maxDayPassPrice };
         }
 
-        if (filter.sortType === "AZ") sort.Resort = 1; // Ascending order by Resort name
-        if (filter.sortType === "ZA") sort.Resort = -1; // Descending order by Resort name
-        if (filter.sortType === "elevationDifference") {
+        // Apply the custom sorting logic
+        if (filter.sortType === "ZA") {
+          sort.Resort = -1; // Descending order by Resort name
+        } else if (filter.sortType === "elevationDifference") {
           // Add a project stage to calculate and add the elevationDifference field
           aggregatePipeline.push({
             $addFields: {
@@ -110,13 +111,20 @@ const resolvers = {
             },
           });
 
-          // Sort based on the elevation difference field
+          // Sort based on the new elevation difference field
           sort.elevationDifference = -1;
+        } else if (filter.sortType === "baseElevation") {
+          sort.LowestPoint = -1; // Descending order by LowestPoint
+        } else if (filter.sortType === "totalPiste") {
+          sort.TotalSlope = -1; // Descending order by TotalSlope
+        } else if (filter.sortType === "totalLifts") {
+          sort.TotalLifts = -1; // Descending order by TotalLifts
+        } else if (filter.sortType === "dayPassPrice") {
+          sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
+        } // If the sortType is not recognized, it defaults to "AZ"
+        else {
+          sort.Resort = 1; // Ascending order by Resort name
         }
-        if (filter.sortType === "baseElevation") sort.LowestPoint = -1; // Descending order by LowestPoint
-        if (filter.sortType === "totalPiste") sort.TotalSlope = -1; // Descending order by TotalSlope
-        if (filter.sortType === "totalLifts") sort.TotalLifts = -1; // Descending order by TotalLifts
-        if (filter.sortType === "dayPassPrice") sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
 
         // Add a sort stage to the aggregate pipeline
         aggregatePipeline.push({ $sort: sort });
