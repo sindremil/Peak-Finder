@@ -45,21 +45,6 @@ const resolvers = {
         return null;
       }
     },
-    getDestinationsByCountry: async (
-      _: any,
-      { Country, maxResults }: { Country: string; maxResults: number },
-    ) => {
-      // Use Mongoose to fetch data from MongoDB and filter by country
-      try {
-        const destinations = await Destination.find({ Country }).limit(
-          maxResults,
-        );
-        return destinations;
-      } catch (error) {
-        console.log("Error fetching destinations by country:", error);
-        return null;
-      }
-    },
     getFilteredDestinations: async (
       _: any,
       {
@@ -77,11 +62,16 @@ const resolvers = {
       try {
         // Initialize the query with the Country and dynamic keys like 'Resort'.
         const query: any = { Country };
+        // Initialize the sort object
+        const sort: any = {};
 
         // If an 'after' cursor is provided, add the 'Resort' property to the query.
         if (after) {
           query.Resort = { $gt: after };
         }
+
+        // Initialize the aggregate pipeline with a match stage
+        const aggregatePipeline: any[] = [{ $match: query }];
 
         // Apply the filters from the 'filter' object to the query.
         if (filter) {
@@ -108,10 +98,42 @@ const resolvers = {
             query.DayPassPriceAdult = { $lte: filter.maxDayPassPrice };
         }
 
-        // Execute the query with sorting and limiting to implement pagination.
-        const destinations = await Destination.find(query)
-          .sort({ Resort: 1 }) // Sort by the Resort field
-          .limit(first);
+        // Apply the custom sorting logic
+        if (filter.sortType === "ZA") {
+          sort.Resort = -1; // Descending order by Resort name
+        } else if (filter.sortType === "elevationDifference") {
+          // Add a project stage to calculate and add the elevationDifference field
+          aggregatePipeline.push({
+            $addFields: {
+              elevationDifference: {
+                $subtract: ["$HighestPoint", "$LowestPoint"],
+              },
+            },
+          });
+
+          // Sort based on the new elevation difference field
+          sort.elevationDifference = -1;
+        } else if (filter.sortType === "baseElevation") {
+          sort.LowestPoint = -1; // Descending order by LowestPoint
+        } else if (filter.sortType === "totalPiste") {
+          sort.TotalSlope = -1; // Descending order by TotalSlope
+        } else if (filter.sortType === "totalLifts") {
+          sort.TotalLifts = -1; // Descending order by TotalLifts
+        } else if (filter.sortType === "dayPassPrice") {
+          sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
+        } // If the sortType is not recognized, it defaults to "AZ"
+        else {
+          sort.Resort = 1; // Ascending order by Resort name
+        }
+
+        // Add a sort stage to the aggregate pipeline
+        aggregatePipeline.push({ $sort: sort });
+
+        // Add a limit stage to the aggregate pipeline
+        aggregatePipeline.push({ $limit: first });
+
+        // Execute the query with the aggregate pipeline
+        const destinations = await Destination.aggregate(aggregatePipeline);
 
         // Transform the result into the shape expected for pagination.
         const edges = destinations.map((destination) => ({
