@@ -10,12 +10,8 @@ export default function Searchbar(): JSX.Element {
 
   const sanitizeSearchTerm = (term: string): string | null => {
     const sanitizedSearchTerm = term.trim();
-    const forbiddenChars = ["*", ";", "'", '"', "=", "<", ">"];
 
-    if (
-      !/[^a-zA-Z ]/.test(sanitizedSearchTerm) &&
-      !forbiddenChars.some((char) => sanitizedSearchTerm.includes(char))
-    ) {
+    if (!/[^a-zA-Z ]/.test(sanitizedSearchTerm)) {
       return sanitizedSearchTerm;
     }
     return null;
