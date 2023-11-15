@@ -41,6 +41,8 @@ export default function BrowseList(): JSX.Element | null {
     return <Alert severity="error">{error.message}</Alert>;
   }
   const countries: string[] = data.getCountries;
+  // Sort list alphabetically
+  countries.sort((a, b) => a.localeCompare(b));
 
   if (!countries) {
     return null;
