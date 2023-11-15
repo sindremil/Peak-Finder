@@ -10,6 +10,7 @@ import SetPageTitle from "../utils/SetPageTitle";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks";
 import { setSearchTerm } from "../components/Searchbar/searchSlice";
+import DestinationSkeleton from "../components/Destination/DestinationSkeleton";
 
 function addTitleAndNavbar(title: string): JSX.Element {
   return (
@@ -36,7 +37,7 @@ export default function DestinationPage() {
 
   const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {
-      return <Navbar />;
+      return <DestinationSkeleton />;
     }
 
     if (isError) {
