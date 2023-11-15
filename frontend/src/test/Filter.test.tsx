@@ -35,7 +35,7 @@ describe("Filter", () => {
       expect(minTotalLiftsInput.value).toBe("100");
       expect(maxDayPassPriceInput.value).toBe("100");
     });
-  })
+  });
 
   it("Color of chips should change when clicked", async () => {
     renderWithReduxProviders(<Filter />);
@@ -46,15 +46,23 @@ describe("Filter", () => {
     const chairLiftChip = screen.getByText("Stolheis");
     const gondolaChip = screen.getByText("Gondol");
     const certifiedChip = screen.getByText("Peak Finder Sertifisert");
-    
+
     // MUI symbolized checked chips by changing color of parent div
     // Color is default for unchecked, so first we expect the color to be default
     expect(parkChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    expect(nightSkiingChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    expect(chairLiftChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    expect(gondolaChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    expect(certifiedChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    
+    expect(nightSkiingChip.parentElement?.className).toContain(
+      "MuiChip-colorDefault",
+    );
+    expect(chairLiftChip.parentElement?.className).toContain(
+      "MuiChip-colorDefault",
+    );
+    expect(gondolaChip.parentElement?.className).toContain(
+      "MuiChip-colorDefault",
+    );
+    expect(certifiedChip.parentElement?.className).toContain(
+      "MuiChip-colorDefault",
+    );
+
     // Click all chips
     fireEvent.click(parkChip);
     fireEvent.click(nightSkiingChip);
@@ -64,11 +72,21 @@ describe("Filter", () => {
 
     // When checked color should change to primary unless stated otherwise in custom themes
     await waitFor(() => {
-      expect(parkChip.parentElement?.className).toContain("MuiChip-colorPrimary");
-      expect(nightSkiingChip.parentElement?.className).toContain("MuiChip-colorPrimary");
-      expect(chairLiftChip.parentElement?.className).toContain("MuiChip-colorPrimary");
-      expect(gondolaChip.parentElement?.className).toContain("MuiChip-colorPrimary");
-      expect(certifiedChip.parentElement?.className).toContain("MuiChip-colorPrimary");
-    })
-  })
-})
+      expect(parkChip.parentElement?.className).toContain(
+        "MuiChip-colorPrimary",
+      );
+      expect(nightSkiingChip.parentElement?.className).toContain(
+        "MuiChip-colorPrimary",
+      );
+      expect(chairLiftChip.parentElement?.className).toContain(
+        "MuiChip-colorPrimary",
+      );
+      expect(gondolaChip.parentElement?.className).toContain(
+        "MuiChip-colorPrimary",
+      );
+      expect(certifiedChip.parentElement?.className).toContain(
+        "MuiChip-colorPrimary",
+      );
+    });
+  });
+});

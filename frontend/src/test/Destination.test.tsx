@@ -46,7 +46,9 @@ describe("Destination", async () => {
     renderWithReduxProviders(<Destination destination={destination} />);
 
     // Get amount of ratings and button
-    const amountOfRatings = screen.getByText(`(${destination.AmountOfRatings})`);
+    const amountOfRatings = screen.getByText(
+      `(${destination.AmountOfRatings})`,
+    );
     const button = screen.getByRole("button");
 
     // Check initial value of amount of ratings from mocked data
