@@ -1,4 +1,5 @@
 import {
+  Box,
   CardContent,
   Grid,
   Rating,
@@ -20,9 +21,11 @@ function DestinationName({ name }: { name: string }): JSX.Element {
 function DestinationRating({
   rating,
   ratings,
+  handleGiveReviewOpen,
 }: {
   rating: number;
   ratings: number;
+  handleGiveReviewOpen: () => void;
 }): JSX.Element {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -44,7 +47,9 @@ function DestinationRating({
         <Typography sx={{ paddingRight: "5px" }} aria-hidden="true">
           {ratingString}
         </Typography>
-        <Rating name="showRating" value={rating} precision={0.5} readOnly />
+        <Box onClick={handleGiveReviewOpen} sx={{ cursor: "pointer" }}>
+          <Rating name="showRating" value={rating} precision={0.5} readOnly />
+        </Box>
         <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
           ({ratings})
         </Typography>
@@ -58,17 +63,23 @@ export default function DestinationHeader({
   destinationName,
   totalRating,
   amountOfRatings,
+  handleGiveReviewOpen,
 }: {
   destinationName: string;
   totalRating: number;
   amountOfRatings: number;
+  handleGiveReviewOpen: () => void;
 }): JSX.Element {
   const averageRating = totalRating / amountOfRatings;
   return (
     <CardContent>
       <Grid container spacing={2} tabIndex={0}>
         <DestinationName name={destinationName} />
-        <DestinationRating rating={averageRating} ratings={amountOfRatings} />
+        <DestinationRating
+          rating={averageRating}
+          ratings={amountOfRatings}
+          handleGiveReviewOpen={handleGiveReviewOpen}
+        />
       </Grid>
     </CardContent>
   );
