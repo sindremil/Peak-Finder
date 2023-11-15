@@ -52,7 +52,7 @@ describe("Destination", async () => {
     // Check initial value of amount of ratings from mocked data
     expect(amountOfRatings).toHaveTextContent("(1)");
 
-    // Click button to get rating menu
+    // Click button to get rating popup
     fireEvent.click(button);
 
     // Get and click star and submit button
@@ -62,6 +62,6 @@ describe("Destination", async () => {
     fireEvent.click(submit);
 
     // Wait for mutation to finish then check if amount of ratings has increased
-    waitFor(() => expect(amountOfRatings).toHaveTextContent("(2)"));
+    await waitFor(() => expect(amountOfRatings).toHaveTextContent("(2)"));
   });
 });
