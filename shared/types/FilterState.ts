@@ -11,11 +11,5 @@ export default interface FilterState {
   minTotalLifts: number;
   maxDayPassPrice: number;
 
-  sortAZ: boolean;
-  sortZA: boolean;
-  sortElevationDifference: boolean;
-  sortBaseElevation: boolean;
-  sortTotalPiste: boolean;
-  sortTotalLifts: boolean;
-  sortDayPassPrice: boolean;
+  sortType: string;
 }

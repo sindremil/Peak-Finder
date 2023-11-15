@@ -98,9 +98,9 @@ const resolvers = {
             query.DayPassPriceAdult = { $lte: filter.maxDayPassPrice };
         }
 
-        if (filter.sortAZ) sort.Resort = 1; // Ascending order by Resort name
-        if (filter.sortZA) sort.Resort = -1; // Descending order by Resort name
-        if (filter.sortElevationDifference) {
+        if (filter.sortType === "AZ") sort.Resort = 1; // Ascending order by Resort name
+        if (filter.sortType === "ZA") sort.Resort = -1; // Descending order by Resort name
+        if (filter.sortType === "elevationDifference") {
           // Add a project stage to calculate and add the elevationDifference field
           aggregatePipeline.push({
             $addFields: {
@@ -113,10 +113,10 @@ const resolvers = {
           // Sort based on the elevation difference field
           sort.elevationDifference = -1;
         }
-        if (filter.sortBaseElevation) sort.LowestPoint = -1; // Descending order by LowestPoint
-        if (filter.sortTotalPiste) sort.TotalSlope = -1; // Descending order by TotalSlope
-        if (filter.sortTotalLifts) sort.TotalLifts = -1; // Descending order by TotalLifts
-        if (filter.sortDayPassPrice) sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
+        if (filter.sortType === "baseElevation") sort.LowestPoint = -1; // Descending order by LowestPoint
+        if (filter.sortType === "totalPiste") sort.TotalSlope = -1; // Descending order by TotalSlope
+        if (filter.sortType === "totalLifts") sort.TotalLifts = -1; // Descending order by TotalLifts
+        if (filter.sortType === "dayPassPrice") sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
 
         // Add a sort stage to the aggregate pipeline
         aggregatePipeline.push({ $sort: sort });

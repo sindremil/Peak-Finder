@@ -16,13 +16,7 @@ const typeDefs = `#graphql
     minTotalLifts: Int
     maxDayPassPrice: Int
 
-    sortAZ: Boolean
-    sortZA: Boolean
-    sortElevationDifference: Boolean
-    sortBaseElevation: Boolean
-    sortTotalPiste: Boolean
-    sortTotalLifts: Boolean
-    sortDayPassPrice: Boolean
+    sortType: String
   }
 
   # This "Destination" type defines the queryable fields for every destination in our data source.
