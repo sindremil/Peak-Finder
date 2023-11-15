@@ -8,12 +8,28 @@ export default function Searchbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const [localSearchValue, setLocalSearchValue] = useState("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setLocalSearchValue(newValue);
-    dispatch(setSearchTerm(newValue));
+  const sanitizeSearchTerm = (term: string): string | null => {
+    const sanitizedSearchTerm = term.trim();
+    const forbiddenChars = ["*", ";", "'", '"', "=", "<", ">"];
+
+    if (
+      !/[^a-zA-Z ]/.test(sanitizedSearchTerm) &&
+      !forbiddenChars.some((char) => sanitizedSearchTerm.includes(char))
+    ) {
+      return sanitizedSearchTerm;
+    }
+    return null;
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    const sanitizedSearchTerm = sanitizeSearchTerm(newValue);
+
+    if (sanitizedSearchTerm !== null) {
+      setLocalSearchValue(newValue);
+      dispatch(setSearchTerm(newValue));
+    }
+  };
   // Media query for mobile that increases size of search bar
   const isMobile = useMediaQuery("(max-aspect-ratio: 3/4)");
 

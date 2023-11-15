@@ -83,21 +83,7 @@ export default function SearchResultList(): JSX.Element | null {
 
   const { isPending, isError, data, error } = useQuery<SearchResult>({
     queryKey: ["searchTerm", debouncedSearchTerm, maxSearchQueryResults],
-    queryFn: () => {
-      const sanitizedSearchTerm = debouncedSearchTerm.trim();
-      if (
-        sanitizedSearchTerm === "" ||
-        /[^a-zA-Z ]/.test(sanitizedSearchTerm) ||
-        sanitizedSearchTerm.includes("'") ||
-        sanitizedSearchTerm.includes(";")
-      ) {
-        // Handle invalid search term, maybe show a message or ignore the search
-        return Promise.resolve({ getDestinations: [] });
-      }
-
-      // Proceed with the valid search term
-      return getSearchResult(sanitizedSearchTerm, maxSearchQueryResults);
-    },
+    queryFn: () => getSearchResult(debouncedSearchTerm, maxSearchQueryResults),
     enabled: !!debouncedSearchTerm,
     staleTime: Infinity,
   });
