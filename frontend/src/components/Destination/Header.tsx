@@ -21,10 +21,12 @@ function DestinationName({ name }: { name: string }): JSX.Element {
 function DestinationRating({
   rating,
   ratings,
+  hasReviewed,
   handleGiveReviewOpen,
 }: {
   rating: number;
   ratings: number;
+  hasReviewed: boolean;
   handleGiveReviewOpen: () => void;
 }): JSX.Element {
   const theme = useTheme();
@@ -47,9 +49,13 @@ function DestinationRating({
         <Typography sx={{ paddingRight: "5px" }} aria-hidden="true">
           {ratingString}
         </Typography>
-        <Box onClick={handleGiveReviewOpen} sx={{ cursor: "pointer" }}>
+        {hasReviewed ? (
           <Rating name="showRating" value={rating} precision={0.5} readOnly />
-        </Box>
+        ) : (
+          <Box onClick={handleGiveReviewOpen} sx={{ cursor: "pointer" }}>
+            <Rating name="showRating" value={rating} precision={0.5} readOnly />
+          </Box>
+        )}
         <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
           ({ratings})
         </Typography>
@@ -63,11 +69,13 @@ export default function DestinationHeader({
   destinationName,
   totalRating,
   amountOfRatings,
+  hasReviewed,
   handleGiveReviewOpen,
 }: {
   destinationName: string;
   totalRating: number;
   amountOfRatings: number;
+  hasReviewed: boolean;
   handleGiveReviewOpen: () => void;
 }): JSX.Element {
   const averageRating = totalRating / amountOfRatings;
@@ -78,6 +86,7 @@ export default function DestinationHeader({
         <DestinationRating
           rating={averageRating}
           ratings={amountOfRatings}
+          hasReviewed={hasReviewed}
           handleGiveReviewOpen={handleGiveReviewOpen}
         />
       </Grid>
