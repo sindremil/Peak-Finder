@@ -1,5 +1,6 @@
 import { Box, Container, useMediaQuery } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import logo from "../assets/logos/logo-color.svg";
 import Browse from "../components/Browse/Browse";
 import { resetFilter } from "../components/Filter/filterSlice";
@@ -25,9 +26,19 @@ function Logo(): JSX.Element {
 
 export default function HomePage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     dispatch(resetFilter());
-  }, [dispatch]);
+
+    if (location.state && location.state.isRedirect) {
+      // Focus the input element when redirected
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  }, [dispatch, location.state]);
   return (
     <Container
       sx={{
@@ -38,7 +49,7 @@ export default function HomePage(): JSX.Element {
       }}
     >
       <Logo />
-      <Searchbar />
+      <Searchbar inputRef={inputRef} />
       <br />
       <Browse />
     </Container>
