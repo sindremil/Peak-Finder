@@ -66,4 +66,11 @@ describe("Destination", async () => {
     // Wait for mutation to finish then check if amount of ratings has increased
     await waitFor(() => expect(amountOfRatings).toHaveTextContent("(2)"));
   });
+
+  it("Destination snapshot", async () => {
+    const destination: DestinationInterface = await mockDestinationProps();
+
+    renderWithReduxProviders(<Destination destination={destination} />);
+    expect(screen).toMatchSnapshot();
+  });
 });

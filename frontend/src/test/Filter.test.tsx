@@ -47,46 +47,26 @@ describe("Filter", () => {
     const gondolaChip = screen.getByText("Gondol");
     const certifiedChip = screen.getByText("Peak Finder Sertifisert");
 
+    const chips = [
+      parkChip,
+      nightSkiingChip,
+      chairLiftChip,
+      gondolaChip,
+      certifiedChip,
+    ];
+
     // MUI symbolized checked chips by changing color of parent div
-    // Color is default for unchecked, so first we expect the color to be default
-    expect(parkChip.parentElement?.className).toContain("MuiChip-colorDefault");
-    expect(nightSkiingChip.parentElement?.className).toContain(
-      "MuiChip-colorDefault",
-    );
-    expect(chairLiftChip.parentElement?.className).toContain(
-      "MuiChip-colorDefault",
-    );
-    expect(gondolaChip.parentElement?.className).toContain(
-      "MuiChip-colorDefault",
-    );
-    expect(certifiedChip.parentElement?.className).toContain(
-      "MuiChip-colorDefault",
-    );
-
-    // Click all chips
-    fireEvent.click(parkChip);
-    fireEvent.click(nightSkiingChip);
-    fireEvent.click(chairLiftChip);
-    fireEvent.click(gondolaChip);
-    fireEvent.click(certifiedChip);
-
-    // When checked color should change to primary unless stated otherwise in custom themes
-    await waitFor(() => {
-      expect(parkChip.parentElement?.className).toContain(
-        "MuiChip-colorPrimary",
-      );
-      expect(nightSkiingChip.parentElement?.className).toContain(
-        "MuiChip-colorPrimary",
-      );
-      expect(chairLiftChip.parentElement?.className).toContain(
-        "MuiChip-colorPrimary",
-      );
-      expect(gondolaChip.parentElement?.className).toContain(
-        "MuiChip-colorPrimary",
-      );
-      expect(certifiedChip.parentElement?.className).toContain(
-        "MuiChip-colorPrimary",
-      );
+    // Color is default for unchecked and primary for checked
+    // Check color of each parent div before and after click
+    chips.forEach((chip) => {
+      expect(chip.parentElement?.className).toContain("MuiChip-colorDefault");
+      fireEvent.click(chip);
+      expect(chip.parentElement?.className).toContain("MuiChip-colorPrimary");
     });
+  });
+
+  it("Filter snapshot", () => {
+    renderWithReduxProviders(<Filter />);
+    expect(screen).toMatchSnapshot();
   });
 });

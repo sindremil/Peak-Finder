@@ -37,4 +37,9 @@ describe("DestinationCard", () => {
     // Expect image to be visible
     expect(destinationImage).toBeVisible();
   });
+
+  it("DestinationCard snapshot", () => {
+    renderDestinationCard();
+    expect(screen).toMatchSnapshot();
+  });
 });
