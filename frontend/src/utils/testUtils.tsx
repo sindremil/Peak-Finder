@@ -39,9 +39,9 @@ const initialPreloadedState = {
   },
 };
 
-// This function is used by all component tests
-// Renders necessary providers and passes in the actual component to be tested
-function renderWithProviders(
+// This function is used by tests that render components that use the redux store
+// Renders component with necessary redux providers
+export default function renderWithReduxProviders(
   ui: React.ReactElement,
   {
     preloadedState = initialPreloadedState,
@@ -61,8 +61,5 @@ function renderWithProviders(
     );
   }
 
-  // Return an object with the store and all of RTL's query functions
-  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
-
-export default renderWithProviders;
