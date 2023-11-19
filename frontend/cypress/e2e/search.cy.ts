@@ -1,6 +1,5 @@
 describe("Search functionality", () => {
   it("suggestions should load and redirect user", () => {
-
     // Visit the homepage
     cy.visit("/");
 

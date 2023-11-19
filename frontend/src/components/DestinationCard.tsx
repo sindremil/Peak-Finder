@@ -91,7 +91,7 @@ function DestinationLifts(props: { lifts: number }): JSX.Element {
       <ListItemIcon>
         <ArrowOutwardIcon />
       </ListItemIcon>
-      <ListItemText primary={`${lifts} heiser`} />
+      <ListItemText primary={`${lifts} heiser`} data-testid="totalLifts" />
     </ListItem>
   );
 }
