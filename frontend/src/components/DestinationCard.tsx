@@ -162,7 +162,7 @@ export default function DestinationCard({
   } = destinationCardProps;
 
   return (
-    <Card raised>
+    <Card raised data-testid="DestinationCard">
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}
