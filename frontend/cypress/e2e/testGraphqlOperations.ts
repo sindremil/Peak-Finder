@@ -21,7 +21,7 @@ export const getDestination = `
       Certified
     }
   }
-`
+`;
 
 export const giveRating = `
   mutation Mutation($resort: String!, $rating: Int!) {
@@ -31,4 +31,4 @@ export const giveRating = `
       AmountOfRatings
     }
   }
-`
+`;

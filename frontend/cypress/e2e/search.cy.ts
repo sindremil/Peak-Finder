@@ -16,7 +16,7 @@ describe("Search functionality", () => {
 
   it("should not let user enter special characters", () => {
     cy.visit("http://localhost:5173/project2");
-    
+
     // Check that the search field is empty after typing in special characters
     cy.get('[aria-label="Søkefelt"]').type("*/!?()").should("have.value", "");
   });
