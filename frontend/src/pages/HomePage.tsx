@@ -6,6 +6,7 @@ import Browse from "../components/Browse/Browse";
 import { resetFilter } from "../components/Filter/filterSlice";
 import Searchbar from "../components/Searchbar/Searchbar";
 import { useAppDispatch } from "../hooks";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Logo(): JSX.Element {
   // Media query for mobile that increases size of logo
@@ -28,6 +29,7 @@ export default function HomePage(): JSX.Element {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
+  usePageTitle("Hjem");
 
   useEffect(() => {
     dispatch(resetFilter());
