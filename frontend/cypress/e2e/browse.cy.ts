@@ -1,12 +1,12 @@
 describe("Browse functionality", () => {
   it("countries should load and redirect user", () => {
-    cy.visit("/");
+    cy.visit("http://localhost:5173/project2");
     cy.get('[id="browseSelect"]').click();
     cy.contains("Frankrike").click();
   });
 
   it("user is able to load more results", () => {
-    cy.visit("/results/Frankrike");
+    cy.visit("http://localhost:5173/project2/results/Frankrike");
 
     // Variable for storing the initial number of cards
     let initialCardCount;
@@ -25,7 +25,7 @@ describe("Browse functionality", () => {
   });
 
   it("user is able to filter away results with less than 20 lifts", () => {
-    cy.visit("/results/Norge");
+    cy.visit("http://localhost:5173/project2/results/Norge");
     cy.contains("Filtrer").click();
 
     // Get the input for total lifts filter and type in 20

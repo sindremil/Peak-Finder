@@ -1,7 +1,7 @@
 describe("Search functionality", () => {
   it("suggestions should load and redirect user", () => {
     // Visit the homepage
-    cy.visit("/");
+    cy.visit("http://localhost:5173/project2");
 
     // Type in the search field
     cy.get('[aria-label="Søkefelt"]').type("Hemse");

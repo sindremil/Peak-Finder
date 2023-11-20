@@ -1,6 +1,6 @@
 describe("Rating functionality", () => {
   it("user is able to rate a ski resort", () => {
-    cy.visit("/Hemsedal");
+    cy.visit("http://localhost:5173/project2/Hemsedal");
 
     // Variable for storing the initial number of ratings
     let initialRatings;
