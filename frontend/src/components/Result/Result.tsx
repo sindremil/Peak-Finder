@@ -57,7 +57,6 @@ export default function Result({
     isError,
     data,
     fetchNextPage,
-    hasNextPage, // This indicates if there's a next page available
     isFetchingNextPage, // This indicates if the next page is currently being fetched
   } = useInfiniteQuery<DestinationCardResponse>({
     queryKey: ["country", decodeURIComponent(country), debouncedFilter],
@@ -68,20 +67,23 @@ export default function Result({
         pageParam,
       ),
     initialPageParam: "0",
-    getNextPageParam: (lastPage) => {
-      const lastEdge = lastPage.getFilteredDestinations.edges;
-      return lastEdge.length > 0
-        ? lastEdge[lastEdge.length - 1].cursor
-        : undefined;
-    },
+    getNextPageParam: (lastPage) =>
+      lastPage.getFilteredDestinations.pageInfo.endCursor,
     staleTime: Infinity,
   });
+
+  const hasNextPage = (): boolean => {
+    if (data) {
+      return data.pages[data.pages.length - 1].getFilteredDestinations.pageInfo
+        .hasNextPage;
+    }
+    return true;
+  };
 
   const getResults = (): DestinationCard[] | null => {
     if (isPending || isError) {
       return null;
     }
-
     const destinations = data.pages.map(
       (page) => page.getFilteredDestinations.edges,
     );
@@ -96,7 +98,7 @@ export default function Result({
   };
 
   const handleLoadMore = () => {
-    if (hasNextPage) {
+    if (hasNextPage()) {
       fetchNextPage();
     }
   };
@@ -120,6 +122,7 @@ export default function Result({
   if (results === null) {
     return getErrorOrEmptyContent("Laster inn resultater...");
   }
+
   if (results.length > 0) {
     return (
       <Container sx={{ marginBottom: "2rem" }}>
@@ -127,15 +130,11 @@ export default function Result({
           {addResults(results)}
         </Grid>
         <Box display="flex" justifyContent="center" my={2}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={handleLoadMore}
-            // Disable button if there's no next page or if it's currently fetching
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            {isFetchingNextPage ? "Laster..." : "Last inn mer"}
-          </Button>
+          {hasNextPage() && (
+            <Button variant="contained" size="large" onClick={handleLoadMore}>
+              {isFetchingNextPage ? "Laster..." : "Last inn mer"}
+            </Button>
+          )}
         </Box>
       </Container>
     );
