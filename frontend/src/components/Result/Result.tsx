@@ -77,6 +77,7 @@ export default function Result({
       return data.pages[data.pages.length - 1].getFilteredDestinations.pageInfo
         .hasNextPage;
     }
+    // Returns true if the data doesn't exist yet
     return true;
   };
 
