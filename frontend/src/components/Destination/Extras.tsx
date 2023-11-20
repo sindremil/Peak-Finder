@@ -70,7 +70,7 @@ export default function DestinationExtras({
   certified: boolean;
 }): JSX.Element {
   return (
-    <>
+    <Box sx={{ paddingTop: "16px" }}>
       <Typography variant="h4">Ekstra</Typography>
       <Grid container spacing={2} tabIndex={0}>
         <Grid item xs={12} sm={3}>
@@ -95,6 +95,6 @@ export default function DestinationExtras({
           />
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 }

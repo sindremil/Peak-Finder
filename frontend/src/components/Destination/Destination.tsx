@@ -207,7 +207,7 @@ export default function Destination({
           totalRating={totalRating}
           amountOfRatings={amountOfRatings}
         />
-        <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
+        <CardContent sx={{ paddingTop: "0px", paddingRight: "0px" }}>
           <Info
             country={country}
             lowestPoint={lowestPoint}
