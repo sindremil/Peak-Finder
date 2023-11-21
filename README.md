@@ -38,7 +38,7 @@ npm run test
 
 ### E2E and API tests
 
-Both API and E2E test are made with the Cypress framework. They are all also located in the frontend directory. The API test file sends different queries and mutations to the API both containing normal values as well as some edge cases. The E2E tests execute a string of user interactions, and asserts that the contents on the screen are as expected. To run the tests you can navigate to the frontend directory and run:
+Both API and E2E test are made with the Cypress framework. They are all also located in the frontend directory. The API test file sends different queries and mutations to the API both containing normal values as well as some edge cases. The E2E tests execute a string of user interactions, and assert that the contents on the screen are as expected. Before running the tests, make sure you have both the frontend and backend running locally. To run the tests you can navigate to the frontend directory and run:
 
 ```
 npm run cypress:run
