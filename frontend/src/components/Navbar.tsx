@@ -37,7 +37,7 @@ function SearchIcon(): JSX.Element {
       state={{ isRedirect: true }}
       sx={{ color: "white" }}
     >
-      <IconButton aria-label="Søk" color="inherit">
+      <IconButton aria-label="Søk" color="inherit" data-testid="searchIcon">
         <Search sx={{ ...iconSize }} />
       </IconButton>
     </Box>
