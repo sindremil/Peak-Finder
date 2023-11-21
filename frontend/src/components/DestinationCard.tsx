@@ -92,7 +92,7 @@ function DestinationLifts(props: { lifts: number }): JSX.Element {
       <ListItemIcon>
         <ArrowOutwardIcon />
       </ListItemIcon>
-      <ListItemText primary={`${lifts} heiser`} />
+      <ListItemText primary={`${lifts} heiser`} data-testid="totalLifts" />
     </ListItem>
   );
 }
@@ -163,7 +163,7 @@ export default function DestinationCard({
   } = destinationCardProps;
 
   return (
-    <Card raised>
+    <Card raised data-testid="DestinationCard">
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}

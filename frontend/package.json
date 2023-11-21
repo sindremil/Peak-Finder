@@ -11,7 +11,9 @@
     "lint-fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "prettier": "prettier . --check",
     "prettier-fix": "prettier . --write",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -25,6 +27,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "cypress": "^13.5.1",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "msw": "^2.0.6",

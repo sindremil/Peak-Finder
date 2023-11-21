@@ -56,7 +56,7 @@ function DestinationRating({
             <Rating name="showRating" value={rating} precision={0.5} readOnly />
           </Box>
         )}
-        <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true">
+        <Typography sx={{ paddingLeft: "5px" }} aria-hidden="true" data-testid="ratings">
           ({ratings})
         </Typography>
       </Grid>

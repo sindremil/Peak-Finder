@@ -54,6 +54,7 @@ function SliderSlider({
       <Slider
         value={typeof value === "number" ? value : 0}
         onChange={handleSliderChange}
+        data-testid="slider"
         aria-labelledby="input-slider"
         min={minValue}
         max={maxValue}
@@ -93,6 +94,7 @@ function SliderInput({
       <Input
         value={value === 0 ? "" : value}
         size="small"
+        data-testid="sliderInput"
         onChange={handleInputChange}
         onBlur={onBlur}
         placeholder={String(defaultValue)}
