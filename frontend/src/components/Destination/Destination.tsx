@@ -206,6 +206,8 @@ export default function Destination({
           destinationName={name}
           totalRating={totalRating}
           amountOfRatings={amountOfRatings}
+          hasReviewed={reviewed}
+          handleGiveReviewOpen={handleGiveReviewOpen}
         />
         <CardContent sx={{ paddingTop: "0px", paddingLeft: "20px" }}>
           <Info
