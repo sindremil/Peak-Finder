@@ -22,5 +22,8 @@ describe("Rating functionality", () => {
           `(${(initialRatings + 1).toString()})`,
         );
       });
+
+    // Button should not be visible after rating
+    cy.contains("Vurder destinasjon").should("not.exist");
   });
 });

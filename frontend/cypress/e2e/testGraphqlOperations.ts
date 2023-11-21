@@ -1,4 +1,4 @@
-export const getDestination = `
+export const getDestinationQuery = `
   query Query($resort: String!) {
     getDestination(Resort: $resort) {
       Resort
@@ -29,6 +29,22 @@ export const giveRating = `
       Resort
       TotalRating
       AmountOfRatings
+    }
+  }
+`;
+
+export const searchQuery = `
+  query Query($searchTerm: String!, $maxResults: Int!) {
+    getDestinations(searchTerm: $searchTerm, maxResults: $maxResults) {
+      Resort
+    }
+  }
+`;
+
+export const getDestinationsByCountry = `
+  query Query($country: String!, $maxResults: Int!) {
+    getDestinationsByCountry(Country: $country, maxResults: $maxResults) {
+      Resort
     }
   }
 `;

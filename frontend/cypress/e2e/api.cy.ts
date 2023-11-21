@@ -1,4 +1,9 @@
-import { getDestination, giveRating } from "./testGraphqlOperations";
+import {
+  getDestinationQuery,
+  giveRating,
+  searchQuery,
+  getDestinationsByCountry,
+} from "./testGraphqlOperations";
 
 context("API tests", () => {
   it("API should return the correct data for Hemsedal", () => {
@@ -9,7 +14,7 @@ context("API tests", () => {
         "Content-Type": "application/json",
       },
       body: {
-        query: getDestination,
+        query: getDestinationQuery,
         variables: {
           resort: "Hemsedal",
         },
@@ -19,21 +24,21 @@ context("API tests", () => {
       expect(response.body).to.have.property("data");
       expect(response.body.data).to.have.property("getDestination");
 
-      const { destination } = response.body.data;
-      expect(destination).to.have.property("Resort").to.equal("Hemsedal");
-      expect(destination).to.have.property("Country").to.equal("Norge");
-      expect(destination).to.have.property("LowestPoint").to.equal(620);
-      expect(destination).to.have.property("HighestPoint").to.equal(1450);
-      expect(destination).to.have.property("DayPassPriceAdult").to.equal(46);
-      expect(destination).to.have.property("BeginnerSlope").to.equal(29);
-      expect(destination).to.have.property("IntermediateSlope").to.equal(10);
-      expect(destination).to.have.property("DifficultSlope").to.equal(4);
-      expect(destination).to.have.property("Snowparks").to.equal(true);
-      expect(destination).to.have.property("NightSki").to.equal(true);
-      expect(destination).to.have.property("SurfaceLifts").to.equal(16);
-      expect(destination).to.have.property("ChairLifts").to.equal(5);
-      expect(destination).to.have.property("GondolaLifts").to.equal(0);
-      expect(destination).to.have.property("Certified").to.equal(true);
+      const { getDestination } = response.body.data;
+      expect(getDestination).to.have.property("Resort").to.equal("Hemsedal");
+      expect(getDestination).to.have.property("Country").to.equal("Norge");
+      expect(getDestination).to.have.property("LowestPoint").to.equal(620);
+      expect(getDestination).to.have.property("HighestPoint").to.equal(1450);
+      expect(getDestination).to.have.property("DayPassPriceAdult").to.equal(46);
+      expect(getDestination).to.have.property("BeginnerSlope").to.equal(29);
+      expect(getDestination).to.have.property("IntermediateSlope").to.equal(10);
+      expect(getDestination).to.have.property("DifficultSlope").to.equal(4);
+      expect(getDestination).to.have.property("Snowparks").to.equal(true);
+      expect(getDestination).to.have.property("NightSki").to.equal(true);
+      expect(getDestination).to.have.property("SurfaceLifts").to.equal(16);
+      expect(getDestination).to.have.property("ChairLifts").to.equal(5);
+      expect(getDestination).to.have.property("GondolaLifts").to.equal(0);
+      expect(getDestination).to.have.property("Certified").to.equal(true);
     });
   });
 
@@ -45,7 +50,7 @@ context("API tests", () => {
         "Content-Type": "application/json",
       },
       body: {
-        query: getDestination,
+        query: getDestinationQuery,
         variables: {
           resort: "Mordor",
         },
@@ -66,7 +71,7 @@ context("API tests", () => {
         "Content-Type": "application/json",
       },
       body: {
-        query: getDestination,
+        query: getDestinationQuery,
         variables: {
           resort: 1,
         },
@@ -87,7 +92,7 @@ context("API tests", () => {
         "Content-Type": "application/json",
       },
       body: {
-        query: getDestination,
+        query: getDestinationQuery,
         variables: {
           resort: "Hemsedal",
         },
@@ -118,6 +123,66 @@ context("API tests", () => {
           totalRating + 5,
         );
       });
+    });
+  });
+
+  it("API should return countries from database", () => {
+    cy.request({
+      method: "POST",
+      url: "http://localhost:4000",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        query: `
+          query Query {
+            getCountries
+          }
+        `,
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body.data.getCountries).to.have.length(26);
+    });
+  });
+
+  it("API should return resort based on searchterm", () => {
+    cy.request({
+      method: "POST",
+      url: "http://localhost:4000",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        query: searchQuery,
+        variables: {
+          searchTerm: "Hems",
+          maxResults: 1,
+        },
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body.data.getDestinations[0].Resort).to.equal("Hemsedal");
+    });
+  });
+
+  it("API should return destinations based on country", () => {
+    cy.request({
+      method: "POST",
+      url: "http://localhost:4000/",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        query: getDestinationsByCountry,
+        variables: {
+          country: "Norge",
+          maxResults: 100,
+        },
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body.data.getDestinationsByCountry).to.have.length(10);
     });
   });
 });
