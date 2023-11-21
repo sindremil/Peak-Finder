@@ -8,20 +8,10 @@ export default function Searchbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const [localSearchValue, setLocalSearchValue] = useState("");
 
-  const sanitizeSearchTerm = (term: string): string | null => {
-    const sanitizedSearchTerm = term.trim();
-
-    if (!/[^a-zA-Z ]/.test(sanitizedSearchTerm)) {
-      return sanitizedSearchTerm;
-    }
-    return null;
-  };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    const sanitizedSearchTerm = sanitizeSearchTerm(newValue);
 
-    if (sanitizedSearchTerm !== null) {
+    if (newValue !== null) {
       setLocalSearchValue(newValue);
       dispatch(setSearchTerm(newValue));
     }

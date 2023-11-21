@@ -34,10 +34,13 @@ const resolvers = {
       _: any,
       { searchTerm, maxResults }: { searchTerm: string; maxResults: number },
     ) => {
-      // Use Mongoose to fetch data from MongoDB and filter by searchTerm
+      // Sanitize searchTerm to allow only letters, "/", "(", ")", and "-"
+      const sanitizedSearchTerm = searchTerm.replace(/[^/()\-\p{L}]/gu, "");
+
+      // Use Mongoose to fetch data from MongoDB and filter by sanitized searchTerm
       try {
         const destinations = await Destination.find({
-          Resort: { $regex: searchTerm, $options: "i" },
+          Resort: { $regex: sanitizedSearchTerm, $options: "i" },
         }).limit(maxResults);
         return destinations;
       } catch (error) {
