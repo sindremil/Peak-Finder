@@ -16,10 +16,11 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Link } from "react-router-dom";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
 
+// In your DestinationName component
 function DestinationName(props: { name: string }): JSX.Element {
   const { name } = props;
   return (
-    <CardContent>
+    <CardContent sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>
       <Typography variant="h4">{name}</Typography>
     </CardContent>
   );
@@ -58,11 +59,11 @@ function DestinationPiste(props: {
 
   // Modifies the padding of all piste per difficulty total
   const listItemPadding: { padding: string } = {
-    padding: "0.5vw 1vw",
+    padding: "0.4vw 1vw",
   };
 
   return (
-    <ListItem sx={{ display: "flex", flexWrap: "wrap" }}>
+    <ListItem sx={{ display: "flex", flexWrap: "wrap", paddingRight: "6px" }}>
       <ListItemIcon>
         <RouteIcon />
       </ListItemIcon>
