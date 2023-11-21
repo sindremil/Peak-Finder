@@ -1,3 +1,6 @@
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import HeightIcon from "@mui/icons-material/Height";
+import RouteIcon from "@mui/icons-material/Route";
 import {
   Box,
   Card,
@@ -9,27 +12,67 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import HeightIcon from "@mui/icons-material/Height";
-import RouteIcon from "@mui/icons-material/Route";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { Link } from "react-router-dom";
 import DestinationCardProps from "../interfaces/DestinationCardProps";
 
-// In your DestinationName component
-function DestinationName(props: { name: string }): JSX.Element {
-  const { name } = props;
+function DestinationName(props: {
+  name: string;
+  titleHeight: number;
+}): JSX.Element {
+  const { name, titleHeight } = props;
+
+  const lineHeight = 1.235;
+  const maxLinesToShow = 2;
+  const maxHeight = `${lineHeight * maxLinesToShow}em`;
+
   return (
-    <CardContent sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>
-      <Typography variant="h4">{name}</Typography>
+    <CardContent
+      sx={{
+        lineHeight: `${lineHeight}em`,
+        height: `${titleHeight}px`, // Set a fixed height for the card content
+        flex: "0 1 auto", // Don't grow, but allow to shrink if needed
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          maxHeight,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: maxLinesToShow,
+        }}
+      >
+        {name}
+      </Typography>
     </CardContent>
   );
 }
 
-function DestinationImage(props: { src: string; alt: string }): JSX.Element {
-  const { src, alt } = props;
+function DestinationImage(props: {
+  src: string;
+  alt: string;
+  fixedHeaderHeight: number;
+  titleHeight: number;
+}): JSX.Element {
+  const { src, alt, fixedHeaderHeight, titleHeight } = props;
 
-  return <CardMedia sx={{ height: 150 }} image={src} title={alt} />;
+  return (
+    <CardMedia
+      component="img"
+      sx={{
+        height: `calc(${fixedHeaderHeight}px - ${titleHeight}px)`, // Calculate height dynamically
+        width: "100%", // Make sure the width is always 100%
+        objectFit: "cover", // This will ensure the aspect ratio is maintained
+      }}
+      image={src}
+      alt={alt}
+    />
+  );
 }
 
 function DestinationElevation(props: {
@@ -59,7 +102,7 @@ function DestinationPiste(props: {
 
   // Modifies the padding of all piste per difficulty total
   const listItemPadding: { padding: string } = {
-    padding: "0.4vw 1vw",
+    padding: "0.5vw 1vw",
   };
 
   return (
@@ -162,8 +205,27 @@ export default function DestinationCard({
     lifts,
   } = destinationCardProps;
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Set the combined height for the name and image area.
+  // The numbers are actually magic.
+  const fixedHeaderHeight = 250;
+  let titleHeightPx = 63;
+  if (isSmallScreen) {
+    if (name.length > 18) {
+      titleHeightPx += 42;
+    }
+  } else if (name.length > 24) {
+    titleHeightPx += 42;
+  }
+
   return (
-    <Card raised data-testid="DestinationCard">
+    <Card
+      raised
+      data-testid="DestinationCard"
+      sx={{ height: "500px", display: "flex", flexDirection: "column" }}
+    >
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}
@@ -171,17 +233,33 @@ export default function DestinationCard({
           sessionStorage.setItem("resultPageScrollY", window.scrollY.toString())
         }
         state={{ isFromResult: true }}
+        sx={{ height: "100%" }}
       >
-        <DestinationName name={name} />
-        <DestinationImage src={imageSrc} alt={imageAlt} />
-        <DestinationInfo
-          lowestPoint={lowestPoint}
-          highestPoint={highestPoint}
-          beginner={beginner}
-          intermediate={intermediate}
-          advanced={advanced}
-          lifts={lifts}
+        <DestinationName name={name} titleHeight={titleHeightPx} />
+        <DestinationImage
+          src={imageSrc}
+          alt={imageAlt}
+          fixedHeaderHeight={fixedHeaderHeight}
+          titleHeight={titleHeightPx}
         />
+        <CardContent
+          sx={{
+            flex: "2 1 auto", // Allows the content to grow and shrink, with more priority than the title
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+        >
+          <DestinationInfo
+            lowestPoint={lowestPoint}
+            highestPoint={highestPoint}
+            beginner={beginner}
+            intermediate={intermediate}
+            advanced={advanced}
+            lifts={lifts}
+          />
+        </CardContent>
       </CardActionArea>
     </Card>
   );
