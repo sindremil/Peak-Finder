@@ -55,6 +55,7 @@ export default function Result({
   const {
     isPending,
     isError,
+    error,
     data,
     fetchNextPage,
     isFetchingNextPage, // This indicates if the next page is currently being fetched
@@ -72,19 +73,15 @@ export default function Result({
     staleTime: Infinity,
   });
 
-  const hasNextPage = (): boolean => {
-    if (data) {
-      return data.pages[data.pages.length - 1].getFilteredDestinations.pageInfo
-        .hasNextPage;
-    }
-    // Returns true if the data doesn't exist yet
-    return true;
-  };
-
-  const getResults = (): DestinationCard[] | null => {
-    if (isPending || isError) {
+  const getResults = (): DestinationCard[] | null | Error => {
+    if (isPending) {
       return null;
     }
+
+    if (isError) {
+      return error;
+    }
+
     const destinations = data.pages.map(
       (page) => page.getFilteredDestinations.edges,
     );
@@ -122,6 +119,12 @@ export default function Result({
 
   if (results === null) {
     return getErrorOrEmptyContent("Laster inn resultater...");
+  }
+
+  if (results instanceof Error) {
+    return getErrorOrEmptyContent(
+      "Det oppstod en feil under lasting av resultater",
+    );
   }
 
   if (results.length > 0) {

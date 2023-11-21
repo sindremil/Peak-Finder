@@ -28,7 +28,7 @@ export default function DestinationPage() {
 
   const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {
-      return <Navbar />;
+      return <DestinationSkeleton isSmallScreen={isSmallScreen} />;
     }
 
     if (isError) {
