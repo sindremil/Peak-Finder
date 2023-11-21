@@ -73,6 +73,15 @@ export default function Result({
     staleTime: Infinity,
   });
 
+  const hasNextPage = (): boolean => {
+    if (data) {
+      return data.pages[data.pages.length - 1].getFilteredDestinations.pageInfo
+        .hasNextPage;
+    }
+    // Returns true if the data doesn't exist yet
+    return true;
+  };
+
   const getResults = (): DestinationCard[] | null | Error => {
     if (isPending) {
       return null;
