@@ -36,6 +36,7 @@ function SearchIcon(): JSX.Element {
       to="/"
       state={{ isRedirect: true }}
       sx={{ color: "white" }}
+      tabIndex={-1}
     >
       <IconButton aria-label="Søk" color="inherit">
         <Search sx={{ ...iconSize }} />
