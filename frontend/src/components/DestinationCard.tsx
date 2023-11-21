@@ -20,8 +20,19 @@ import DestinationCardProps from "../interfaces/DestinationCardProps";
 function DestinationName(props: { name: string }): JSX.Element {
   const { name } = props;
   return (
-    <CardContent sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>
-      <Typography variant="h4">{name}</Typography>
+    <CardContent
+      sx={{
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        maxHeight: "64px",
+        flex: "1 0 auto",
+      }}
+    >
+      {/* Adjust the maxHeight according to your design requirements */}
+      <Typography variant="h4" noWrap>
+        {name}
+      </Typography>
+      {/* You can use noWrap or handle overflow with ellipsis */}
     </CardContent>
   );
 }
