@@ -19,20 +19,28 @@ import DestinationCardProps from "../interfaces/DestinationCardProps";
 // In your DestinationName component
 function DestinationName(props: { name: string }): JSX.Element {
   const { name } = props;
+  const lineHeight = 3.2; // Line height in em units, adjust as needed
+
   return (
     <CardContent
       sx={{
+        position: "relative",
         overflow: "hidden",
-        textOverflow: "ellipsis",
-        maxHeight: "64px",
+        lineHeight: `${lineHeight}em`,
+        maxHeight: `${lineHeight * 2}em`, // Set to double the line-height to accommodate exactly two lines
         flex: "1 0 auto",
       }}
     >
-      {/* Adjust the maxHeight according to your design requirements */}
-      <Typography variant="h4" noWrap>
+      <Typography
+        variant="h4"
+        sx={{
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: 2,
+        }}
+      >
         {name}
       </Typography>
-      {/* You can use noWrap or handle overflow with ellipsis */}
     </CardContent>
   );
 }
@@ -174,22 +182,37 @@ export default function DestinationCard({
   } = destinationCardProps;
 
   return (
-    <Card raised data-testid="DestinationCard">
+    <Card
+      raised
+      data-testid="DestinationCard"
+      sx={{ height: "500px", display: "flex", flexDirection: "column" }}
+    >
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}
         state={{ isFromResult: true }}
+        sx={{ height: "100%" }}
       >
         <DestinationName name={name} />
         <DestinationImage src={imageSrc} alt={imageAlt} />
-        <DestinationInfo
-          lowestPoint={lowestPoint}
-          highestPoint={highestPoint}
-          beginner={beginner}
-          intermediate={intermediate}
-          advanced={advanced}
-          lifts={lifts}
-        />
+        <CardContent
+          sx={{
+            flex: "2 1 auto", // Allows the content to grow and shrink, with more priority than the title
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+        >
+          <DestinationInfo
+            lowestPoint={lowestPoint}
+            highestPoint={highestPoint}
+            beginner={beginner}
+            intermediate={intermediate}
+            advanced={advanced}
+            lifts={lifts}
+          />
+        </CardContent>
       </CardActionArea>
     </Card>
   );
