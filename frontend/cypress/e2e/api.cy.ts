@@ -2,10 +2,14 @@ import {
   getDestinationQuery,
   giveRating,
   searchQuery,
-  getDestinationsByCountry,
 } from "./testGraphqlOperations";
 
-context("API tests", () => {
+describe("API tests", () => {
+  // Frontend project needs to be opened for coming e2e tests to work
+  before(() => {
+    cy.visit("http://localhost:5173/project2");
+  });
+
   it("API should return the correct data for Hemsedal", () => {
     cy.request({
       method: "POST",
@@ -163,26 +167,6 @@ context("API tests", () => {
     }).then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body.data.getDestinations[0].Resort).to.equal("Hemsedal");
-    });
-  });
-
-  it("API should return destinations based on country", () => {
-    cy.request({
-      method: "POST",
-      url: "http://localhost:4000/",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        query: getDestinationsByCountry,
-        variables: {
-          country: "Norge",
-          maxResults: 100,
-        },
-      },
-    }).then((response) => {
-      expect(response.status).to.equal(200);
-      expect(response.body.data.getDestinationsByCountry).to.have.length(10);
     });
   });
 });

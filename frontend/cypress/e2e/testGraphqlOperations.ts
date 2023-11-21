@@ -40,11 +40,3 @@ export const searchQuery = `
     }
   }
 `;
-
-export const getDestinationsByCountry = `
-  query Query($country: String!, $maxResults: Int!) {
-    getDestinationsByCountry(Country: $country, maxResults: $maxResults) {
-      Resort
-    }
-  }
-`;

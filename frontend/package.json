@@ -12,8 +12,8 @@
     "prettier": "prettier . --check",
     "prettier-fix": "prettier . --write",
     "test": "vitest --coverage",
-    "cypress": "cypress open",
-    "cypress:all": "cypress run"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
