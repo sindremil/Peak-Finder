@@ -46,6 +46,10 @@ export default function DestinationPage() {
     if (!isFromResult) {
       dispatch(setSearchTerm(""));
     }
+
+    // Always scroll to the top of the page
+    window.scrollTo(0, 0);
+
     return isSmallScreen ? (
       <>
         <Navbar />

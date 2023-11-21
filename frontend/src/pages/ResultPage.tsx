@@ -1,6 +1,6 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Container, Drawer, Fab } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import Filter from "../components/Filter/Filter";
@@ -16,6 +16,12 @@ export default function ResultPage() {
   const debouncedFilter = useDebounce(filter, 500);
   const [drawerOpen, setDrawerOpen] = useState(false);
   usePageTitle(country);
+
+  // Scrolls to the previous position when the page is loaded
+  const pos = parseInt(sessionStorage.getItem("resultPageScrollY") || "0", 10);
+  useEffect(() => {
+    window.scrollTo(0, pos);
+  }, [pos]);
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
