@@ -21,14 +21,14 @@ interface GiveReviewProps {
 export default function GiveReview({
   name,
   handleClose,
-  handleReviewGiven: handleGiveRating,
+  handleReviewGiven,
 }: GiveReviewProps): JSX.Element {
   const [newRating, setNewRating] = useState(0);
 
   const handleMutation = async (rating: number) => {
     try {
       const response = await giveRating({ resort: name, rating });
-      handleGiveRating(
+      handleReviewGiven(
         response.giveRating.TotalRating,
         response.giveRating.AmountOfRatings,
       );

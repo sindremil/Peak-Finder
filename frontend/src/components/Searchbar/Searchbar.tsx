@@ -14,10 +14,12 @@ export default function Searchbar({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    setLocalSearchValue(newValue);
-    dispatch(setSearchTerm(newValue));
-  };
 
+    if (newValue !== null) {
+      setLocalSearchValue(newValue);
+      dispatch(setSearchTerm(newValue));
+    }
+  };
   // Media query for mobile that increases size of search bar
   const isMobile = useMediaQuery("(max-aspect-ratio: 3/4)");
 
