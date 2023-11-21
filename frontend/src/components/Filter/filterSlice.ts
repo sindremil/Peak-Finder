@@ -13,6 +13,8 @@ const initialState: FilterState = {
   minTotalPiste: 0,
   minTotalLifts: 0,
   maxDayPassPrice: 200,
+
+  sortType: "",
 };
 
 /* eslint-disable no-param-reassign */
@@ -52,6 +54,9 @@ export const filterSlice = createSlice({
     setMaxDayPassPrice: (state, action) => {
       state.maxDayPassPrice = action.payload;
     },
+    setSortType: (state, action) => {
+      state.sortType = action.payload;
+    },
     resetFilter: (state) => {
       state.hasPark = false;
       state.hasNightSkiing = false;
@@ -63,6 +68,7 @@ export const filterSlice = createSlice({
       state.minTotalPiste = 0;
       state.minTotalLifts = 0;
       state.maxDayPassPrice = 200;
+      state.sortType = "";
     },
   },
 });
@@ -80,6 +86,8 @@ export const {
   setMinTotalPiste,
   setMinTotalLifts,
   setMaxDayPassPrice,
+
+  setSortType,
 
   resetFilter,
 } = filterSlice.actions;

@@ -6,5 +6,9 @@ export default interface DestinationCardResponse {
       cursor: string;
       node: DestinationCard;
     }[];
+    pageInfo: {
+      endCursor: string;
+      hasNextPage: boolean;
+    };
   };
 }

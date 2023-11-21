@@ -37,6 +37,10 @@ export default async function getFilteredDestinations(
             TotalLifts
           }
         }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
       }
     }
   `;

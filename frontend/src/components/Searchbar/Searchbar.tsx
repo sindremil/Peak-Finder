@@ -1,19 +1,25 @@
-import React, { useState } from "react";
 import { Box, TextField, useMediaQuery } from "@mui/material";
-import { setSearchTerm } from "./searchSlice";
+import React, { RefObject, useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import SearchResultList from "./SearchResultList";
+import { setSearchTerm } from "./searchSlice";
 
-export default function Searchbar(): JSX.Element {
+export default function Searchbar({
+  inputRef,
+}: {
+  inputRef: RefObject<HTMLInputElement>;
+}): JSX.Element {
   const dispatch = useAppDispatch();
   const [localSearchValue, setLocalSearchValue] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    setLocalSearchValue(newValue);
-    dispatch(setSearchTerm(newValue));
-  };
 
+    if (newValue !== null) {
+      setLocalSearchValue(newValue);
+      dispatch(setSearchTerm(newValue));
+    }
+  };
   // Media query for mobile that increases size of search bar
   const isMobile = useMediaQuery("(max-aspect-ratio: 3/4)");
 
@@ -35,6 +41,7 @@ export default function Searchbar(): JSX.Element {
         placeholder="Søk etter destinasjon"
         value={localSearchValue}
         onChange={handleInputChange}
+        inputRef={inputRef}
         sx={{
           flex: 1,
           borderColor: "#2074d4",

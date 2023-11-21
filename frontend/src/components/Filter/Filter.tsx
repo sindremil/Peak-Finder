@@ -1,11 +1,12 @@
-import { Box, Container, Stack } from "@mui/material";
-import HeightIcon from "@mui/icons-material/Height";
-import RouteIcon from "@mui/icons-material/Route";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import EuroIcon from "@mui/icons-material/Euro";
+import HeightIcon from "@mui/icons-material/Height";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
-import CustomSlider from "./CustomSlider";
+import RouteIcon from "@mui/icons-material/Route";
+import { Box, Container, Stack } from "@mui/material";
 import CustomChip from "./CustomChip";
+import CustomSlider from "./CustomSlider";
+import SortSelect from "./SortSelect";
 import {
   setMaxDayPassPrice,
   setMinBaseElevation,
@@ -161,7 +162,7 @@ function MaximumDayPassPriceSlider(): JSX.Element {
 // Component for grouping all the sliders
 function Sliders(): JSX.Element {
   return (
-    <Stack spacing={2}>
+    <Stack spacing={{ xs: 2, sm: 4 }}>
       <MinimumElevationDifferenceSlider />
       <MinimumBaseElevationSlider />
       <MinimumTotalPisteSlider />
@@ -178,10 +179,11 @@ export default function Filter(): JSX.Element {
         direction="column"
         justifyContent="flex-start"
         alignItems="flex-start"
-        spacing={4}
+        spacing={{ xs: 2, sm: 4 }}
       >
         <Sliders />
         <Chips />
+        <SortSelect />
       </Stack>
     </Container>
   );

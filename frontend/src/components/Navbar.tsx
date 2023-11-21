@@ -1,9 +1,9 @@
-import { AppBar, Toolbar, Box, IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Search } from "@mui/icons-material";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logos/logo-no-background.svg";
 import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
+import logo from "../assets/logos/logo-no-background.svg";
 
 // This const controls the size of all icons that belong to this component
 const iconSize: { fontSize: string } = {
@@ -31,7 +31,12 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
 
 function SearchIcon(): JSX.Element {
   return (
-    <Box component={Link} to="/" sx={{ color: "white" }}>
+    <Box
+      component={Link}
+      to="/"
+      state={{ isRedirect: true }}
+      sx={{ color: "white" }}
+    >
       <IconButton aria-label="Søk" color="inherit">
         <Search sx={{ ...iconSize }} />
       </IconButton>

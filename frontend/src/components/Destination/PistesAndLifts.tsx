@@ -81,14 +81,22 @@ function DestinationPistes({
   intermediate,
   advanced,
   totalSlope,
+  borderStyle,
 }: {
   beginner: number;
   intermediate: number;
   advanced: number;
   totalSlope: number;
+  borderStyle: string;
 }): JSX.Element {
   return (
-    <Grid item xs={12} sm={6} tabIndex={0}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      tabIndex={0}
+      sx={{ borderRight: `${borderStyle}` }}
+    >
       <Typography variant="h4" gutterBottom>
         Skibakker
       </Typography>
@@ -219,13 +227,24 @@ export default function DestinationPistesAndLifts({
   surfaceLifts: number;
   totalLifts: number;
 }): JSX.Element {
+  const borderStyle = "2px solid #D3D3D3";
   return (
-    <Grid container spacing={2} sx={{ paddingTop: "20px" }}>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        marginTop: "0",
+        paddingRight: "-16px",
+        borderTop: `${borderStyle}`,
+        borderBottom: `${borderStyle}`,
+      }}
+    >
       <DestinationPistes
         beginner={beginner}
         intermediate={intermediate}
         advanced={advanced}
         totalSlope={totalSlope}
+        borderStyle={borderStyle}
       />
       <DestinationLifts
         gondolas={gondolas}
