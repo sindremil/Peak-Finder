@@ -10,6 +10,7 @@ import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks";
 import { setSearchTerm } from "../components/Searchbar/searchSlice";
 import usePageTitle from "../hooks/usePageTitle";
+import DestinationSkeleton from "../components/Destination/DestinationSkeleton";
 
 export default function DestinationPage() {
   const theme = useTheme();
