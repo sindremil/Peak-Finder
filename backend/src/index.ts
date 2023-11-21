@@ -1,11 +1,13 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import mongoose from "mongoose";
+import { config } from "dotenv";
 import resolvers from "./graphql/resolvers.js";
 import typeDefs from "./graphql/typeDefs.js";
 
-const MONGODB =
-  "mongodb://peakfinder:peakfinder@it2810-42.idi.ntnu.no:27017/PeakFinder";
+// Opens .env file and sets environment variables
+config({ path: "./config.env" });
+const MONGODB = process.env.MONGODB || "";
 
 // Apollo Server
 // typeDefs GraphQL Type Definitions
