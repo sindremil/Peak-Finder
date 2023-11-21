@@ -55,6 +55,7 @@ export default function Result({
   const {
     isPending,
     isError,
+    error,
     data,
     fetchNextPage,
     hasNextPage, // This indicates if there's a next page available
@@ -77,9 +78,13 @@ export default function Result({
     staleTime: Infinity,
   });
 
-  const getResults = (): DestinationCard[] | null => {
-    if (isPending || isError) {
+  const getResults = (): DestinationCard[] | null | Error => {
+    if (isPending) {
       return null;
+    }
+
+    if (isError) {
+      return error;
     }
 
     const destinations = data.pages.map(
@@ -120,6 +125,13 @@ export default function Result({
   if (results === null) {
     return getErrorOrEmptyContent("Laster inn resultater...");
   }
+
+  if (results instanceof Error) {
+    return getErrorOrEmptyContent(
+      "Det oppstod en feil under lasting av resultater",
+    );
+  }
+
   if (results.length > 0) {
     return (
       <Container sx={{ marginBottom: "2rem" }}>
