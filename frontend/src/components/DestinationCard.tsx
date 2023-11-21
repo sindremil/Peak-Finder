@@ -167,6 +167,9 @@ export default function DestinationCard({
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}
+        onClick={() =>
+          sessionStorage.setItem("resultPageScrollY", window.scrollY.toString())
+        }
         state={{ isFromResult: true }}
       >
         <DestinationName name={name} />
