@@ -6,19 +6,10 @@ import Destination from "../components/Destination/Destination";
 import Navbar from "../components/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
-import SetPageTitle from "../utils/SetPageTitle";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks";
 import { setSearchTerm } from "../components/Searchbar/searchSlice";
-
-function addTitleAndNavbar(title: string): JSX.Element {
-  return (
-    <>
-      <SetPageTitle title={title || "Destination"} />
-      <Navbar />
-    </>
-  );
-}
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function DestinationPage() {
   const theme = useTheme();
@@ -27,6 +18,7 @@ export default function DestinationPage() {
   const decodedName = decodeURI(name || "");
   const location = useLocation();
   const dispatch = useAppDispatch();
+  usePageTitle(decodedName);
 
   const { isPending, isError, data, error } = useQuery<DestinationResponse>({
     queryKey: ["Resort", decodedName],
@@ -55,7 +47,7 @@ export default function DestinationPage() {
     }
     return isSmallScreen ? (
       <>
-        {addTitleAndNavbar(destination.Resort)}
+        <Navbar />
         <Box>
           {BreadCrumbs({
             country: destination.Country,
@@ -68,7 +60,7 @@ export default function DestinationPage() {
       </>
     ) : (
       <>
-        {addTitleAndNavbar(destination.Resort)}
+        <Navbar />
         <br />
         <Container maxWidth="md">
           {BreadCrumbs({

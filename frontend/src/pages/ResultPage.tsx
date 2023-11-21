@@ -8,13 +8,14 @@ import Navbar from "../components/Navbar";
 import Result from "../components/Result/Result";
 import { useAppSelector } from "../hooks";
 import useDebounce from "../hooks/useDebounce";
-import SetPageTitle from "../utils/SetPageTitle";
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function ResultPage() {
   const filter = useAppSelector((state) => state.filter);
   const country = useParams().country ?? "";
   const debouncedFilter = useDebounce(filter, 500);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  usePageTitle(country);
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -22,7 +23,6 @@ export default function ResultPage() {
 
   return (
     <>
-      <SetPageTitle title={country || "Result"} />
       <Navbar />
       <Container sx={{ paddingTop: "24px", paddingBottom: "24px" }}>
         {BreadCrumbs({ country, isResult: true })}
