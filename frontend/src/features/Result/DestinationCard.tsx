@@ -102,7 +102,7 @@ function DestinationPiste(props: {
 
   // Modifies the padding of all piste per difficulty total
   const listItemPadding: { padding: string } = {
-    padding: "0.5vw 1vw",
+    padding: "0.5rem",
   };
 
   return (
@@ -221,11 +221,7 @@ export default function DestinationCard({
   }
 
   return (
-    <Card
-      raised
-      data-testid="DestinationCard"
-      sx={{ height: "500px", display: "flex", flexDirection: "column" }}
-    >
+    <Card raised data-testid="DestinationCard" sx={{ height: "475px" }}>
       <CardActionArea
         component={Link}
         to={`/${encodeURIComponent(name)}`}
@@ -242,24 +238,14 @@ export default function DestinationCard({
           fixedHeaderHeight={fixedHeaderHeight}
           titleHeight={titleHeightPx}
         />
-        <CardContent
-          sx={{
-            flex: "2 1 auto", // Allows the content to grow and shrink, with more priority than the title
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "auto",
-            marginBottom: "auto",
-          }}
-        >
-          <DestinationInfo
-            lowestPoint={lowestPoint}
-            highestPoint={highestPoint}
-            beginner={beginner}
-            intermediate={intermediate}
-            advanced={advanced}
-            lifts={lifts}
-          />
-        </CardContent>
+        <DestinationInfo
+          lowestPoint={lowestPoint}
+          highestPoint={highestPoint}
+          beginner={beginner}
+          intermediate={intermediate}
+          advanced={advanced}
+          lifts={lifts}
+        />
       </CardActionArea>
     </Card>
   );
