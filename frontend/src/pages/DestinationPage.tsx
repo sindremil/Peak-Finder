@@ -2,15 +2,15 @@ import { Alert, Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
 import getDestinationPageProps from "../api/getDestinationPageProps";
-import Destination from "../components/Destination/Destination";
-import Navbar from "../components/Navbar/Navbar";
+import Destination from "../features/Destination/Destination";
+import Navbar from "../features/Navbar/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
-import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
+import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks";
-import { setSearchTerm } from "../components/Searchbar/searchSlice";
+import { setSearchTerm } from "../features/Searchbar/searchSlice";
 import usePageTitle from "../hooks/usePageTitle";
-import DestinationSkeleton from "../components/Destination/DestinationSkeleton";
+import DestinationSkeleton from "../features/Destination/DestinationSkeleton";
 
 export default function DestinationPage() {
   const theme = useTheme();

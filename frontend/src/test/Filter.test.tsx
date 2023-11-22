@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 import renderWithReduxProviders from "./testUtils";
-import Filter from "../components/Filter/Filter";
+import Filter from "../features/Filter/Filter";
 
 describe("Filter", () => {
   it("Values in input fields should update when sliders are used", async () => {

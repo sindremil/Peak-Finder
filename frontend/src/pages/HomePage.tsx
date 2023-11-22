@@ -2,9 +2,9 @@ import { Box, Container, useMediaQuery } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import logo from "../assets/logos/logo-color.svg";
-import Browse from "../components/Browse/Browse";
-import { resetFilter } from "../components/Filter/filterSlice";
-import Searchbar from "../components/Searchbar/Searchbar";
+import Browse from "../features/Browse/Browse";
+import { resetFilter } from "../features/Filter/filterSlice";
+import Searchbar from "../features/Searchbar/Searchbar";
 import { useAppDispatch } from "../hooks";
 import usePageTitle from "../hooks/usePageTitle";
 

@@ -2,8 +2,8 @@ import { Search } from "@mui/icons-material";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logoCropped from "../assets/logos/logo-no-background-cropped.svg";
-import logo from "../assets/logos/logo-no-background.svg";
+import logoCropped from "../../assets/logos/logo-no-background-cropped.svg";
+import logo from "../../assets/logos/logo-no-background.svg";
 
 // This const controls the size of all icons that belong to this component
 const iconSize: { fontSize: string } = {
