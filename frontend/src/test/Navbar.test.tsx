@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { screen, render, waitFor, act } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../features/Navbar/Navbar";
 
 describe("Navbar", async () => {
   beforeEach(() => {

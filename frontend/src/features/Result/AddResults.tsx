@@ -32,8 +32,8 @@ export default function AddResults({
     const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
       /[^a-z]/g,
       "",
-    )}.jpg`;
-    const imageAlt = `Bilde av ${Resort}`;
+    )}.webp`;
+    const imageAlt = Resort;
 
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
