@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { screen, render } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import DestinationCard from "../components/DestinationCard";
+import DestinationCard from "../components/Result/DestinationCard";
 import { hemsedalCard } from "../mocks/mockData";
 
 describe("DestinationCard", () => {

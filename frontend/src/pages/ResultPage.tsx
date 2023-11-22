@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import Filter from "../components/Filter/Filter";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Result from "../components/Result/Result";
 import { useAppSelector } from "../hooks";
 import useDebounce from "../hooks/useDebounce";
