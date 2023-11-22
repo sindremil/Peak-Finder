@@ -23,6 +23,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
 // This is the initial state of the store for testing purposes
 const initialPreloadedState = {
   filter: {
+    sortType: "",
     hasPark: false,
     hasNightSkiing: false,
     hasChairlift: false,

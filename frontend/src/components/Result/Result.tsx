@@ -3,47 +3,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import FilterState from "../../../../shared/types/FilterState";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
-import DestinationCardProps from "../../interfaces/DestinationCardProps";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
-import addResult from "../../utils/addResult";
-
-function addResults(results: DestinationCard[]): JSX.Element[] {
-  const resultArray: JSX.Element[] = [];
-
-  results.forEach((destinationCard: DestinationCard) => {
-    const {
-      Resort,
-      Country,
-      HighestPoint,
-      LowestPoint,
-      BeginnerSlope,
-      IntermediateSlope,
-      DifficultSlope,
-      TotalLifts,
-    } = destinationCard;
-    const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
-      /[^a-z]/g,
-      "",
-    )}.jpg`;
-    const imageAlt = `Bilde av ${Resort}`;
-
-    const destinationCardProps: DestinationCardProps = {
-      name: Resort,
-      country: Country,
-      highestPoint: HighestPoint,
-      lowestPoint: LowestPoint,
-      beginner: BeginnerSlope,
-      intermediate: IntermediateSlope,
-      advanced: DifficultSlope,
-      lifts: TotalLifts,
-      imageSrc: imagePath,
-      imageAlt,
-    };
-    resultArray.push(addResult(destinationCardProps));
-  });
-
-  return resultArray;
-}
+import AddResults from "./AddResults";
 
 export default function Result({
   country,
@@ -140,7 +101,7 @@ export default function Result({
     return (
       <Container sx={{ marginBottom: "2rem" }}>
         <Grid container spacing={4}>
-          {addResults(results)}
+          <AddResults results={results} />
         </Grid>
         <Box display="flex" justifyContent="center" my={2}>
           {hasNextPage() && (

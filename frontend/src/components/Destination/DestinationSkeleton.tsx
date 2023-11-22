@@ -1,5 +1,5 @@
 import { Container, Card, Skeleton, Grid, Box } from "@mui/material";
-import Navbar from "../Navbar";
+import Navbar from "../Navbar/Navbar";
 
 export default function DestinationSkeleton({
   isSmallScreen,

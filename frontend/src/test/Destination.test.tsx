@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
-import renderWithReduxProviders from "../utils/testUtils";
+import renderWithReduxProviders from "./testUtils";
 import Destination from "../components/Destination/Destination";
 import getDestinationPageProps from "../api/getDestinationPageProps";
 import DestinationInterface from "../interfaces/Destination";

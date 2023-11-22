@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
 import getDestinationPageProps from "../api/getDestinationPageProps";
 import Destination from "../components/Destination/Destination";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
