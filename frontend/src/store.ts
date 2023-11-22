@@ -3,8 +3,8 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
-import filterReducer from "./components/Filter/filterSlice";
-import searchReducer from "./components/Searchbar/searchSlice";
+import filterReducer from "./features/Filter/filterSlice";
+import searchReducer from "./features/Searchbar/searchSlice";
 
 const store = configureStore({
   reducer: {

@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import type { AppStore, RootState } from "../store";
-import searchReducer from "../components/Searchbar/searchSlice";
-import filterReducer from "../components/Filter/filterSlice";
+import searchReducer from "../features/Searchbar/searchSlice";
+import filterReducer from "../features/Filter/filterSlice";
 
 // QueryClientProvider is needed for components using react-query hooks
 const tanstackClient = new QueryClient();
@@ -23,6 +23,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
 // This is the initial state of the store for testing purposes
 const initialPreloadedState = {
   filter: {
+    sortType: "",
     hasPark: false,
     hasNightSkiing: false,
     hasChairlift: false,

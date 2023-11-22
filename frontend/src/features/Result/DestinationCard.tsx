@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import DestinationCardProps from "../interfaces/DestinationCardProps";
+import DestinationCardProps from "../../interfaces/DestinationCardProps";
 
 function DestinationName(props: {
   name: string;

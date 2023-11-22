@@ -1,5 +1,5 @@
 import { GraphQLClient, gql } from "graphql-request";
-import { SearchResult } from "../components/Searchbar/searchbarTypes";
+import { SearchResult } from "../features/Searchbar/searchbarTypes";
 import getGraphQLClient from "./getGraphQLClient";
 
 const client: GraphQLClient = getGraphQLClient();

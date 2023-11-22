@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
-import renderWithReduxProviders from "../utils/testUtils";
-import Destination from "../components/Destination/Destination";
+import renderWithReduxProviders from "./testUtils";
+import Destination from "../features/Destination/Destination";
 import getDestinationPageProps from "../api/getDestinationPageProps";
 
 describe("Destination", async () => {

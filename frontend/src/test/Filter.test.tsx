@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
-import renderWithReduxProviders from "../utils/testUtils";
-import Filter from "../components/Filter/Filter";
+import renderWithReduxProviders from "./testUtils";
+import Filter from "../features/Filter/Filter";
 
 describe("Filter", () => {
   beforeEach(() => {
