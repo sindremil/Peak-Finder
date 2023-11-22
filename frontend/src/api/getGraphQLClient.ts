@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import { backendEndpoint } from "../config";
+import { backendEndpoint } from "../configs/config";
 
 let clientInstance: GraphQLClient | null = null;
 

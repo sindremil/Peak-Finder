@@ -10,7 +10,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App";
 import store from "./store";
-import themeConfig from "./themeConfig";
+import themeConfig from "./configs/themeConfig";
 
 const theme = createTheme(themeConfig);
 const tanstackClient = new QueryClient();
