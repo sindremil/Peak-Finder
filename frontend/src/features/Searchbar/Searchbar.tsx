@@ -1,6 +1,6 @@
 import { Box, TextField, useMediaQuery } from "@mui/material";
 import React, { RefObject, useState } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import SearchResultList from "./SearchResultList";
 import { setSearchTerm } from "./searchSlice";
 

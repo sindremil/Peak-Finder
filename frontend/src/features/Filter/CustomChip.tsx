@@ -1,5 +1,5 @@
 import Chip from "@mui/material/Chip";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 // CustomChip takes in a selector which is used to read the current filter state and an action to update the state
 export default function CustomChip({
