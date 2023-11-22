@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 import renderWithReduxProviders from "./testUtils";
 import Filter from "../features/Filter/Filter";
