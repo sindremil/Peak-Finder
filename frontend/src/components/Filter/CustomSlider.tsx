@@ -73,7 +73,6 @@ function SliderInput({
   maxValue,
   step,
   onChange,
-  onBlur,
 }: {
   value: number;
   defaultValue: number;
@@ -81,7 +80,6 @@ function SliderInput({
   maxValue: number;
   step: number;
   onChange: (value: number) => void;
-  onBlur: () => void;
 }): JSX.Element {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue =
@@ -96,7 +94,6 @@ function SliderInput({
         size="small"
         data-testid="sliderInput"
         onChange={handleInputChange}
-        onBlur={onBlur}
         placeholder={String(defaultValue)}
         inputProps={{
           step,
@@ -141,15 +138,15 @@ function IconSliderInput({
   };
 
   const handleInputChange = (newValue: number) => {
-    setValue(newValue);
-    onChange(newValue);
-  };
-
-  const handleBlur = () => {
-    if (value < minValue) {
+    if (newValue < minValue) {
       setValue(minValue);
-    } else if (value > maxValue) {
+      onChange(minValue);
+    } else if (newValue > maxValue) {
       setValue(maxValue);
+      onChange(maxValue);
+    } else {
+      setValue(newValue);
+      onChange(newValue);
     }
   };
 
@@ -170,7 +167,6 @@ function IconSliderInput({
         maxValue={maxValue}
         step={step}
         onChange={handleInputChange}
-        onBlur={handleBlur}
       />
     </Grid>
   );

@@ -3,36 +3,26 @@ import { screen, fireEvent, waitFor } from "@testing-library/react";
 import renderWithReduxProviders from "../utils/testUtils";
 import Destination from "../components/Destination/Destination";
 import getDestinationPageProps from "../api/getDestinationPageProps";
-import DestinationInterface from "../interfaces/Destination";
 
 describe("Destination", async () => {
-  // Function to get destination data from Mock Service Worker
-  async function mockDestinationProps(): Promise<DestinationInterface> {
-    const destinationResponse = await getDestinationPageProps("Hemsedal");
-    return destinationResponse.getDestination;
-  }
+  beforeEach(async () => {
+    // Get destination page props from Mock Service Worker and render component
+    const destination = (await getDestinationPageProps("Hemsedal"))
+      .getDestination;
+    renderWithReduxProviders(<Destination destination={destination} />);
+  });
 
   it("Title should be visible and display correct text", async () => {
-    const destination: DestinationInterface = await mockDestinationProps();
-
-    // Render component with mock data and necessary providers
-    renderWithReduxProviders(<Destination destination={destination} />);
-    const destinationTitle = screen.getByText(destination.Resort);
+    const destinationTitle = screen.getByText("Hemsedal");
 
     // Expect title to be visible and display correct text
     expect(destinationTitle).toBeVisible();
-    expect(destinationTitle).toHaveTextContent("Hemsedal");
   });
 
   it("Destination image should be visible", async () => {
-    const destination: DestinationInterface = await mockDestinationProps();
-
-    // Render component with mock data and necessary providers
-    renderWithReduxProviders(<Destination destination={destination} />);
-
     // Get destination image by role and aria-label
     const destinationImage = screen.getByRole("img", {
-      name: `Bilde av ${destination.Resort}`,
+      name: "Bilde av Hemsedal",
     });
 
     // Except image to be visible
@@ -40,19 +30,10 @@ describe("Destination", async () => {
   });
 
   it("Amount of ratings should increase when user gives a rating", async () => {
-    const destination: DestinationInterface = await mockDestinationProps();
-
-    // Render component with mock data and necessary providers
-    renderWithReduxProviders(<Destination destination={destination} />);
-
     // Get amount of ratings and button
-    const amountOfRatings = screen.getByText(
-      `(${destination.AmountOfRatings})`,
-    );
-    const button = screen.getByRole("button");
+    const amountOfRatings = screen.getByText("(1)");
 
-    // Check initial value of amount of ratings from mocked data
-    expect(amountOfRatings).toHaveTextContent("(1)");
+    const button = screen.getByRole("button");
 
     // Click button to get rating popup
     fireEvent.click(button);
@@ -68,9 +49,6 @@ describe("Destination", async () => {
   });
 
   it("Destination snapshot", async () => {
-    const destination: DestinationInterface = await mockDestinationProps();
-
-    renderWithReduxProviders(<Destination destination={destination} />);
     expect(screen).toMatchSnapshot();
   });
 });

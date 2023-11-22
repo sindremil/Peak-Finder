@@ -4,9 +4,11 @@ import renderWithReduxProviders from "../utils/testUtils";
 import Filter from "../components/Filter/Filter";
 
 describe("Filter", () => {
-  it("Values in input fields should update when sliders are used", async () => {
+  beforeEach(() => {
     renderWithReduxProviders(<Filter />);
+  });
 
+  it("Values in input fields should update when sliders are used", async () => {
     // Get all sliders and input fields
     const inputs = document.getElementsByTagName("input");
     const minElevationDifferenceSlider = inputs[0];
@@ -35,11 +37,15 @@ describe("Filter", () => {
       expect(minTotalLiftsInput.value).toBe("100");
       expect(maxDayPassPriceInput.value).toBe("100");
     });
+
+    // Check that manual input also works as expected
+    fireEvent.change(minElevationDifferenceInput, { target: { value: 1000 } });
+    await waitFor(() => {
+      expect(minElevationDifferenceSlider.value).toBe("1000");
+    });
   });
 
   it("Color of chips should change when clicked", async () => {
-    renderWithReduxProviders(<Filter />);
-
     // Get all chips
     const parkChip = screen.getByText("Park");
     const nightSkiingChip = screen.getByText("Kveldskjøring");
@@ -65,8 +71,17 @@ describe("Filter", () => {
     });
   });
 
-  it("Filter snapshot", () => {
-    renderWithReduxProviders(<Filter />);
-    expect(screen).toMatchSnapshot();
+  it("Inputs should automatically go to max when input is higher than max (same for min)", async () => {
+    const inputs = document.getElementsByTagName("input");
+    const minElevationDifferenceInput = inputs[1];
+    const minBaseElevationInput = inputs[3];
+
+    fireEvent.change(minElevationDifferenceInput, { target: { value: 10000 } });
+    fireEvent.click(minBaseElevationInput);
+    await waitFor(() => {
+      expect(minElevationDifferenceInput.value).toBe("3000");
+    });
   });
+
+  it("Filter snapshot", () => expect(screen).toMatchSnapshot());
 });
