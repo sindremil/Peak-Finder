@@ -4,9 +4,11 @@ import renderWithReduxProviders from "../utils/testUtils";
 import Filter from "../components/Filter/Filter";
 
 describe("Filter", () => {
-  it("Values in input fields should update when sliders are used", async () => {
+  beforeEach(() => {
     renderWithReduxProviders(<Filter />);
+  });
 
+  it("Values in input fields should update when sliders are used", async () => {
     // Get all sliders and input fields
     const inputs = document.getElementsByTagName("input");
     const minElevationDifferenceSlider = inputs[0];
@@ -38,8 +40,6 @@ describe("Filter", () => {
   });
 
   it("Color of chips should change when clicked", async () => {
-    renderWithReduxProviders(<Filter />);
-
     // Get all chips
     const parkChip = screen.getByText("Park");
     const nightSkiingChip = screen.getByText("Kveldskjøring");
@@ -66,7 +66,6 @@ describe("Filter", () => {
   });
 
   it("Filter snapshot", () => {
-    renderWithReduxProviders(<Filter />);
     expect(screen).toMatchSnapshot();
   });
 });

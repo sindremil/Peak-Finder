@@ -7,17 +7,15 @@ import { hemsedalCard } from "../mocks/mockData";
 describe("DestinationCard", () => {
   // Render component with mock data and BrowserRouter
   // This mock data is not from MSW, but comes directly from mockData.ts
-  function renderDestinationCard() {
+  beforeEach(() => {
     render(
       <Router>
         <DestinationCard destinationCardProps={hemsedalCard} />
       </Router>,
     );
-  }
+  });
 
   it("Title should be visible and display correct text", () => {
-    renderDestinationCard();
-
     // Get title by text
     const destinationTitle = screen.getByText(hemsedalCard.name);
 
@@ -27,8 +25,6 @@ describe("DestinationCard", () => {
   });
 
   it("Image should be visible", () => {
-    renderDestinationCard();
-
     // Get image by role and alt text
     const destinationImage = screen.getByRole("img", {
       name: `Bilde av ${hemsedalCard.name}`,
@@ -39,7 +35,6 @@ describe("DestinationCard", () => {
   });
 
   it("DestinationCard snapshot", () => {
-    renderDestinationCard();
     expect(screen).toMatchSnapshot();
   });
 });

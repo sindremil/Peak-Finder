@@ -3,29 +3,26 @@ import { screen, render, waitFor, act } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-function renderNavbar() {
-  render(
-    <Router>
-      <Navbar />
-    </Router>,
-  );
-}
-
 describe("Navbar", async () => {
+  beforeEach(() => {
+    render(
+      <Router>
+        <Navbar />
+      </Router>,
+    );
+  });
+
   it("Logo should be visible", async () => {
-    renderNavbar();
     const logo = await screen.findByRole("img", { name: "Peak Finder logo" });
     expect(logo).toBeVisible();
   });
 
   it("Search icon should be visible", async () => {
-    renderNavbar();
     const searchIcon = await screen.findByTestId("searchIcon");
     expect(searchIcon).toBeVisible();
   });
 
   it("Logo should be cropped when window width is less than 600px", async () => {
-    renderNavbar();
     const logo = await screen.findByRole("img", { name: "Peak Finder logo" });
 
     // Check inital src of logo
@@ -61,7 +58,6 @@ describe("Navbar", async () => {
   });
 
   it("Navbar snapshot", () => {
-    renderNavbar();
     expect(screen).toMatchSnapshot();
   });
 });
