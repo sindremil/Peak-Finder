@@ -1,6 +1,6 @@
 # Peak Finder
 
-Peak Finder will allow users to find different ski resorts across Europe.
+Peak Finder allows users to find different ski resorts across Europe.
 
 ## Running the project
 
@@ -13,7 +13,7 @@ npm install
 ```
 npm run dev
 ```
-The application is connected to the backend running on the virtual machine, however if you want to run the backend locally as well you can navigate to the backend directory and run the following commands:
+The application is connected to the backend running on the virtual machine, however if you want to run the backend locally, you can navigate to the backend directory and run the following commands:
 
 ```
 npm install
@@ -24,7 +24,7 @@ npm start
 ```
 This is good to know as you will need to do this before running the e2e tests.
 
-If you want to test the API in Apollo Sandbox you can then visit: http://localhost:4000/ or http://it2810-42.idi.ntnu.no:4000/
+If you want to test the API in Apollo Sandbox you can visit either: http://localhost:4000/ or http://it2810-42.idi.ntnu.no:4000/
 
 ## Running ESLint
 
@@ -80,15 +80,15 @@ A window should open. From here you want to click "E2E Testing" and choose you p
 
 ## Functionality
 
-- User can search for a specific destination, with suggestions showing based on users input.
+- The user can search for a specific destination, with suggestions showing based on the users input.
 - Clicking on a result will redirect to page showing detailed information.
-- User can browse destinations by choosing a country.
-- 9 destinations cards from chosen country will be displayed, and user can load 9 more until there are no more destinations.
+- The user can browse destinations by choosing a country.
+- Nine destinations cards from chosen country will be displayed, and the user can load nine more until there are no more destinations.
 - The site has a filter which can be applied to browse results.
 - The site also has several sorting options that can be applied to the results.
 - The app is responsive which allows it to be used on devices with different screen sizes.
 - The user can give a destination a rating which will be persistent on the database.
-- The app is fully accessible. All elements can be tabbed to, and all relevant information is read aloud to the user.
+- The app is fully accessible.
 - The app is developed with sustainability in mind.
 - The data this app uses is from: https://www.kaggle.com/datasets/thomasnibb/european-ski-resorts
 
@@ -104,4 +104,4 @@ Peak Finder has been developed with accessibility in mind. All pages have suppor
 
 ## Sustainability 
 
-We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. Most information retrieved from backend has an infinite stale time, with the exception being the mutation giveReview. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Lastly, all our images uses the .webp file type, this is a sustainable file format.
+We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. All queries have an infinite stale time. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Lastly, all our images have the .webp file type, this is a sustainable file format.
