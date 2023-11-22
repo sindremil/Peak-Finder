@@ -2,23 +2,15 @@ import { Alert, Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
 import getDestinationPageProps from "../api/getDestinationPageProps";
-import Destination from "../components/Destination/Destination";
-import Navbar from "../components/Navbar";
+import Destination from "../features/Destination/Destination";
+import Navbar from "../features/Navbar/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
-import SetPageTitle from "../utils/SetPageTitle";
-import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
+import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks";
-import { setSearchTerm } from "../components/Searchbar/searchSlice";
-
-function addTitleAndNavbar(title: string): JSX.Element {
-  return (
-    <>
-      <SetPageTitle title={title || "Destination"} />
-      <Navbar />
-    </>
-  );
-}
+import { setSearchTerm } from "../features/Searchbar/searchSlice";
+import usePageTitle from "../hooks/usePageTitle";
+import DestinationSkeleton from "../features/Destination/DestinationSkeleton";
 
 export default function DestinationPage() {
   const theme = useTheme();
@@ -27,6 +19,7 @@ export default function DestinationPage() {
   const decodedName = decodeURI(name || "");
   const location = useLocation();
   const dispatch = useAppDispatch();
+  usePageTitle(decodedName);
 
   const { isPending, isError, data, error } = useQuery<DestinationResponse>({
     queryKey: ["Resort", decodedName],
@@ -36,7 +29,7 @@ export default function DestinationPage() {
 
   const getDestinationContent = (): JSX.Element | null => {
     if (isPending) {
-      return <Navbar />;
+      return <DestinationSkeleton isSmallScreen={isSmallScreen} />;
     }
 
     if (isError) {
@@ -53,9 +46,13 @@ export default function DestinationPage() {
     if (!isFromResult) {
       dispatch(setSearchTerm(""));
     }
+
+    // Always scroll to the top of the page
+    window.scrollTo(0, 0);
+
     return isSmallScreen ? (
       <>
-        {addTitleAndNavbar(destination.Resort)}
+        <Navbar />
         <Box>
           {BreadCrumbs({
             country: destination.Country,
@@ -68,7 +65,7 @@ export default function DestinationPage() {
       </>
     ) : (
       <>
-        {addTitleAndNavbar(destination.Resort)}
+        <Navbar />
         <br />
         <Container maxWidth="md">
           {BreadCrumbs({

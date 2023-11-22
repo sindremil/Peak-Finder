@@ -1,20 +1,27 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Container, Drawer, Fab } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
-import Filter from "../components/Filter/Filter";
-import Navbar from "../components/Navbar";
-import Result from "../components/Result/Result";
+import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
+import Filter from "../features/Filter/Filter";
+import Navbar from "../features/Navbar/Navbar";
+import Result from "../features/Result/Result";
 import { useAppSelector } from "../hooks";
 import useDebounce from "../hooks/useDebounce";
-import SetPageTitle from "../utils/SetPageTitle";
+import usePageTitle from "../hooks/usePageTitle";
 
 export default function ResultPage() {
   const filter = useAppSelector((state) => state.filter);
   const country = useParams().country ?? "";
   const debouncedFilter = useDebounce(filter, 500);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  usePageTitle(country);
+
+  // Scrolls to the previous position when the page is loaded
+  const pos = parseInt(sessionStorage.getItem("resultPageScrollY") || "0", 10);
+  useEffect(() => {
+    window.scrollTo(0, pos);
+  }, [pos]);
 
   const handleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -22,7 +29,6 @@ export default function ResultPage() {
 
   return (
     <>
-      <SetPageTitle title={country || "Result"} />
       <Navbar />
       <Container sx={{ paddingTop: "24px", paddingBottom: "24px" }}>
         {BreadCrumbs({ country, isResult: true })}
@@ -30,11 +36,16 @@ export default function ResultPage() {
       <Fab
         aria-label="filter"
         variant="extended"
-        sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
+        color="primary"
+        sx={{
+          position: "fixed",
+          bottom: "2rem",
+          right: { xs: "2rem", sm: "6.5rem" },
+        }}
         onClick={handleDrawer}
       >
         <FilterListIcon />
-        Filtrer
+        Filtrer eller sorter
       </Fab>
       <Result country={country} debouncedFilter={debouncedFilter} />
       <Drawer
