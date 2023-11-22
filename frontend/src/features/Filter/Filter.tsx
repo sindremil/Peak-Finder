@@ -174,7 +174,7 @@ function Sliders(): JSX.Element {
 
 export default function Filter(): JSX.Element {
   return (
-    <Container sx={{ marginTop: "2rem" }}>
+    <Container sx={{ marginTop: "2rem", marginBottom: "1rem" }}>
       <Stack
         direction="column"
         justifyContent="flex-start"
