@@ -36,11 +36,16 @@ export default function ResultPage() {
       <Fab
         aria-label="filter"
         variant="extended"
-        sx={{ position: "fixed", bottom: "2rem", right: "2rem" }}
+        color="primary"
+        sx={{
+          position: "fixed",
+          bottom: "2rem",
+          right: { xs: "2rem", sm: "6.5rem" },
+        }}
         onClick={handleDrawer}
       >
         <FilterListIcon />
-        Filtrer
+        Filtrer eller sorter
       </Fab>
       <Result country={country} debouncedFilter={debouncedFilter} />
       <Drawer
