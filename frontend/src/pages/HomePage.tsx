@@ -41,6 +41,11 @@ export default function HomePage(): JSX.Element {
       }
     }
   }, [dispatch, location.state]);
+
+  useEffect(() => {
+    sessionStorage.setItem("resultPageScrollY", "0");
+  }, []);
+
   return (
     <Container
       sx={{
