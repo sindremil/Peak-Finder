@@ -31,17 +31,15 @@ function Logo({ logoPath }: LogoProps): JSX.Element {
 
 function SearchIcon(): JSX.Element {
   return (
-    <Box
+    <IconButton
       component={Link}
       to="/"
       state={{ isRedirect: true }}
+      aria-label="Søk"
       sx={{ color: "white" }}
-      tabIndex={-1}
     >
-      <IconButton aria-label="Søk" color="inherit">
-        <Search sx={{ ...iconSize }} />
-      </IconButton>
-    </Box>
+      <Search sx={{ ...iconSize }} />
+    </IconButton>
   );
 }
 
