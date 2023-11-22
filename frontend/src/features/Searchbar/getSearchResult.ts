@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from "graphql-request";
 import { SearchResult } from "./searchbarTypes";
-import { backendEndpoint } from "../../config";
+import { backendEndpoint } from "../../configs/config";
 
 const client = new GraphQLClient(backendEndpoint);
 

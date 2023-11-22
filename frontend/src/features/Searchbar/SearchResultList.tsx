@@ -17,7 +17,7 @@ import useDebounce from "../../hooks/useDebounce";
 import {
   maxSearchQueryResults,
   searchQueryDebounceDelayMs,
-} from "../../config";
+} from "../../configs/config";
 import { setSearchTerm } from "./searchSlice";
 
 // A placeholder component which is displayed when data being fetched
