@@ -25,7 +25,7 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
       /[^a-z]/g,
       "",
     )}.webp`;
-    const imageAlt = `Bilde av ${Resort}`;
+    const imageAlt = `${Resort}`;
 
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
