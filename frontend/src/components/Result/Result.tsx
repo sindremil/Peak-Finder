@@ -24,7 +24,7 @@ function addResults(results: DestinationCard[]): JSX.Element[] {
     const imagePath = `../images/resorts/${Resort.toLowerCase().replace(
       /[^a-z]/g,
       "",
-    )}.jpg`;
+    )}.webp`;
     const imageAlt = `Bilde av ${Resort}`;
 
     const destinationCardProps: DestinationCardProps = {
