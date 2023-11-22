@@ -196,7 +196,7 @@ export default function Destination({
 
   const imagePath = `images/resorts/${name
     .toLowerCase()
-    .replace(/[^a-z]/g, "")}.jpg`;
+    .replace(/[^a-z]/g, "")}.webp`;
 
   return (
     <>
