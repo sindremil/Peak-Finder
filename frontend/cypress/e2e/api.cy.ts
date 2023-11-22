@@ -1,5 +1,6 @@
 import {
   getDestinationQuery,
+  getFilteredDestinations,
   giveRating,
   searchQuery,
 } from "./testGraphqlOperations";
@@ -167,6 +168,53 @@ describe("API tests", () => {
     }).then((response) => {
       expect(response.status).to.equal(200);
       expect(response.body.data.getDestinations[0].Resort).to.equal("Hemsedal");
+    });
+  });
+
+  it("API should return the correct results for the FilterState", () => {
+    cy.request({
+      method: "POST",
+      url: "http://localhost:4000",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        query: getFilteredDestinations,
+        variables: {
+          country: "Østerrike",
+          filter: {
+            minElevationDifference: 500,
+            hasChairlift: true,
+            hasGondola: true,
+            hasNightSkiing: true,
+            hasPark: false,
+            isCertified: false,
+            maxDayPassPrice: 55,
+            minBaseElevation: 1000,
+            minTotalLifts: 20,
+            minTotalPiste: 50,
+            sortType: "ZA",
+          },
+          after: "0",
+        },
+      },
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(
+        response.body.data.getFilteredDestinations.edges[0].node.Resort,
+      ).to.equal("Sölden");
+      expect(
+        response.body.data.getFilteredDestinations.edges[1].node.Resort,
+      ).to.equal("Serfaus-Fiss-Ladis");
+      expect(
+        response.body.data.getFilteredDestinations.edges[2].node.Resort,
+      ).to.equal("Obertauern");
+      expect(
+        response.body.data.getFilteredDestinations.edges[3].node.Resort,
+      ).to.equal("Obergurgl-Hochgurgl");
+      expect(
+        response.body.data.getFilteredDestinations.edges[4].node.Resort,
+      ).to.equal("Bad Kleinkirchheim-​St. Oswald");
     });
   });
 });
