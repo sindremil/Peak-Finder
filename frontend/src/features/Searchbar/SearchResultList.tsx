@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import getSearchResult from "../../api/getSearchResult";
 import { SearchResult } from "./searchbarTypes";
 import useDebounce from "../../hooks/useDebounce";
 import {
   maxSearchQueryResults,
   searchQueryDebounceDelayMs,
-} from "../../config";
+} from "../../configs/config";
 import { setSearchTerm } from "./searchSlice";
 
 // A placeholder component which is displayed when data being fetched

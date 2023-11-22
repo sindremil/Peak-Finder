@@ -5,7 +5,7 @@ import logo from "../assets/logos/logo-color.svg";
 import Browse from "../features/Browse/Browse";
 import { resetFilter } from "../features/Filter/filterSlice";
 import Searchbar from "../features/Searchbar/Searchbar";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../hooks/hooks";
 import usePageTitle from "../hooks/usePageTitle";
 
 function Logo(): JSX.Element {

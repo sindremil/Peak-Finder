@@ -2,7 +2,7 @@ import { Box, Grid, Input, Slider, SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks"; // Import the hook
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks"; // Import the hook
 
 // The onBlur event occurs when an input field loses focus
 
