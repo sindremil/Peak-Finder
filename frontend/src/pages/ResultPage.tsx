@@ -6,7 +6,7 @@ import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import Filter from "../features/Filter/Filter";
 import Navbar from "../features/Navbar/Navbar";
 import Result from "../features/Result/Result";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../hooks/hooks";
 import useDebounce from "../hooks/useDebounce";
 import usePageTitle from "../hooks/usePageTitle";
 

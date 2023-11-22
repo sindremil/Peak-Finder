@@ -7,7 +7,7 @@ import Navbar from "../features/Navbar/Navbar";
 import DestinationInterface from "../interfaces/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
 import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../hooks/hooks";
 import { setSearchTerm } from "../features/Searchbar/searchSlice";
 import usePageTitle from "../hooks/usePageTitle";
 import DestinationSkeleton from "../features/Destination/DestinationSkeleton";
