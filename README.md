@@ -82,10 +82,11 @@ A window should open. From here you want to click "E2E Testing" and choose you p
 
 - The user can search for a specific destination, with suggestions showing based on the users input.
 - Clicking on a result will redirect to page showing detailed information.
-- The user can browse destinations by choosing a country.
-- Nine destinations cards from chosen country will be displayed, and the user can load nine more until there are no more destinations.
+- The user can browse destinations by choosing a country
+- Nine destinations cards from the chosen country will be displayed
 - The site has a filter which can be applied to browse results.
 - The site also has several sorting options that can be applied to the results.
+- The user can load nine more destinations until there are no more destinations in the database that matches the users filter.
 - The app is responsive which allows it to be used on devices with different screen sizes.
 - The user can give a destination a rating which will be persistent on the database.
 - The app is fully accessible.
