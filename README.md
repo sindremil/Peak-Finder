@@ -101,7 +101,7 @@ We have assumed a grid of results is sufficient for the list requirement since a
 
 ## Technologies
 
-We have used several technologies.
+We have used the following technologies:
 
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/) - GraphQL server
 
