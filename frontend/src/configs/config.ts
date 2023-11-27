@@ -1,5 +1,7 @@
 // The amount of millisecons a search term is debounced before returning
 export const searchQueryDebounceDelayMs: number = 300;
+// The amount of millisecons a filter term is debounced before returning;
+export const filterQueryDebounceDelayMs: number = 500;
 
 // The amount of resorts which a search term can display
 export const maxSearchQueryResults: number = 5;

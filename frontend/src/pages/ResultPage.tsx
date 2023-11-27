@@ -2,6 +2,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { Container, Drawer, Fab } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { filterQueryDebounceDelayMs } from "../configs/config";
 import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import Filter from "../features/Filter/Filter";
 import Navbar from "../features/Navbar/Navbar";
@@ -13,7 +14,7 @@ import usePageTitle from "../hooks/usePageTitle";
 export default function ResultPage() {
   const filter = useAppSelector((state) => state.filter);
   const country = useParams().country ?? "";
-  const debouncedFilter = useDebounce(filter, 500);
+  const debouncedFilter = useDebounce(filter, filterQueryDebounceDelayMs);
   const [drawerOpen, setDrawerOpen] = useState(false);
   usePageTitle(country);
 
