@@ -11,7 +11,7 @@ function addResult(destinationCardProps: DestinationCardProps): JSX.Element {
   );
 }
 
-export default function AddResults({
+export default function AddDestinationCards({
   results,
 }: {
   results: DestinationCardInterface[];

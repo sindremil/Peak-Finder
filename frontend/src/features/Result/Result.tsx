@@ -4,7 +4,7 @@ import FilterState from "../../../../shared/types/FilterState";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
-import AddResults from "./AddResults";
+import AddDestinationCards from "./AddDestinationCards";
 
 export default function Result({
   country,
@@ -101,7 +101,7 @@ export default function Result({
     return (
       <Container sx={{ marginBottom: "2rem" }}>
         <Grid container spacing={4}>
-          <AddResults results={results} />
+          <AddDestinationCards results={results} />
         </Grid>
         <Box display="flex" justifyContent="center" my={2}>
           {hasNextPage() && (
