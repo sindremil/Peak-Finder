@@ -21,9 +21,9 @@ export default function AddResults({
   results.forEach((destinationCard: DestinationCardInterface) => {
     const {
       Resort,
-      Country,
       HighestPoint,
       LowestPoint,
+      ElevationDifference,
       BeginnerSlope,
       IntermediateSlope,
       DifficultSlope,
@@ -37,9 +37,9 @@ export default function AddResults({
 
     const destinationCardProps: DestinationCardProps = {
       name: Resort,
-      country: Country,
       highestPoint: HighestPoint,
       lowestPoint: LowestPoint,
+      elevationDifference: ElevationDifference,
       beginner: BeginnerSlope,
       intermediate: IntermediateSlope,
       advanced: DifficultSlope,

@@ -80,15 +80,12 @@ const resolvers = {
           if (filter.hasGondola) query.GondolaLifts = { $gte: 1 };
           if (filter.isCertified) query.Certified = filter.isCertified;
           if (filter.minElevationDifference) {
-            query.$expr = {
-              $gte: [
-                { $subtract: ["$HighestPoint", "$LowestPoint"] },
-                filter.minElevationDifference,
-              ],
+            query.ElevationDifference = {
+              $gte: filter.minElevationDifference,
             };
           }
           if (filter.minBaseElevation) {
-            query.HighestPoint = { $gte: filter.minBaseElevation };
+            query.LowestPoint = { $gte: filter.minBaseElevation };
           }
           if (filter.minTotalPiste)
             query.TotalSlope = { $gte: filter.minTotalPiste };

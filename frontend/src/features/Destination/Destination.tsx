@@ -47,16 +47,17 @@ function Country({ country }: { country: string }): JSX.Element {
 function Altitude({
   lowestPoint,
   highestPoint,
+  elevationDifference,
 }: {
   lowestPoint: number;
   highestPoint: number;
+  elevationDifference: number;
 }): JSX.Element {
-  const heightDiff = highestPoint - lowestPoint;
   return (
     <ListItem>
       <ListItemText
         primary="Meter over havet"
-        secondary={`${lowestPoint} m - ${highestPoint} m (${heightDiff} m)`}
+        secondary={`${lowestPoint} m - ${highestPoint} m (${elevationDifference} m)`}
       />
     </ListItem>
   );
@@ -77,11 +78,13 @@ function Info({
   country,
   lowestPoint,
   highestPoint,
+  elevationDifference,
   passPrice,
 }: {
   country: string;
   lowestPoint: number;
   highestPoint: number;
+  elevationDifference: number;
   passPrice: number;
 }): JSX.Element {
   return (
@@ -90,7 +93,11 @@ function Info({
         <Country country={country} />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <Altitude lowestPoint={lowestPoint} highestPoint={highestPoint} />
+        <Altitude
+          lowestPoint={lowestPoint}
+          highestPoint={highestPoint}
+          elevationDifference={elevationDifference}
+        />
       </Grid>
       <Grid item xs={12} sm={4}>
         <Pass passPrice={passPrice} />
@@ -131,6 +138,7 @@ export default function Destination({
     Country: country,
     HighestPoint: highestPoint,
     LowestPoint: lowestPoint,
+    ElevationDifference: elevationDifference,
     DayPassPriceAdult: passPrice,
     BeginnerSlope: beginnerSlope,
     IntermediateSlope: intermediateSlope,
@@ -214,6 +222,7 @@ export default function Destination({
             country={country}
             lowestPoint={lowestPoint}
             highestPoint={highestPoint}
+            elevationDifference={elevationDifference}
             passPrice={passPrice}
           />
           <PistesAndLifts

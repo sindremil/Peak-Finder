@@ -3,6 +3,7 @@ export default interface DestinationCard {
   Country: string;
   HighestPoint: number;
   LowestPoint: number;
+  ElevationDifference: number;
   BeginnerSlope: number;
   IntermediateSlope: number;
   DifficultSlope: number;
