@@ -28,7 +28,7 @@ If you want to test the API in Apollo Sandbox you can visit either: http://local
 
 ## Running ESLint
 
-To check the project for ESLint errors the following command can be run from the project's root folder:
+To check the project for ESLint errors the following command can be run from the project's frontend and backend folder:
 
 ```
 npm run lint
@@ -42,7 +42,7 @@ npm run lint-fix
 
 ## Running prettier
 
-To check the project for formatting issues the following command can be run from the project's root folder:
+To check the project for formatting issues the following command can be run from the project's frontend and backend folder:
 
 ```
 npm run prettier
