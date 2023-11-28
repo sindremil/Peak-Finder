@@ -28,7 +28,7 @@ export default function Result({
         debouncedFilter,
         pageParam,
       ),
-    initialPageParam: "0",
+    initialPageParam: null,
     getNextPageParam: (lastPage) =>
       lastPage.getFilteredDestinations.pageInfo.endCursor,
     staleTime: Infinity,

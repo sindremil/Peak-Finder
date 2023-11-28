@@ -28,6 +28,11 @@
     /* Testing */
     "types": ["vitest/globals"]
   },
-  "include": ["src", "cypress", "cypress.config.ts"],
+  "include": [
+    "src",
+    "cypress",
+    "cypress.config.ts",
+    "../shared/types/Destination.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

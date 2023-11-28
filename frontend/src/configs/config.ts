@@ -5,4 +5,4 @@ export const searchQueryDebounceDelayMs: number = 300;
 export const maxSearchQueryResults: number = 5;
 
 // The endpoint of the backend
-export const backendEndpoint = "http://it2810-42.idi.ntnu.no:4000/";
+export const backendEndpoint = "http://localhost:4000/";

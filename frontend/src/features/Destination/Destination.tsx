@@ -10,7 +10,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import { useState } from "react";
-import DestinationInterface from "../../interfaces/Destination";
+import DestinationInterface from "../../../../shared/types/Destination";
 import Extras from "./Extras";
 import GiveReview from "./GiveReview";
 import Header from "./Header";

@@ -3,6 +3,7 @@ export default interface Destination {
   Country: string;
   HighestPoint: number;
   LowestPoint: number;
+  ElevationDifference: number;
   DayPassPriceAdult: number;
   BeginnerSlope: number;
   IntermediateSlope: number;
