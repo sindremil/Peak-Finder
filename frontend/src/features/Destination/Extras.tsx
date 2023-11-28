@@ -9,7 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import LogoIcon from "../../assets/logos/logo-black-cropped.svg";
+import LogoIconLight from "../../assets/light/logos/logo-black-cropped.svg";
+import LogoIconDark from "../../assets/dark/logos/logo-white-cropped.svg";
+import { useAppSelector } from "../../hooks/hooks";
 
 // This component displays information about a specific extra for the destination
 function DestinationExtra({
@@ -33,12 +35,7 @@ function DestinationExtra({
   // Handles if the "Icon" is a MUI Icon or a path string
   if (typeof Icon === "string") {
     icon = (
-      <Box
-        component="img"
-        src={LogoIcon}
-        alt="Logo"
-        sx={{ maxWidth: "40px" }}
-      />
+      <Box component="img" src={Icon} alt="Logo" sx={{ maxWidth: "40px" }} />
     );
   } else {
     icon = <Icon sx={{ minWidth: "40px" }} />;
@@ -69,6 +66,7 @@ export default function DestinationExtras({
   nightSki: boolean;
   certified: boolean;
 }): JSX.Element {
+  const { theme } = useAppSelector((state) => state.theme);
   return (
     <Box tabIndex={0} sx={{ paddingTop: "16px" }}>
       <Typography variant="h4">Ekstra</Typography>
@@ -91,7 +89,7 @@ export default function DestinationExtras({
           <DestinationExtra
             text="Peak Finder sertifisering"
             boolean={certified}
-            Icon={LogoIcon}
+            Icon={theme === "dark" ? LogoIconLight : LogoIconDark}
           />
         </Grid>
       </Grid>
