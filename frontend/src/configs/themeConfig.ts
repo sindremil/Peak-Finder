@@ -1,9 +1,7 @@
 import { ThemeOptions } from "@mui/material";
 
-const lightThemeConfig: ThemeOptions = {
-  palette: {
-    mode: "light",
-  },
+// Common configuration
+const baseThemeConfig: ThemeOptions = {
   breakpoints: {
     values: {
       xs: 0,
@@ -15,18 +13,19 @@ const lightThemeConfig: ThemeOptions = {
   },
 };
 
+// Light theme configuration
+const lightThemeConfig: ThemeOptions = {
+  ...baseThemeConfig,
+  palette: {
+    mode: "light",
+  },
+};
+
+// Dark theme configuration
 const darkThemeConfig: ThemeOptions = {
+  ...baseThemeConfig,
   palette: {
     mode: "dark",
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 720,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
   },
 };
 
