@@ -117,7 +117,13 @@ We have used the following technologies:
 
 - [Node](https://nodejs.org/en/) - JavaScript runtime
 
-- [Redux](https://redux.js.org/) - We use Redux for state management, like caching previous search terms and filter states.
+- [React](https://react.dev/) - React
+
+- [Redux](https://redux.js.org/) - We use Redux for state management for storing the search term and filter state.
+
+- [Typescript](https://www.typescriptlang.org/) - Typescript is the programming language we've used.
+
+- [Vite](https://vitejs.dev/) - We used Vite to setup our development enviroment.
 
 ## Accessibility
 
