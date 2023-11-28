@@ -100,8 +100,10 @@ const resolvers = {
 
         // Apply the custom sorting logic
         let sortByField = "Resort";
+        let sortAsc = true;
         if (filter.sortType === "ZA") {
           sort.Resort = -1; // Descending order by Resort name
+          sortAsc = false;
           if (after) {
             query.Resort = { $lt: after.Resort };
           }
@@ -109,58 +111,43 @@ const resolvers = {
           // Sort based on the elevation difference field
           sort.ElevationDifference = -1;
           sortByField = "ElevationDifference";
+          sortAsc = false;
           if (after) {
-            if (after.ElevationDifference > filter.minElevationDifference) {
-              query.ElevationDifference = { $lt: after.ElevationDifference };
-            } else {
-              query.ElevationDifference = {
-                $lt: filter.minElevationDifference,
-              };
-            }
+            query.ElevationDifference = { $lt: after.ElevationDifference };
           }
         } else if (filter.sortType === "baseElevation") {
           sort.LowestPoint = -1; // Descending order by LowestPoint
           sortByField = "LowestPoint";
+          sortAsc = false;
           if (after) {
-            if (after.LowestPoint > filter.minBaseElevation) {
-              query.LowestPoint = { $lt: after.LowestPoint };
-            } else {
-              query.LowestPoint = { $lt: filter.minBaseElevation };
-            }
+            query.LowestPoint = { $lt: after.LowestPoint };
           }
         } else if (filter.sortType === "totalPiste") {
           sort.TotalSlope = -1; // Descending order by TotalSlope
           sortByField = "TotalSlope";
+          sortAsc = false;
           if (after) {
-            if (after.TotalSlope > filter.minTotalPiste) {
-              query.TotalSlope = { $lt: after.TotalSlope };
-            } else {
-              query.TotalSlope = { $lt: filter.minTotalPiste };
-            }
+            query.TotalSlope = { $lt: after.TotalSlope };
           }
         } else if (filter.sortType === "totalLifts") {
           sort.TotalLifts = -1; // Descending order by TotalLifts
           sortByField = "TotalLifts";
+          sortAsc = false;
           if (after) {
-            if (after.TotalLifts > filter.minTotalLifts) {
-              query.TotalLifts = { $lt: after.TotalLifts };
-            } else {
-              query.TotalLifts = { $lt: filter.minTotalLifts };
-            }
+            query.TotalLifts = { $lt: after.TotalLifts };
           }
         } else if (filter.sortType === "dayPassPrice") {
           sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
           sortByField = "DayPassPriceAdult";
           if (after) {
-            if (after.DayPassPriceAdult < filter.maxDayPassPrice) {
-              query.DayPassPriceAdult = { $gt: after.DayPassPriceAdult };
-            } else {
-              query.DayPassPriceAdult = { $lt: filter.maxDayPassPrice };
-            }
+            query.DayPassPriceAdult = { $gt: after.DayPassPriceAdult };
           }
         } // If the sortType is not recognized, it defaults to "AZ"
         else {
           sort.Resort = 1; // Ascending order by Resort name
+          if (after) {
+            query.Resort = { $gt: after.Resort };
+          }
         }
 
         // Add a sort stage to the aggregate pipeline
@@ -184,10 +171,15 @@ const resolvers = {
 
           // Create a dynamic field query based on sortByField
           const nextPageQuery = { ...query };
-          nextPageQuery[sortByField] = { $lt: lastDestination[sortByField] };
-
+          if (sortAsc) {
+            nextPageQuery[sortByField] = { $gt: lastDestination[sortByField] };
+          } else {
+            nextPageQuery[sortByField] = { $lt: lastDestination[sortByField] };
+          }
           // Count if there are more destinations after the last one we fetched.
-          hasNextPage = (await Destination.countDocuments(nextPageQuery)) > 0;
+          const nextPageDocuments =
+            await Destination.countDocuments(nextPageQuery);
+          hasNextPage = nextPageDocuments > 0;
         }
 
         // Prepare the endCursor from the last destination's Resort if available.
