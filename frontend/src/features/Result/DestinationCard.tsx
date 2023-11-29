@@ -217,10 +217,10 @@ export default function DestinationCard({
   const fixedHeaderHeight = 250;
   let titleHeightPx = 63;
   if (isSmallScreen) {
-    if (name.length > 18) {
+    if (name.length > 20) {
       titleHeightPx += 42;
     }
-  } else if (name.length > 24) {
+  } else if (name.length > 24 || (name.includes("(") && name.length > 23)) {
     titleHeightPx += 42;
   }
 
