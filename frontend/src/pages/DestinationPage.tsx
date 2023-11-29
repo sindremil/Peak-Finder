@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import getDestinationPageProps from "../api/getDestinationPageProps";
 import Destination from "../features/Destination/Destination";
 import Navbar from "../features/Navbar/Navbar";
-import DestinationInterface from "../interfaces/Destination";
+import DestinationInterface from "../../../shared/types/Destination";
 import DestinationResponse from "../interfaces/DestinationResponse";
 import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import { useAppDispatch } from "../hooks/hooks";

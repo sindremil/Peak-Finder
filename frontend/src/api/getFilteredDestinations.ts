@@ -2,20 +2,21 @@ import { GraphQLClient, gql } from "graphql-request";
 import getGraphQLClient from "./getGraphQLClient";
 import DestinationCardResponse from "../interfaces/DestinationCardResponse";
 import FilterState from "../../../shared/types/FilterState";
+import Destination from "../../../shared/types/Destination";
 
 const client: GraphQLClient = getGraphQLClient();
 
 export default async function getFilteredDestinations(
   country: string,
   filter: FilterState,
-  after: string | unknown,
+  after: Destination | unknown = null,
   first: number = 9,
 ): Promise<DestinationCardResponse> {
   const query = gql`
     query getFilteredDestinations(
       $country: String!
       $filter: FilterState!
-      $after: String!
+      $after: DestinationInput
       $first: Int
     ) {
       getFilteredDestinations(
@@ -25,12 +26,12 @@ export default async function getFilteredDestinations(
         first: $first
       ) {
         edges {
-          cursor
           node {
             Resort
             Country
             HighestPoint
             LowestPoint
+            ElevationDifference
             BeginnerSlope
             IntermediateSlope
             DifficultSlope
@@ -38,7 +39,17 @@ export default async function getFilteredDestinations(
           }
         }
         pageInfo {
-          endCursor
+          endCursor {
+            Resort
+            Country
+            HighestPoint
+            LowestPoint
+            ElevationDifference
+            BeginnerSlope
+            IntermediateSlope
+            DifficultSlope
+            TotalLifts
+          }
           hasNextPage
         }
       }
@@ -48,7 +59,7 @@ export default async function getFilteredDestinations(
   const variables: {
     country: string;
     filter: FilterState;
-    after: string | unknown;
+    after: Destination | unknown;
     first: number;
   } = {
     country,

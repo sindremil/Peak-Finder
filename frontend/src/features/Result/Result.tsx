@@ -27,7 +27,7 @@ export default function Result({ country }: { country: string }): JSX.Element {
         debouncedFilter,
         pageParam,
       ),
-    initialPageParam: "0",
+    initialPageParam: null,
     getNextPageParam: (lastPage) =>
       lastPage.getFilteredDestinations.pageInfo.endCursor,
     staleTime: Infinity,

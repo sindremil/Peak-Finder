@@ -14,6 +14,7 @@ export default async function getDestinationPageProps(
         Country
         HighestPoint
         LowestPoint
+        ElevationDifference
         DayPassPriceAdult
         BeginnerSlope
         DifficultSlope

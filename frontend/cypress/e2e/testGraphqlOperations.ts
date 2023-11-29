@@ -47,7 +47,7 @@ export const getFilteredDestinations = gql`
   query Query(
     $country: String!
     $filter: FilterState!
-    $after: String!
+    $after: DestinationInput
     $first: Int
   ) {
     getFilteredDestinations(
@@ -57,12 +57,12 @@ export const getFilteredDestinations = gql`
       first: $first
     ) {
       edges {
-        cursor
         node {
           Resort
           Country
           HighestPoint
           LowestPoint
+          ElevationDifference
           BeginnerSlope
           IntermediateSlope
           DifficultSlope
@@ -70,7 +70,17 @@ export const getFilteredDestinations = gql`
         }
       }
       pageInfo {
-        endCursor
+        endCursor {
+          Resort
+          Country
+          HighestPoint
+          LowestPoint
+          ElevationDifference
+          BeginnerSlope
+          IntermediateSlope
+          DifficultSlope
+          TotalLifts
+        }
         hasNextPage
       }
     }

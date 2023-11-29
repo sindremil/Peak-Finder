@@ -25,6 +25,29 @@ const typeDefs = `#graphql
     Country: String
     HighestPoint: Int
     LowestPoint: Int
+    ElevationDifference: Int
+    DayPassPriceAdult: Int
+    BeginnerSlope: Int
+    IntermediateSlope: Int
+    DifficultSlope: Int
+    TotalSlope: Int
+    Snowparks: Boolean
+    NightSki: Boolean
+    SurfaceLifts: Int
+    ChairLifts: Int
+    GondolaLifts: Int
+    TotalLifts: Int
+    TotalRating: Int
+    AmountOfRatings: Int
+    Certified: Boolean
+  }
+
+  input DestinationInput {
+    Resort: String
+    Country: String
+    HighestPoint: Int
+    LowestPoint: Int
+    ElevationDifference: Int
     DayPassPriceAdult: Int
     BeginnerSlope: Int
     IntermediateSlope: Int
@@ -48,11 +71,10 @@ const typeDefs = `#graphql
 
   type DestinationEdge {
     node: Destination
-    cursor: String
   }
 
   type PageInfo {
-    endCursor: String
+    endCursor: Destination
     hasNextPage: Boolean
   }
 
@@ -63,7 +85,7 @@ const typeDefs = `#graphql
     getCountries: [String]
     getDestination(Resort: String!): Destination
     getDestinations(searchTerm: String!, maxResults: Int!): [Destination]
-    getFilteredDestinations(Country: String!, filter: FilterState!, after: String!, first: Int): DestinationConnection
+    getFilteredDestinations(Country: String!, filter: FilterState!, after: DestinationInput, first: Int): DestinationConnection
   }
 
   type Mutation {
