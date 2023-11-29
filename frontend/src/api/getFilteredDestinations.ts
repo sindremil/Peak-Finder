@@ -48,7 +48,9 @@ export default async function getFilteredDestinations(
             BeginnerSlope
             IntermediateSlope
             DifficultSlope
+            TotalSlope
             TotalLifts
+            DayPassPriceAdult
           }
           hasNextPage
         }

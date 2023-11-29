@@ -79,7 +79,9 @@ export const getFilteredDestinations = gql`
           BeginnerSlope
           IntermediateSlope
           DifficultSlope
+          TotalSlope
           TotalLifts
+          DayPassPriceAdult
         }
         hasNextPage
       }

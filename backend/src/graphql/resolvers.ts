@@ -137,7 +137,7 @@ const resolvers = {
           sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
           sortByField = "DayPassPriceAdult";
           if (after) {
-            query.DayPassPriceAdult = { $gt: after.DayPassPriceAdult };
+            query.DayPassPriceAdult = { $gte: after.DayPassPriceAdult };
           }
         } // If the sortType is not recognized, it defaults to "AZ"
         else {
