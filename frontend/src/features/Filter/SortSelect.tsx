@@ -8,10 +8,16 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSortType } from "./filterSlice";
+import { useAppSelector } from "../../hooks/hooks";
 
 export default function SortSelect(): JSX.Element {
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState("AZ");
+  const sortType = useAppSelector((state) => state.filter.sortType);
+
+  if (selectedValue !== sortType) {
+    setSelectedValue(sortType);
+  }
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const newValue = event.target.value;
