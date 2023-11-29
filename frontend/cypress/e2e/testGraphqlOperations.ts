@@ -71,6 +71,7 @@ export const getFilteredDestinations = gql`
       }
       pageInfo {
         endCursor {
+          id
           Resort
           Country
           HighestPoint
