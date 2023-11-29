@@ -21,6 +21,7 @@ const typeDefs = `#graphql
 
   # This "Destination" type defines the queryable fields for every destination in our data source.
   type Destination {
+    id: Int
     Resort: String
     Country: String
     HighestPoint: Int
@@ -43,6 +44,7 @@ const typeDefs = `#graphql
   }
 
   input DestinationInput {
+    id: Int
     Resort: String
     Country: String
     HighestPoint: Int

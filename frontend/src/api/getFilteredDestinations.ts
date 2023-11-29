@@ -40,6 +40,7 @@ export default async function getFilteredDestinations(
         }
         pageInfo {
           endCursor {
+            id
             Resort
             Country
             HighestPoint

@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const destinationSchema = new Schema({
+  id: Number,
   Resort: String,
   Country: String,
   HighestPoint: Number,
