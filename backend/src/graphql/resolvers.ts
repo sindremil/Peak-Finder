@@ -110,6 +110,8 @@ const resolvers = {
           sort.ElevationDifference = -1;
           sortByField = "ElevationDifference";
           sortAsc = false;
+          // If there is an 'after' cursor, use it to find the next page of results.
+          // Based on the sort type, we need to use a different query.
           if (after) {
             query.$or = [
               { ElevationDifference: { $lt: after.ElevationDifference } },
@@ -188,6 +190,7 @@ const resolvers = {
           }
         }
 
+        // Seconday sorting by id to ensure deterministic results
         sort.id = 1; // Ascending order by id
 
         // Add a sort stage to the aggregate pipeline
@@ -212,8 +215,11 @@ const resolvers = {
           // Create a dynamic field query based on sortByField
           const nextPageQuery = { ...query };
 
-          const comparisonOperator = sortAsc ? "$gte" : "$lte";
+          // Create a dynamic comparison operator based on sortAsc
+          const comparisonOperator = sortAsc ? "$gt" : "$lt";
 
+          // Add the dynamic field query to the nextPageQuery
+          // to find the next page of results.
           nextPageQuery.$or = [
             {
               [sortByField]: {
@@ -221,7 +227,10 @@ const resolvers = {
               },
             },
             {
-              $and: [{ id: { $gt: lastDestination.id } }],
+              $and: [
+                { [sortByField]: lastDestination[sortByField] },
+                { id: { $gt: lastDestination.id } },
+              ],
             },
           ];
 
