@@ -26,7 +26,6 @@ export default function Searchbar({
   return (
     <Box
       role="search"
-      aria-label="Søkefelt"
       component="div"
       sx={{
         position: "relative",
@@ -38,6 +37,7 @@ export default function Searchbar({
       }}
     >
       <TextField
+        label="Søk"
         placeholder="Søk etter destinasjon"
         value={localSearchValue}
         onChange={handleInputChange}
