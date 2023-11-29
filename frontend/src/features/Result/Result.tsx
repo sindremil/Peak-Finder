@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
-import AddResults from "./AddResults";
+import AddDestinationCards from "./AddDestinationCards";
 import { useAppSelector } from "../../hooks/hooks";
 import useDebounce from "../../hooks/useDebounce";
 
@@ -99,7 +99,7 @@ export default function Result({ country }: { country: string }): JSX.Element {
     return (
       <Container sx={{ marginBottom: "2rem" }}>
         <Grid container spacing={4}>
-          <AddResults results={results} />
+          <AddDestinationCards results={results} />
         </Grid>
         <Box display="flex" justifyContent="center" my={2}>
           {hasNextPage() && (
