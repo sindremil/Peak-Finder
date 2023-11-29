@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
+import { filterQueryDebounceDelayMs } from "../../configs/config";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
 import AddDestinationCards from "./AddDestinationCards";
 import { useAppSelector } from "../../hooks/hooks";
@@ -9,7 +10,7 @@ import useDebounce from "../../hooks/useDebounce";
 
 export default function Result({ country }: { country: string }): JSX.Element {
   const filter = useAppSelector((state) => state.filter);
-  const debouncedFilter = useDebounce(filter, 500);
+  const debouncedFilter = useDebounce(filter, filterQueryDebounceDelayMs);
 
   const {
     isPending,
