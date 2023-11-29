@@ -19,7 +19,7 @@ function Logo(): JSX.Element {
       role="img"
       component="img"
       alt="Peak Finder logo"
-      src={theme === "light" ? logoLight : logoDark}
+      src={theme === "light" ? logoDark : logoLight}
       sx={{
         width: isMobile ? "80%" : "50%",
       }}

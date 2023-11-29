@@ -89,7 +89,7 @@ export default function DestinationExtras({
           <DestinationExtra
             text="Peak Finder sertifisering"
             boolean={certified}
-            Icon={theme === "dark" ? LogoIconLight : LogoIconDark}
+            Icon={theme === "light" ? LogoIconLight : LogoIconDark}
           />
         </Grid>
       </Grid>
