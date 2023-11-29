@@ -78,16 +78,16 @@ function DestinationImage(props: {
 function DestinationElevation(props: {
   lowestPoint: number;
   highestPoint: number;
+  elevationDifference: number;
 }): JSX.Element {
-  const { lowestPoint, highestPoint } = props;
-  const heightDelta: number = highestPoint - lowestPoint;
+  const { lowestPoint, highestPoint, elevationDifference } = props;
   return (
     <ListItem>
       <ListItemIcon>
         <HeightIcon />
       </ListItemIcon>
       <ListItemText
-        primary={`${lowestPoint} m - ${highestPoint} m (${heightDelta} m)`}
+        primary={`${lowestPoint} m - ${highestPoint} m (${elevationDifference} m)`}
       />
     </ListItem>
   );
@@ -117,7 +117,7 @@ function DestinationPiste(props: {
         />
         <ListItemText
           primary={`${intermediate} km`}
-          sx={{ ...listItemPadding, background: "red" }}
+          sx={{ ...listItemPadding, background: "#B90E0A" }}
         />
         <ListItemText
           primary={`${advanced} km`}
@@ -145,6 +145,7 @@ function DestinationLifts(props: { lifts: number }): JSX.Element {
 function DestinationInfo({
   lowestPoint,
   highestPoint,
+  elevationDifference,
   beginner,
   intermediate,
   advanced,
@@ -153,6 +154,7 @@ function DestinationInfo({
   lowestPoint: number;
   highestPoint: number;
   beginner: number;
+  elevationDifference: number;
   intermediate: number;
   advanced: number;
   lifts: number;
@@ -174,6 +176,7 @@ function DestinationInfo({
         <DestinationElevation
           lowestPoint={lowestPoint}
           highestPoint={highestPoint}
+          elevationDifference={elevationDifference}
         />
         <DestinationPiste
           beginner={beginner}
@@ -195,14 +198,15 @@ export default function DestinationCard({
 }): JSX.Element {
   const {
     name,
-    imageSrc,
-    imageAlt,
-    lowestPoint,
     highestPoint,
+    lowestPoint,
+    elevationDifference,
     beginner,
     intermediate,
     advanced,
     lifts,
+    imageSrc,
+    imageAlt,
   } = destinationCardProps;
 
   const theme = useTheme();
@@ -241,6 +245,7 @@ export default function DestinationCard({
         <DestinationInfo
           lowestPoint={lowestPoint}
           highestPoint={highestPoint}
+          elevationDifference={elevationDifference}
           beginner={beginner}
           intermediate={intermediate}
           advanced={advanced}

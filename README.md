@@ -28,7 +28,7 @@ If you want to test the API in Apollo Sandbox you can visit either: http://local
 
 ## Running ESLint
 
-To check the project for ESLint errors the following command can be run from the project's root folder:
+To check the project for ESLint errors the following command can be run from the project's frontend and backend folder:
 
 ```
 npm run lint
@@ -42,7 +42,7 @@ npm run lint-fix
 
 ## Running prettier
 
-To check the project for formatting issues the following command can be run from the project's root folder:
+To check the project for formatting issues the following command can be run from the project's frontend and backend folder:
 
 ```
 npm run prettier
@@ -99,6 +99,32 @@ A window should open. From here you want to click "E2E Testing" and choose you p
 We have assumed a grid of results is sufficient for the list requirement since a grid is virtually a list spread across multiple rows.
 
 
+## Technologies
+
+We have used the following technologies:
+
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/) - GraphQL server
+
+- [Cypress](https://www.cypress.io/) - Cypress is used for our E2E tests.
+
+- [GraphQL](https://graphql.org/) - Query language for APIs
+
+- [MongoDB](https://www.mongodb.com/) - NoSQL Database
+
+- [Mongoose](https://mongoosejs.com/) - MongoDB object modeling
+
+- [MUI](https://mui.com/) - We have used MaterialUI for more effecient and faster development. MaterialUI provides a lot of components that we can use and follows what Google thinks is best design practices.
+
+- [Node](https://nodejs.org/en/) - JavaScript runtime
+
+- [React](https://react.dev/) - React
+
+- [Redux](https://redux.js.org/) - We use Redux for state management for storing the search term and filter state.
+
+- [Typescript](https://www.typescriptlang.org/) - Typescript is the programming language we've used.
+
+- [Vite](https://vitejs.dev/) - We used Vite to setup our development enviroment.
+
 ## Accessibility
 
 Peak Finder has been developed with accessibility in mind. All pages have support for screen readers and allow the use of the tab key to navigate between elements.
@@ -106,3 +132,7 @@ Peak Finder has been developed with accessibility in mind. All pages have suppor
 ## Sustainability 
 
 We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. All queries have an infinite stale time. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Dark mode is another implementation which enhances the sustainabiliy of the page. Lastly, all our images have the .webp file type, this is a sustainable file format.
+
+## .env
+
+We have chosen to have our config.env in the git repository because of peer reviews. Since the reviewers were supposed to be able to create a local version of the backend, they would need to be able to connect to the database. If this wasn’t the case we would of course have put the config.env in the .gitignore file.

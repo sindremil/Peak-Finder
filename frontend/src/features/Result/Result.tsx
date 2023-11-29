@@ -1,18 +1,17 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import FilterState from "../../../../shared/types/FilterState";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
+import { filterQueryDebounceDelayMs } from "../../configs/config";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
-import AddResults from "./AddResults";
+import AddDestinationCards from "./AddDestinationCards";
+import { useAppSelector } from "../../hooks/hooks";
+import useDebounce from "../../hooks/useDebounce";
 
-export default function Result({
-  country,
-  debouncedFilter,
-}: {
-  country: string;
-  debouncedFilter: FilterState;
-}): JSX.Element {
+export default function Result({ country }: { country: string }): JSX.Element {
+  const filter = useAppSelector((state) => state.filter);
+  const debouncedFilter = useDebounce(filter, filterQueryDebounceDelayMs);
+
   const {
     isPending,
     isError,
@@ -28,7 +27,7 @@ export default function Result({
         debouncedFilter,
         pageParam,
       ),
-    initialPageParam: "0",
+    initialPageParam: null,
     getNextPageParam: (lastPage) =>
       lastPage.getFilteredDestinations.pageInfo.endCursor,
     staleTime: Infinity,
@@ -101,7 +100,7 @@ export default function Result({
     return (
       <Container sx={{ marginBottom: "2rem" }}>
         <Grid container spacing={4}>
-          <AddResults results={results} />
+          <AddDestinationCards results={results} />
         </Grid>
         <Box display="flex" justifyContent="center" my={2}>
           {hasNextPage() && (

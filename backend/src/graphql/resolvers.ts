@@ -1,5 +1,6 @@
 import Destination from "../models/Destination.js";
 import FilterState from "../../../shared/types/FilterState";
+import DestinationInterface from "../../../shared/types/Destination";
 
 const resolvers = {
   Query: {
@@ -58,7 +59,7 @@ const resolvers = {
       }: {
         Country: string;
         filter: FilterState;
-        after: string;
+        after?: DestinationInterface;
         first?: number;
       },
     ) => {
@@ -67,11 +68,6 @@ const resolvers = {
         const query: any = { Country };
         // Initialize the sort object
         const sort: any = {};
-
-        // If an 'after' cursor is provided, add the 'Resort' property to the query.
-        if (after) {
-          query.Resort = { $gt: after };
-        }
 
         // Initialize the aggregate pipeline with a match stage
         const aggregatePipeline: any[] = [{ $match: query }];
@@ -84,15 +80,13 @@ const resolvers = {
           if (filter.hasGondola) query.GondolaLifts = { $gte: 1 };
           if (filter.isCertified) query.Certified = filter.isCertified;
           if (filter.minElevationDifference) {
-            query.$expr = {
-              $gte: [
-                { $subtract: ["$HighestPoint", "$LowestPoint"] },
-                filter.minElevationDifference,
-              ],
+            query.ElevationDifference = {
+              $gte: filter.minElevationDifference,
             };
           }
-          if (filter.minBaseElevation)
+          if (filter.minBaseElevation) {
             query.LowestPoint = { $gte: filter.minBaseElevation };
+          }
           if (filter.minTotalPiste)
             query.TotalSlope = { $gte: filter.minTotalPiste };
           if (filter.minTotalLifts)
@@ -102,31 +96,55 @@ const resolvers = {
         }
 
         // Apply the custom sorting logic
+        let sortByField = "Resort";
+        let sortAsc = true;
         if (filter.sortType === "ZA") {
           sort.Resort = -1; // Descending order by Resort name
+          sortAsc = false;
+          if (after) {
+            query.Resort = { $lt: after.Resort };
+          }
         } else if (filter.sortType === "elevationDifference") {
-          // Add a project stage to calculate and add the elevationDifference field
-          aggregatePipeline.push({
-            $addFields: {
-              elevationDifference: {
-                $subtract: ["$HighestPoint", "$LowestPoint"],
-              },
-            },
-          });
-
-          // Sort based on the new elevation difference field
-          sort.elevationDifference = -1;
+          // Sort based on the elevation difference field
+          sort.ElevationDifference = -1;
+          sortByField = "ElevationDifference";
+          sortAsc = false;
+          if (after) {
+            query.ElevationDifference = { $lt: after.ElevationDifference };
+          }
         } else if (filter.sortType === "baseElevation") {
           sort.LowestPoint = -1; // Descending order by LowestPoint
+          sortByField = "LowestPoint";
+          sortAsc = false;
+          if (after) {
+            query.LowestPoint = { $lt: after.LowestPoint };
+          }
         } else if (filter.sortType === "totalPiste") {
           sort.TotalSlope = -1; // Descending order by TotalSlope
+          sortByField = "TotalSlope";
+          sortAsc = false;
+          if (after) {
+            query.TotalSlope = { $lt: after.TotalSlope };
+          }
         } else if (filter.sortType === "totalLifts") {
           sort.TotalLifts = -1; // Descending order by TotalLifts
+          sortByField = "TotalLifts";
+          sortAsc = false;
+          if (after) {
+            query.TotalLifts = { $lt: after.TotalLifts };
+          }
         } else if (filter.sortType === "dayPassPrice") {
           sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
+          sortByField = "DayPassPriceAdult";
+          if (after) {
+            query.DayPassPriceAdult = { $gt: after.DayPassPriceAdult };
+          }
         } // If the sortType is not recognized, it defaults to "AZ"
         else {
           sort.Resort = 1; // Ascending order by Resort name
+          if (after) {
+            query.Resort = { $gt: after.Resort };
+          }
         }
 
         // Add a sort stage to the aggregate pipeline
@@ -141,24 +159,29 @@ const resolvers = {
         // Transform the result into the shape expected for pagination.
         const edges = destinations.map((destination) => ({
           node: destination,
-          cursor: destination.Resort, // Use Resort name as the cursor
         }));
 
         // Find out if there is a next page.
         let hasNextPage = false;
         if (destinations.length > 0) {
           const lastDestination = destinations[destinations.length - 1];
+
+          // Create a dynamic field query based on sortByField
+          const nextPageQuery = { ...query };
+          if (sortAsc) {
+            nextPageQuery[sortByField] = { $gt: lastDestination[sortByField] };
+          } else {
+            nextPageQuery[sortByField] = { $lt: lastDestination[sortByField] };
+          }
           // Count if there are more destinations after the last one we fetched.
-          hasNextPage =
-            (await Destination.countDocuments({
-              ...query,
-              Resort: { $gt: lastDestination.Resort },
-            })) > 0;
+          const nextPageDocuments =
+            await Destination.countDocuments(nextPageQuery);
+          hasNextPage = nextPageDocuments > 0;
         }
 
         // Prepare the endCursor from the last destination's Resort if available.
         const endCursor =
-          edges.length > 0 ? edges[edges.length - 1].cursor : null;
+          edges.length > 0 ? edges[edges.length - 1].node : null;
 
         // Return in the shape of a paginated response.
         return {

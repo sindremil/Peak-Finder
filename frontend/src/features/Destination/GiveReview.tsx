@@ -26,6 +26,9 @@ export default function GiveReview({
   const [newRating, setNewRating] = useState(0);
 
   const handleMutation = async (rating: number) => {
+    if (rating === 0) {
+      return;
+    }
     try {
       const response = await giveRating({ resort: name, rating });
       handleReviewGiven(

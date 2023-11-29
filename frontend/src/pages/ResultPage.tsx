@@ -6,14 +6,10 @@ import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
 import Filter from "../features/Filter/Filter";
 import Navbar from "../features/Navbar/Navbar";
 import Result from "../features/Result/Result";
-import { useAppSelector } from "../hooks/hooks";
-import useDebounce from "../hooks/useDebounce";
 import usePageTitle from "../hooks/usePageTitle";
 
 export default function ResultPage() {
-  const filter = useAppSelector((state) => state.filter);
   const country = useParams().country ?? "";
-  const debouncedFilter = useDebounce(filter, 500);
   const [drawerOpen, setDrawerOpen] = useState(false);
   usePageTitle(country);
 
@@ -47,7 +43,7 @@ export default function ResultPage() {
         <FilterListIcon />
         Filtrer eller sorter
       </Fab>
-      <Result country={country} debouncedFilter={debouncedFilter} />
+      <Result country={country} />
       <Drawer
         anchor="left"
         open={drawerOpen}
