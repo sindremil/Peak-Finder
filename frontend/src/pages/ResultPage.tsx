@@ -1,5 +1,5 @@
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { Container, Drawer, Fab } from "@mui/material";
+import { Container, Drawer, Fab, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BreadCrumbs from "../features/BreadCrumbs/BreadCrumbs";
@@ -10,6 +10,8 @@ import usePageTitle from "../hooks/usePageTitle";
 
 export default function ResultPage() {
   const country = useParams().country ?? "";
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   usePageTitle(country);
 
@@ -36,12 +38,12 @@ export default function ResultPage() {
         sx={{
           position: "fixed",
           bottom: "2rem",
-          right: { xs: "2rem", sm: "6.5rem" },
+          right: { xs: "1.25rem", sm: "6.5rem" },
         }}
         onClick={handleDrawer}
       >
         <FilterListIcon />
-        Filtrer eller sorter
+        {isSmallScreen ? "" : "Filter eller sorter"}
       </Fab>
       <Result country={country} />
       <Drawer
