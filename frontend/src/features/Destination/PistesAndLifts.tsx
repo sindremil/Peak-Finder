@@ -63,7 +63,7 @@ function DestinationTotal({
   totalNumber: number;
 }): JSX.Element {
   const theme = useAppSelector((state) => state.theme.theme);
-  const DragHandleIconColor = theme === "dark" ? "black" : "white";
+  const DragHandleIconColor = theme === "light" ? "black" : "white";
   return (
     <ListItem>
       <ListItemIconCentered>
@@ -187,9 +187,11 @@ function DestinationLifts({
   totalLifts: number;
 }): JSX.Element {
   const { theme } = useAppSelector((state) => state.theme);
-  const GondolaIcon = theme === "dark" ? GondolaIconLight : GondolaIconDark;
-  const SkiliftIcon = theme === "dark" ? ChairLiftIconLight : ChairLiftIconDark;
-  const SurfaceLiftIcon = theme === "dark" ? SurfaceIconLight : SurfaceIconDark;
+  const GondolaIcon = theme === "light" ? GondolaIconLight : GondolaIconDark;
+  const SkiliftIcon =
+    theme === "light" ? ChairLiftIconLight : ChairLiftIconDark;
+  const SurfaceLiftIcon =
+    theme === "light" ? SurfaceIconLight : SurfaceIconDark;
   return (
     <Grid item xs={12} sm={6} tabIndex={0}>
       <Typography variant="h4" gutterBottom>

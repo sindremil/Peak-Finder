@@ -57,10 +57,10 @@ function ThemeIcon(): JSX.Element {
       sx={{ color: "white" }}
       data-testid="themeIcon"
     >
-      {theme === "dark" ? (
-        <LightMode sx={{ ...iconSize }} />
-      ) : (
+      {theme === "light" ? (
         <DarkMode sx={{ ...iconSize }} />
+      ) : (
+        <LightMode sx={{ ...iconSize }} />
       )}
     </IconButton>
   );

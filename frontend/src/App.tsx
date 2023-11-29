@@ -10,7 +10,9 @@ function App() {
   const theme = useAppSelector((state) => state.theme.theme);
   return (
     <ThemeProvider
-      theme={createTheme(theme === "dark" ? lightThemeConfig : darkThemeConfig)}
+      theme={createTheme(
+        theme === "light" ? lightThemeConfig : darkThemeConfig,
+      )}
     >
       <CssBaseline />
       <Router basename="/project2">
