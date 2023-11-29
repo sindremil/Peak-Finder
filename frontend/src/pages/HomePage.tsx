@@ -1,23 +1,25 @@
 import { Box, Container, useMediaQuery } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import logo from "../assets/logos/logo-color.svg";
+import logoLight from "../assets/light/logos/bigMainLogoDark.svg";
+import logoDark from "../assets/dark/logos/bigMainLogoLight.svg";
 import Browse from "../features/Browse/Browse";
 import { resetFilter } from "../features/Filter/filterSlice";
 import Searchbar from "../features/Searchbar/Searchbar";
-import { useAppDispatch } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import usePageTitle from "../hooks/usePageTitle";
 
 function Logo(): JSX.Element {
   // Media query for mobile that increases size of logo
   const isMobile = useMediaQuery("(max-aspect-ratio: 3/4)");
+  const theme = useAppSelector((state) => state.theme.theme);
 
   return (
     <Box
       role="img"
       component="img"
       alt="Peak Finder logo"
-      src={logo}
+      src={theme === "light" ? logoLight : logoDark}
       sx={{
         width: isMobile ? "80%" : "50%",
       }}

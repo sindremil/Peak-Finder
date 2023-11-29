@@ -1,4 +1,7 @@
-const themeConfig = {
+import { ThemeOptions } from "@mui/material";
+
+// Common configuration
+const baseThemeConfig: ThemeOptions = {
   breakpoints: {
     values: {
       xs: 0,
@@ -10,4 +13,20 @@ const themeConfig = {
   },
 };
 
-export default themeConfig;
+// Light theme configuration
+const lightThemeConfig: ThemeOptions = {
+  ...baseThemeConfig,
+  palette: {
+    mode: "light",
+  },
+};
+
+// Dark theme configuration
+const darkThemeConfig: ThemeOptions = {
+  ...baseThemeConfig,
+  palette: {
+    mode: "dark",
+  },
+};
+
+export { lightThemeConfig, darkThemeConfig };

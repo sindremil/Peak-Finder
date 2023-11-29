@@ -1,9 +1,11 @@
-import { Search } from "@mui/icons-material";
+import { Search, DarkMode, LightMode } from "@mui/icons-material";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logoCropped from "../../assets/logos/logo-no-background-cropped.svg";
 import logo from "../../assets/logos/logo-no-background.svg";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { toggleTheme } from "./themeSlice";
 
 // This const controls the size of all icons that belong to this component
 const iconSize: { fontSize: string } = {
@@ -40,6 +42,26 @@ function SearchIcon(): JSX.Element {
       data-testid="searchIcon"
     >
       <Search sx={{ ...iconSize }} />
+    </IconButton>
+  );
+}
+
+function ThemeIcon(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { theme } = useAppSelector((state) => state.theme);
+
+  return (
+    <IconButton
+      onClick={() => dispatch(toggleTheme())}
+      aria-label="Bytt tema"
+      sx={{ color: "white" }}
+      data-testid="themeIcon"
+    >
+      {theme === "dark" ? (
+        <LightMode sx={{ ...iconSize }} />
+      ) : (
+        <DarkMode sx={{ ...iconSize }} />
+      )}
     </IconButton>
   );
 }
@@ -82,6 +104,7 @@ export default function Navbar(): JSX.Element {
             marginRight: 0,
           }}
         >
+          <ThemeIcon />
           <SearchIcon />
         </Box>
       </Toolbar>

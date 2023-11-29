@@ -14,9 +14,13 @@ import {
   styled,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import SkiliftIcon from "../../assets/ChairLiftIcon.svg";
-import GondolaIcon from "../../assets/GondolaIcon.svg";
-import surfaceLiftIcon from "../../assets/SurfaceLiftIcon.svg";
+import GondolaIconLight from "../../assets/light/lifts/GondolaIcon.svg";
+import ChairLiftIconLight from "../../assets/light/lifts/ChairLiftIcon.svg";
+import SurfaceIconLight from "../../assets/light/lifts/SurfaceLiftIcon.svg";
+import GondolaIconDark from "../../assets/dark/lifts/GondolaIcon.svg";
+import ChairLiftIconDark from "../../assets/dark/lifts/ChairLiftIcon.svg";
+import SurfaceIconDark from "../../assets/dark/lifts/SurfaceLiftIcon.svg";
+import { useAppSelector } from "../../hooks/hooks";
 
 // ListItemIconCentered is a new MUI class which copies ListItemIcon
 // The difference is that it also has 'justifyContent: "center"'
@@ -58,10 +62,12 @@ function DestinationTotal({
   totalType: string;
   totalNumber: number;
 }): JSX.Element {
+  const theme = useAppSelector((state) => state.theme.theme);
+  const DragHandleIconColor = theme === "dark" ? "black" : "white";
   return (
     <ListItem>
       <ListItemIconCentered>
-        <DragHandleIcon sx={{ color: "Black" }} />
+        <DragHandleIcon sx={{ color: `${DragHandleIconColor}` }} />
       </ListItemIconCentered>
       <ListItemText
         primary="Totalt"
@@ -180,6 +186,10 @@ function DestinationLifts({
   surfaceLifts: number;
   totalLifts: number;
 }): JSX.Element {
+  const { theme } = useAppSelector((state) => state.theme);
+  const GondolaIcon = theme === "dark" ? GondolaIconLight : GondolaIconDark;
+  const SkiliftIcon = theme === "dark" ? ChairLiftIconLight : ChairLiftIconDark;
+  const SurfaceLiftIcon = theme === "dark" ? SurfaceIconLight : SurfaceIconDark;
   return (
     <Grid item xs={12} sm={6} tabIndex={0}>
       <Typography variant="h4" gutterBottom>
@@ -199,7 +209,7 @@ function DestinationLifts({
         <DestinationLift
           liftType="Ankerheiser"
           liftAmount={surfaceLifts}
-          liftIcon={surfaceLiftIcon}
+          liftIcon={SurfaceLiftIcon}
         />
         <DestinationTotal totalType="Lifts" totalNumber={totalLifts} />
       </List>

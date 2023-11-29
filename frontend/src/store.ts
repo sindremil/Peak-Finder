@@ -5,17 +5,20 @@ import {
 } from "@reduxjs/toolkit";
 import filterReducer from "./features/Filter/filterSlice";
 import searchReducer from "./features/Searchbar/searchSlice";
+import themeReducer from "./features/Navbar/themeSlice";
 
 const store = configureStore({
   reducer: {
     filter: filterReducer,
     search: searchReducer,
+    theme: themeReducer,
   },
 });
 
 const rootReducer = combineReducers({
   filter: filterReducer,
   search: searchReducer,
+  theme: themeReducer,
 });
 
 export default store;

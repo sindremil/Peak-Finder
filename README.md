@@ -131,7 +131,7 @@ Peak Finder has been developed with accessibility in mind. All pages have suppor
 
 ## Sustainability 
 
-We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. All queries have an infinite stale time. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Lastly, all our images have the .webp file type, this is a sustainable file format.
+We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. All queries have an infinite stale time. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Dark mode is another implementation which enhances the sustainabiliy of the page. Lastly, all our images have the .webp file type, this is a sustainable file format.
 
 ## .env
 
