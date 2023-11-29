@@ -43,7 +43,7 @@ export default function ResultPage() {
         onClick={handleDrawer}
       >
         <FilterListIcon />
-        {isSmallScreen ? "" : "Filter eller sorter"}
+        {isSmallScreen ? "" : "Filtrer eller sorter"}
       </Fab>
       <Result country={country} />
       <Drawer
