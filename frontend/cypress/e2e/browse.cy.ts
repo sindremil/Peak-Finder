@@ -1,7 +1,7 @@
 describe("Browse functionality", () => {
   it("countries should load and redirect user", () => {
     cy.visit("http://localhost:5173/project2");
-    cy.get('[id="browseSelect"]').click();
+    cy.get('[data-testid="browseSelect"]').click();
     cy.contains("Frankrike").click();
   });
 

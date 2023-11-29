@@ -195,7 +195,6 @@ describe("API tests", () => {
             minTotalPiste: 50,
             sortType: "ZA",
           },
-          after: "0",
         },
       },
     }).then((response) => {
