@@ -71,6 +71,7 @@ export const getFilteredDestinations = gql`
       }
       pageInfo {
         endCursor {
+          id
           Resort
           Country
           HighestPoint
@@ -79,7 +80,9 @@ export const getFilteredDestinations = gql`
           BeginnerSlope
           IntermediateSlope
           DifficultSlope
+          TotalSlope
           TotalLifts
+          DayPassPriceAdult
         }
         hasNextPage
       }

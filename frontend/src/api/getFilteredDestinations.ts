@@ -40,6 +40,7 @@ export default async function getFilteredDestinations(
         }
         pageInfo {
           endCursor {
+            id
             Resort
             Country
             HighestPoint
@@ -48,7 +49,9 @@ export default async function getFilteredDestinations(
             BeginnerSlope
             IntermediateSlope
             DifficultSlope
+            TotalSlope
             TotalLifts
+            DayPassPriceAdult
           }
           hasNextPage
         }

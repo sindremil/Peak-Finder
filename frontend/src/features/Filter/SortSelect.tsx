@@ -36,7 +36,7 @@ export default function SortSelect(): JSX.Element {
         value={selectedValue}
         onChange={handleChange}
       >
-        <MenuItem value="AZ">A-Z</MenuItem>
+        <MenuItem value="AZ">A-Z (Standard)</MenuItem>
         <MenuItem value="ZA">Z-A</MenuItem>
         <MenuItem value="elevationDifference">Største fallhøyde</MenuItem>
         <MenuItem value="baseElevation">Største basehøyde</MenuItem>

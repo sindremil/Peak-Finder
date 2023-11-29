@@ -98,6 +98,7 @@ const resolvers = {
         // Apply the custom sorting logic
         let sortByField = "Resort";
         let sortAsc = true;
+
         if (filter.sortType === "ZA") {
           sort.Resort = -1; // Descending order by Resort name
           sortAsc = false;
@@ -109,35 +110,77 @@ const resolvers = {
           sort.ElevationDifference = -1;
           sortByField = "ElevationDifference";
           sortAsc = false;
+          // If there is an 'after' cursor, use it to find the next page of results.
+          // Based on the sort type, we need to use a different query.
           if (after) {
-            query.ElevationDifference = { $lt: after.ElevationDifference };
+            query.$or = [
+              { ElevationDifference: { $lt: after.ElevationDifference } },
+              {
+                $and: [
+                  { ElevationDifference: after.ElevationDifference },
+                  { id: { $gt: after.id } },
+                ],
+              },
+            ];
           }
         } else if (filter.sortType === "baseElevation") {
           sort.LowestPoint = -1; // Descending order by LowestPoint
           sortByField = "LowestPoint";
           sortAsc = false;
           if (after) {
-            query.LowestPoint = { $lt: after.LowestPoint };
+            query.$or = [
+              { LowestPoint: { $lt: after.LowestPoint } },
+              {
+                $and: [
+                  { LowestPoint: after.LowestPoint },
+                  { id: { $gt: after.id } },
+                ],
+              },
+            ];
           }
         } else if (filter.sortType === "totalPiste") {
           sort.TotalSlope = -1; // Descending order by TotalSlope
           sortByField = "TotalSlope";
           sortAsc = false;
           if (after) {
-            query.TotalSlope = { $lt: after.TotalSlope };
+            query.$or = [
+              { TotalSlope: { $lt: after.TotalSlope } },
+              {
+                $and: [
+                  { TotalSlope: after.TotalSlope },
+                  { id: { $gt: after.id } },
+                ],
+              },
+            ];
           }
         } else if (filter.sortType === "totalLifts") {
           sort.TotalLifts = -1; // Descending order by TotalLifts
           sortByField = "TotalLifts";
           sortAsc = false;
           if (after) {
-            query.TotalLifts = { $lt: after.TotalLifts };
+            query.$or = [
+              { TotalLifts: { $lt: after.TotalLifts } },
+              {
+                $and: [
+                  { TotalLifts: after.TotalLifts },
+                  { id: { $gt: after.id } },
+                ],
+              },
+            ];
           }
         } else if (filter.sortType === "dayPassPrice") {
           sort.DayPassPriceAdult = 1; // Ascending order by DayPassPriceAdult
           sortByField = "DayPassPriceAdult";
           if (after) {
-            query.DayPassPriceAdult = { $gt: after.DayPassPriceAdult };
+            query.$or = [
+              { DayPassPriceAdult: { $gt: after.DayPassPriceAdult } },
+              {
+                $and: [
+                  { DayPassPriceAdult: after.DayPassPriceAdult },
+                  { id: { $gt: after.id } },
+                ],
+              },
+            ];
           }
         } // If the sortType is not recognized, it defaults to "AZ"
         else {
@@ -146,6 +189,9 @@ const resolvers = {
             query.Resort = { $gt: after.Resort };
           }
         }
+
+        // Seconday sorting by id to ensure deterministic results
+        sort.id = 1; // Ascending order by id
 
         // Add a sort stage to the aggregate pipeline
         aggregatePipeline.push({ $sort: sort });
@@ -168,11 +214,26 @@ const resolvers = {
 
           // Create a dynamic field query based on sortByField
           const nextPageQuery = { ...query };
-          if (sortAsc) {
-            nextPageQuery[sortByField] = { $gt: lastDestination[sortByField] };
-          } else {
-            nextPageQuery[sortByField] = { $lt: lastDestination[sortByField] };
-          }
+
+          // Create a dynamic comparison operator based on sortAsc
+          const comparisonOperator = sortAsc ? "$gt" : "$lt";
+
+          // Add the dynamic field query to the nextPageQuery
+          // to find the next page of results.
+          nextPageQuery.$or = [
+            {
+              [sortByField]: {
+                [comparisonOperator]: lastDestination[sortByField],
+              },
+            },
+            {
+              $and: [
+                { [sortByField]: lastDestination[sortByField] },
+                { id: { $gt: lastDestination.id } },
+              ],
+            },
+          ];
+
           // Count if there are more destinations after the last one we fetched.
           const nextPageDocuments =
             await Destination.countDocuments(nextPageQuery);

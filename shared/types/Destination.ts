@@ -1,4 +1,5 @@
 export default interface Destination {
+  id: number;
   Resort: string;
   Country: string;
   HighestPoint: number;
