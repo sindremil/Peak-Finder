@@ -1,18 +1,16 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import FilterState from "../../../../shared/types/FilterState";
 import getFilteredDestinations from "../../api/getFilteredDestinations";
 import DestinationCard from "../../interfaces/DestinationCard";
 import DestinationCardResponse from "../../interfaces/DestinationCardResponse";
 import AddResults from "./AddResults";
+import { useAppSelector } from "../../hooks/hooks";
+import useDebounce from "../../hooks/useDebounce";
 
-export default function Result({
-  country,
-  debouncedFilter,
-}: {
-  country: string;
-  debouncedFilter: FilterState;
-}): JSX.Element {
+export default function Result({ country }: { country: string }): JSX.Element {
+  const filter = useAppSelector((state) => state.filter);
+  const debouncedFilter = useDebounce(filter, 500);
+
   const {
     isPending,
     isError,
