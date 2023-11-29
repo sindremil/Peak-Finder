@@ -21,7 +21,12 @@ function createSelect({
   return (
     <FormControl sx={{ m: 1, minWidth: 200 }}>
       <InputLabel id="browseSelectLabel">Land</InputLabel>
-      <Select labelId="browseSelectLabel" label="Land" defaultValue="">
+      <Select
+        labelId="browseSelectLabel"
+        label="Land"
+        defaultValue=""
+        data-testid="browseSelect"
+      >
         {countries.map((country) => (
           <MenuItem
             key={encodeURIComponent(country)}

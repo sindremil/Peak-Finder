@@ -42,6 +42,7 @@ export default function Searchbar({
         value={localSearchValue}
         onChange={handleInputChange}
         inputRef={inputRef}
+        data-testid="searchField"
         sx={{
           flex: 1,
           borderColor: "#2074d4",

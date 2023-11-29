@@ -4,7 +4,7 @@ describe("Search functionality", () => {
     cy.visit("http://localhost:5173/project2");
 
     // Type in the search field
-    cy.get('[aria-label="Søkefelt"]').type("Hemse");
+    cy.get('[data-testid="searchField"]').type("Hemse");
 
     // Visit Hemsedal page
     cy.contains("Hemsedal").click();
