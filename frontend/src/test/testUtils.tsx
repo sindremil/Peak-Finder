@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppStore, RootState } from "../store";
 import searchReducer from "../features/Searchbar/searchSlice";
 import filterReducer from "../features/Filter/filterSlice";
+import themeReducer from "../features/Navbar/themeSlice";
 
 // QueryClientProvider is needed for components using react-query hooks
 const tanstackClient = new QueryClient();
@@ -38,6 +39,9 @@ const initialPreloadedState = {
   search: {
     searchTerm: "",
   },
+  theme: {
+    theme: "light",
+  },
 };
 
 // This function is used by tests that render components that use the redux store
@@ -48,7 +52,11 @@ export default function renderWithReduxProviders(
     preloadedState = initialPreloadedState,
     // Automatically create a store instance if no store was passed in
     store = configureStore({
-      reducer: { filter: filterReducer, search: searchReducer },
+      reducer: {
+        filter: filterReducer,
+        search: searchReducer,
+        theme: themeReducer,
+      },
       preloadedState,
     }),
     ...renderOptions

@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { screen, render, waitFor, act } from "@testing-library/react";
+import { screen, waitFor, act } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "../features/Navbar/Navbar";
+import renderWithReduxProviders from "./testUtils";
 
 describe("Navbar", async () => {
   beforeEach(() => {
-    render(
+    renderWithReduxProviders(
       <Router>
         <Navbar />
       </Router>,
