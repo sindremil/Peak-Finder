@@ -106,3 +106,7 @@ Peak Finder has been developed with accessibility in mind. All pages have suppor
 ## Sustainability 
 
 We are using a debouncer on several user inputs. The debouncer limits the number of calls sent to the backend by having a delay before sending them. If changes are made within this timeframe the call won't be sent until the user is done inputting. The states are also cached so if the user changes back to an earlier input there won't be an unnecessary call and the cached information will be used. All queries have an infinite stale time. This is to reduce unnecessary calls. The stale time can be this high since there won’t be any changes to the ski resorts in real-time. Lastly, all our images have the .webp file type, this is a sustainable file format.
+
+## .env
+
+We have chosen to have our config.env in the git repository because of peer reviews. Since the reviewers were supposed to be able to create a local version of the backend, they would need to be able to connect to the database. If this wasn’t the case we would of course have put the config.env in the .gitignore file.
