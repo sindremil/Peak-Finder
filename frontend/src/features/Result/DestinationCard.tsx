@@ -117,7 +117,7 @@ function DestinationPiste(props: {
         />
         <ListItemText
           primary={`${intermediate} km`}
-          sx={{ ...listItemPadding, background: "red" }}
+          sx={{ ...listItemPadding, background: "#B90E0A" }}
         />
         <ListItemText
           primary={`${advanced} km`}
