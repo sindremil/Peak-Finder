@@ -99,6 +99,32 @@ A window should open. From here you want to click "E2E Testing" and choose you p
 We have assumed a grid of results is sufficient for the list requirement since a grid is virtually a list spread across multiple rows.
 
 
+## Technologies
+
+We have used the following technologies:
+
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/) - GraphQL server
+
+- [Cypress](https://www.cypress.io/) - Cypress is used for our E2E tests.
+
+- [GraphQL](https://graphql.org/) - Query language for APIs
+
+- [MongoDB](https://www.mongodb.com/) - NoSQL Database
+
+- [Mongoose](https://mongoosejs.com/) - MongoDB object modeling
+
+- [MUI](https://mui.com/) - We have used MaterialUI for more effecient and faster development. MaterialUI provides a lot of components that we can use and follows what Google thinks is best design practices.
+
+- [Node](https://nodejs.org/en/) - JavaScript runtime
+
+- [React](https://react.dev/) - React
+
+- [Redux](https://redux.js.org/) - We use Redux for state management for storing the search term and filter state.
+
+- [Typescript](https://www.typescriptlang.org/) - Typescript is the programming language we've used.
+
+- [Vite](https://vitejs.dev/) - We used Vite to setup our development enviroment.
+
 ## Accessibility
 
 Peak Finder has been developed with accessibility in mind. All pages have support for screen readers and allow the use of the tab key to navigate between elements.
